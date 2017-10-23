@@ -12,8 +12,8 @@ import os
 # date spans from 2014/10/22 to 2017/10/22
 startDate = "1413961200"
 endDate = "1508655600"
-#urlPattern = ["https://finance.yahoo.com/quote/","/history?period1="+startDate+"&period2="+endDate+"&interval=1d&filter=history&frequency=1d"]
-urlPattern=["http://query1.finance.yahoo.com/v7/finance/download/","?period1="+startDate+"&period2="+endDate+"&interval=1d&events=history&crumb=4pY5iACZrgf"]
+urlPattern = ["https://finance.yahoo.com/quote/","/history?period1="+startDate+"&period2="+endDate+"&interval=1d&filter=history&frequency=1d"]
+#urlPattern=["http://query1.finance.yahoo.com/v7/finance/download/","?period1="+startDate+"&period2="+endDate+"&interval=1d&events=history&crumb=4pY5iACZrgf"]
 def getHTML(URL, verbose = False):
 	"""
 	get raw HTML from given URL
