@@ -1,3 +1,13 @@
-import sys
+import sys, os, csv
+import numpy as np
+from utils import readin
 
-print "hello world!"
+def main():
+	datapath = 'data/sp10/'
+	allfilecontents= readin.readCsvFromPath(datapath)
+	print allfilecontents
+
+
+if __name__=='__main__':
+	main()
+
