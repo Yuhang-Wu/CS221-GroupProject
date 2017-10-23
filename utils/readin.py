@@ -26,3 +26,5 @@ def readCsvFromPath(datapath):
 def separateDates(dateStr):
 	return dateStr.split('-')
 
+
+
