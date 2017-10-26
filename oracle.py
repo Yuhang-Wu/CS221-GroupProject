@@ -41,7 +41,7 @@ def selectDate(allfilecontents):
 				curMonth = 1
 			else:
 				curMonth += 1
-	return dateSelected
+	return dateSelected[1:]
 
 # Store the price of each stock on the date selected, return a matrix 
 # in the form of [[]]
@@ -52,7 +52,7 @@ def getStockPrice(allfilecontents, dateSelected):
 			dateIdx = dateSelected[i][1]
 			price = float(data[1:][dateIdx][1]) #open price
 			stockPrice[i].append(price)		
-	return stockPrice[1:]
+	return stockPrice
 
 # The oracle senario
 # Outputs:
@@ -100,27 +100,30 @@ def solveOracle(SP, startingFund,c,c_0):
 		absTerm = cvx.abs(cvx.mul_elemwise(cvx.inv_pos(S), P) - cvx.mul_elemwise(  cvx.mul_elemwise(M_pre,P_pre), cvx.inv_pos( cvx.mul_elemwise(M,S_pre ))))
 		term2 = cvx.mul_elemwise( S, cvx.mul_elemwise(c, absTerm))
 		obj = cvx.Maximize(sum(term1 - term2) - c_0)
-		'''
-		term1 = cvx.mul_elemwise(cvx.mul_elemwise(P,cvx.inv_pos(S)),(S_next - S))
-		absTerm = cvx.abs(np.divide(P,S) - np.divide(np.multiply(M_pre, P_pre),np.multiply(M,S_pre)))
-		term2 = np.multiply(np.multiply(c, absTerm),S)
-		obj = cvx.Maximize(sum(term1 - term2) - c_0)
-		'''
-		#obj = cvx.Maximize(sum(np.multiply(np.divide(P,S),np.subtract(S_next,S)) - np.multiply(np.multiply(c, np.absolute(np.subtract(np.divide(P,S),np.divide(np.multiply(M_pre, P_pre),np.multiply(M,S_pre))))),S)) - c_0)
 		# Form and solve problem:
 		prob = cvx.Problem(obj, constraints)
 		prob.solve()
-		print prob.status
+		'''print prob.status'''
 		result_P.append(P.value)
 		R = prob.value
 		result_R.append(R)
 		M_next = M * (1+R)
 		result_M.append(M_next)
+	#print result_M
+	#print len(result_M)
+	#print result_P
+	return_accum = [0] * len(result_R)
+	for i in xrange(len(result_R)):
+		for j in xrange(i + 1):
+			return_accum[i] += result_R[j]
+	print return_accum
+	print result_R
 	print result_M
-	print len(result_M)
-	print result_P
-
-
+ 	#return return_accum
+ 
+ 
+def makePlot(xAxis, yAxis):
+	pass
 
 
 
