@@ -45,7 +45,7 @@ with tf.Session() as sess:
 
 	# what our data would be
 	feed_dict = { 
-					x : np.array([[1,2,1]]).T , 
+					x: np.array([[1,2,1]]).T , 
 				 	y: 1.0
 				}
 
