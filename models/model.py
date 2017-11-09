@@ -6,7 +6,7 @@ class Model(object):
 	def __init__(self):
 		pass
 
-	# create feed dict (add it to self)
+	# create feed dict (return it)
 	def create_feed_dict(self, inputs):
 		raiseNotDefined()
 
