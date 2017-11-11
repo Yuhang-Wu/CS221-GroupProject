@@ -11,7 +11,15 @@ def getData():
     stockPrice = stockPrice[1:]
     return dateSelected, stockPrice
     
-    
+def logReturn(stockPrice):
+    logReturn = np.log(np.array(stockPrice(1:))) - np.log(np.array(stockPrice(:-1)))
+    return logReturn
+
+def logReturnMatrix(logReturn, N):
+    lRMtx =np.empty((len(logReturn)-N,len(logReturn[0]),N))
+    for i in xrange(len(logReturn)-N):
+        lRMtx[i] = np.transpose(logReturn[i:i+N])
+    return lRMtx
     
 # Get stock price data from CSV files
 def readCsvExample():
