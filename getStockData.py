@@ -17,8 +17,8 @@ def logReturn(stockPrice):
 
 def logReturnMatrix(logReturn, N):
     lRMtx =np.empty((len(logReturn)-N,len(logReturn[0]),N))
-    for i in xrange(len(logReturn)-N):
-        lRMtx[i] = np.transpose(logReturn[i:i+N])
+    for i in xrange(N,len(logReturn)):
+        lRMtx[i-N] = np.transpose(logReturn[i-N:i])
     return lRMtx
     
 # Get stock price data from CSV files
