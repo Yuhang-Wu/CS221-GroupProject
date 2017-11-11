@@ -12,7 +12,7 @@ def getData():
     return dateSelected, stockPrice
     
 def logReturn(stockPrice):
-    logReturn = np.log(np.array(stockPrice(1:))) - np.log(np.array(stockPrice(:-1)))
+    logReturn = np.log(np.array(stockPrice[1:])) - np.log(np.array(stockPrice[:-1]))
     return logReturn
 
 def logReturnMatrix(logReturn, N):
