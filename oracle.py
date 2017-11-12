@@ -1,13 +1,13 @@
 import sys, os, csv
 import numpy as np
-from utils import readin, yfReader
+from utils import readin, yfReader, dataUtil as du
 import cvxpy as cvx
-from selectDate_weekly import selectDate_weekly 
+
 
 def main():
 	data = readCsvExample()
-	dateSelected = selectDate_weekly(data)
-	stockPrice =  getStockPrice(data, dateSelected)
+	dateSelected = du.selectDate(data, 'week')
+	stockPrice =  du.getStockPrice(data, dateSelected)
 	c = [0.0001]*10
 	c_0 = 0.001
 	solveOracle(stockPrice, 10000, c, c_0)
@@ -28,31 +28,6 @@ def readCsvExample():
 def getNames(allfilecontents):
 	pass
 
-
-# Select the dates which are the first date of each month in database
-# store the result as a list of (date, index) tuple
-def selectDate(allfilecontents):
-	curMonth = int(allfilecontents[0][1][1][0][5:7])
-	dateSelected = []
-	for dateIdx in xrange(len(allfilecontents[0][1][1:])):
-		oneDay = allfilecontents[0][1][1:][dateIdx]
-		if curMonth == int(oneDay[0][5:7]):
-			dateSelected.append((oneDay[0], dateIdx))
-			if curMonth == 12:
-				curMonth = 1
-			else:
-				curMonth += 1
-	return dateSelected[1:]
-# Store the price of each stock on the date selected, return a matrix 
-# in the form of [[]]
-def getStockPrice(allfilecontents, dateSelected):
-	stockPrice = [[] for i in xrange(len(dateSelected))]
-	for compName, data in allfilecontents:
-		for i in xrange(len( dateSelected)):
-			dateIdx = dateSelected[i][1]
-			price = float(data[1:][dateIdx][1]) #open price
-			stockPrice[i].append(price)		
-	return stockPrice
 
 # The oracle senario
 # Outputs:

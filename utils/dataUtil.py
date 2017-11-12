@@ -34,7 +34,6 @@ def loss2mRatio(loss):
 	return 1.0 / (1.0 - loss)
 
 
-
 # Select the dates which are the first date of each week in database
 # store the result as a list of (date, index) tuple
 def selectDate_weekly(allfilecontents):
@@ -104,3 +103,51 @@ def logReturnMatrix(logReturn, N):
     for i in xrange(N,len(logReturn)):
         lRMtx[i-N] = np.transpose(logReturn[i-N:i])
     return lRMtx
+
+# exponential weighted average mean and covariance matrix
+# stocknum: num of stockPrice
+# mu: hyperparameter for weighted exponential mean 
+# T: number of time period
+def getCovarianceMatrix(stockReturn, mu):
+    stocknum = len(stockReturn[0])
+    returnSum = np.zeros(stocknum)
+    T = len(stockReturn)
+    denumerator = 0
+    
+    # calculate weighted exponential mean
+    for i in xrange(T):
+        returnSum = returnSum + stockReturn[i] * np.exp(-mu * (T-i))
+        denumerator += np.exp(-mu * (T-i))
+    meanReturn = returnSum / denumerator
+
+    # calculate weighted exponential covariance matrix
+    cov = np.zeros((stocknum, stocknum))
+    for i in xrange(T):
+        normalizedReturn = (stockReturn[i] - meanReturn)
+        cov = cov + \
+        np.dot(np.transpose(normalizedReturn),normalizedReturn) * np.exp(-mu * (T-i))
+    
+    cov  = cov / denumerator
+    return cov
+        
+    
+# calculate largest eval-eigenvector 
+def getLargestEigenvector(cov):
+    D, S = np.linalg.eigh(cov)
+    eigenportfolio = S[:,-1] / np.sum(S[:,-1]) 
+    return eigenportfolio
+
+# portfolioHistory: a list/nparray of double
+# indicating the total worth of portfolio
+def calcMDD(portfolioHistory):
+	ph = portfolioHistory
+	mdd = 0.0
+	for i in range(len(ph)):
+		for j in range(i+1, len(ph)):
+			mdd = max(mdd, (ph[i] - ph[j]) / ph[i])
+	return mdd
+
+
+
+
+

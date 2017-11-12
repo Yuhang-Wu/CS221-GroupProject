@@ -79,44 +79,13 @@ def getPeriodReturn(stockPrice):
 
     
 def baselineReturn(stockReturn, mu):
-    cov = getCovarianceMatrix(stockReturn[:-1], mu)
-    eigenportfolio = getLargestEigenvector(cov)
+    cov = du.getCovarianceMatrix(stockReturn[:-1], mu)
+    eigenportfolio = du.getLargestEigenvector(cov)
     portReturn = np.dot(eigenportfolio, stockReturn[-1])
     return portReturn, eigenportfolio
     
 
-# exponential weighted average mean and covariance matrix
-# stocknum: num of stockPrice
-# mu: hyperparameter for weighted exponential mean 
-# T: number of time period
-def getCovarianceMatrix(stockReturn, mu):
-    stocknum = len(stockReturn[0])
-    returnSum = np.zeros(stocknum)
-    T = len(stockReturn)
-    denumerator = 0
-    
-    # calculate weighted exponential mean
-    for i in xrange(T):
-        returnSum = returnSum + stockReturn[i] * np.exp(-mu * (T-i))
-        denumerator += np.exp(-mu * (T-i))
-    meanReturn = returnSum / denumerator
 
-    # calculate weighted exponential covariance matrix
-    cov = np.zeros((stocknum, stocknum))
-    for i in xrange(T):
-        normalizedReturn = (stockReturn[i] - meanReturn)
-        cov = cov + \
-        np.dot(np.transpose(normalizedReturn),normalizedReturn) * np.exp(-mu * (T-i))
-    
-    cov  = cov / denumerator
-    return cov
-        
-    
-# calculate largest eval-eigenvector 
-def getLargestEigenvector(cov):
-    D, S = np.linalg.eigh(cov)
-    eigenportfolio = S[:,-1] / np.sum(S[:,-1]) 
-    return eigenportfolio
 
 if __name__=='__main__':
     estimateReturn, Date, M = main()

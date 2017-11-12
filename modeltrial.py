@@ -1,8 +1,10 @@
+from __future__ import print_function
+import sys, os, csv
 from models import dummyModel as dm
 import numpy as np
 import tensorflow as tf
-import sys, os, csv
 from utils import readin, yfReader, dataUtil as du
+
 
 DATA_PATH = 'data/sp10/'
 
@@ -66,8 +68,6 @@ def dummyModelTrainingTrial(datapath1):
 	#print(allLosses)
 
 	
-
-
 def getPricesFromPath(datapath1): 
 	allfilecontents = readin.readCsvFromPath(datapath1)
 	dateSelected = du.selectDate(allfilecontents)
