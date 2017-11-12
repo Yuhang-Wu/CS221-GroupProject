@@ -1,17 +1,20 @@
+from __future__ import print_function
+from utils import dataUtil as du
 import tensorflow as tf
 import numpy as np
-import getStockData
+
 
 N = 5 # depend on the N previous periods
-
-dateSelected, stockPrice  = getStockData.getData()
-logreturn = getStockData.logReturn(stockPrice)
+B = 10 # number of examples per batch
+dateSelected, stockPrice  = du.getData()
+logreturn = du.logReturn(stockPrice)
 # return for N previous periods, input, shape: [-1,K,N]
-logReturn_x = getStockData.logReturnMatrix(logreturn, N)
+logReturn_x = du.logReturnMatrix(logreturn, N)
 # return for current period
-logReturn_x0 = logreturn[:len(logReturn_x)]
+logReturn_x0 = logreturn[N:]
 
 K = len(stockPrice[0]) # K stocks
+L = len(logReturn_x0) # total number of time steps
 logReturn_x_data = tf.reshape(logReturn_x, [-1,K,N,1])
 
 x = tf.placeholder(tf.float32, shape=[None, K, N])
@@ -64,7 +67,12 @@ b_fc2 = bias_variable([K])
 y_conv = tf.matmul(h_fc1, W_fc2) + b_fc2
 
 # train and evaluate model
-reward0 = np.multiply(tf.nn.softmax(logits=y_conv), y_)
+action = tf.nn.softmax(logits=y_conv)
+reward0 = np.multiply(action, y_)
+
+# ========
+# should there be an extra exp?***
+reward0 = np.multiply(action, tf.exp(y_))
 reward = tf.reduce_sum(reward0, 1)
 reward_minus = -tf.reduce_mean(reward)
 
@@ -72,9 +80,11 @@ train_step = tf.train.AdamOptimizer(1e-4).minimize(reward_minus)
 
 with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
-    for i in range(3):
-        historicalData = logReturn_x[i*10:(i+1)*10]
-        compareReturn = logReturn_x0[i*10:(i+1)*10]
-        print(sess.run(-reward_minus, {x: historicalData, y_: compareReturn}))
-        train_step.run(feed_dict={x: historicalData, y_: compareReturn})
-
+    for i in range(L/B):
+        historicalData = logReturn_x[i*B:(i+1)*B]
+        compareReturn = logReturn_x0[i*B:(i+1)*B]
+        feed_dict = {x: historicalData, y_: compareReturn}
+        print('action is', sess.run(action, feed_dict = feed_dict))
+        print()
+        print(sess.run(-reward_minus, feed_dict = feed_dict))
+        train_step.run(feed_dict = feed_dict)

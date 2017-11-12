@@ -1,11 +1,11 @@
 import sys, os, csv
 import numpy as np
-import getStockData
+from utils import dataUtil as du
 
 def main():
     
     # get data
-    dateSelected, stockPrice = getStockData.getData()
+    dateSelected, stockPrice = du.getData()
     
     # get time for baseline estimation  
     # [0,10],[0,11],...,[0,len(dateSelected)]
