@@ -9,7 +9,7 @@ logreturn = getStockData.logReturn(stockPrice)
 # return for N previous periods, input, shape: [-1,K,N]
 logReturn_x = getStockData.logReturnMatrix(logreturn, N)
 # return for current period
-logReturn_x0 = logreturn[:len(logReturn_x)]
+logReturn_x0 = logreturn[N:]
 
 K = len(stockPrice[0]) # K stocks
 logReturn_x_data = tf.reshape(logReturn_x, [-1,K,N,1])
