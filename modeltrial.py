@@ -18,8 +18,8 @@ def dummyModelTrainingTrial(datapath1):
 	D = stockPrices.shape[0]
 	N = 3
 	c = 0.0001
-	epochs = 50
-
+	epochs = 10
+	print('num of datapoints', stockPrices.shape[1])
 	transCostParams = {
 		'c': np.array([ [c] for _ in range(D) ]),
 		'c0': c
@@ -59,10 +59,18 @@ def dummyModelTrainingTrial(datapath1):
 
 				prevLoss = curLoss
 				prevA = curA
+
 			totalLoss = sum(allLosses)
+			growthRates = map(lambda x: 1-x, allLosses)
+			totalGR = 1.0
+			for gr in growthRates:
+				totalGR *= gr
 			print(i, 'th epoch')
-			print('total earnings:')
-			print(-1.0*totalLoss)
+			#print('total linear earnings:')
+			#print(-1.0*totalLoss)
+			print('total growth rate:')
+			print(totalGR)
+			print()
 
 	#print(allActions)
 	#print(allLosses)
@@ -70,7 +78,7 @@ def dummyModelTrainingTrial(datapath1):
 	
 def getPricesFromPath(datapath1): 
 	allfilecontents = readin.readCsvFromPath(datapath1)
-	dateSelected = du.selectDate(allfilecontents)
+	dateSelected = du.selectDate(allfilecontents, 'week')
 	stockPricesList = du.getStockPrice(allfilecontents, dateSelected)
 	stockPrices = np.array(stockPricesList).T
 	return stockPrices

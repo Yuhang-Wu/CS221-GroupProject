@@ -30,7 +30,7 @@ class Model(object):
 	# called after initializing an instance of the object
 	def build(self):
 		self.add_placeholders()
-		self.action = self.add_action()
+		self.add_action()
 		self.loss = self.add_loss(self.action)
 		self.train_op = self.add_train_op(self.loss)
 

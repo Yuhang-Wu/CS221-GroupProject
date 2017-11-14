@@ -6,7 +6,7 @@ import modelUtil as mu
 
 
 class Config:
-	lr = 0.0001
+	lr = 0.0005
 	dropout = 0.5
 
 class DummyModel(Model):
@@ -83,7 +83,7 @@ class DummyModel(Model):
 		print('action', action.shape)
 
 		self.action = action
-		return action
+		
 
 	# create loss from action (return it)
 	def add_loss(self, action):
@@ -116,8 +116,7 @@ class DummyModel(Model):
 	# get the action of the current time step
 	def get_action(self, inputs, sess):
 		feed_dict = self.create_feed_dict(inputs)
-		action = self.add_action()
-		result = sess.run(action, feed_dict = feed_dict)
+		result = sess.run(self.action, feed_dict = feed_dict)
 		return result
 
 	# object constructor
