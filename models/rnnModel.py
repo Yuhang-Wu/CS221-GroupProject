@@ -4,58 +4,74 @@ from model import Model, raiseNotDefined
 from basicModel import BasicModel
 import os
 import modelUtil as mu
-
+from rnnCell import RNNCell 
+from gruCell import GRUCell
 
 class Config:
-	lr = 1e-4
+	lr = 2e-4
 	dropout = 0.5
 	modelType = 'RNNModel'
+	cellType = 'rnn'
+	hiddenSize = 50
 
 class RnnModel(BasicModel):
 	# add an action (add to self and return it)
 	def add_action(self):
 		# define your variables here
 
-		initializer = tf.contrib.layers.xavier_initializer()
-
-		self.W1 = tf.get_variable('W1',
-                              [self.D, self.D],
-                              initializer = initializer)
-		self.W2 = tf.get_variable('W2',
-                              [self.D, self.D + 1],
-                              initializer = initializer)
-		self.W3 = tf.get_variable('W3',
-                              [self.D + 1, self.D * 2],
-                              initializer = initializer)
-		
-
 		X = self.placeholders['X']
 		prevReturn = self.placeholders['prevReturn']
 		prevA = self.placeholders['prevA']
 
-		# calculate action
-		# helpful functions:
-		# tf.matmul, tf.nn.softmax
+		cellType = self.config.cellType
+		if cellType == 'rnn':
+			cell = RNNCell(self.L, self.config.hiddenSize)
+		elif cellType == 'gru':
+			cell = GRUCell(self.L, self.config.hiddenSize)
+		else:
+			assert False, "Cell type undefined"
+		h = tf.zeros([self.D, self.config.hiddenSize], dtype = tf.float32)
+		hh = tf.zeros([self.D, self.config.hiddenSize], dtype = tf.float32)
+		states = []
+		hiddenstates = []
+			
 
-		U = tf.matmul(self.W1, X)
-		U = tf.nn.relu(U)
+		with tf.variable_scope("RNN"):
+			for t in range(self.N):
+				if t>=1:
+					tf.get_variable_scope().reuse_variables()
+				h, hh = cell(X[:, t, :], h, hh)
+				states.append(h)
+				hiddenstates.append(hh)
+		# calculate action based on all hidden states
 
-		alpha = tf.reduce_mean(U, axis = 1, keep_dims = True)
+		initializer = tf.contrib.layers.xavier_initializer()
+		W_fc1 = tf.get_variable('W_fc1',
+		                      [self.config.hiddenSize, self.D],
+		                      initializer = initializer)
+		b_fc1 = tf.get_variable('b_fc1',
+		                      [self.D, ],
+		                      initializer = initializer)
 
-		beta = tf.matmul(self.W2, prevA)
-		beta = tf.nn.relu(beta)
-		
-		alphabeta = tf.concat([alpha, beta], axis = 0)
+		W_fc2 = tf.get_variable('W_fc2',
+		                      [self.D, 1],
+		                      initializer = initializer)
+		b_fc2 = tf.get_variable('b_fc2',
+		                      [1, ],
+		                      initializer = initializer)
 
-		action = tf.matmul(self.W3, alphabeta)
-		#action = tf.sigmoid(action)
+		y_fc1 = tf.nn.sigmoid(tf.matmul(states[-1], W_fc1) + b_fc1)
+		y_fc2 = tf.nn.relu(tf.matmul(y_fc1, W_fc2) + b_fc2)
+
+		action = mu.addBias(y_fc2)
 		action = tf.nn.softmax(action, dim = 0)
-
 		self.action = action
+
 	
 	# object constructor
 	# D : the dimension of the portfolio,
 	# N : the number of days looking back
+	# L : the number of data points per time step
 	def __init__(self, D, N, transCostParams, L = 1):
 		self.D = D
 		self.N = N

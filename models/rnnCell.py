@@ -17,7 +17,7 @@ class RNNCell(tf.nn.rnn_cell.RNNCell):
     def output_size(self):
         return self._state_size
 
-    def __call__(self, inputs, state, scope=None):
+    def __call__(self, inputs, state, hiddenstate, scope=None):
         scope = scope or type(self).__name__
 
         initializer = tf.contrib.layers.xavier_initializer()
@@ -34,6 +34,7 @@ class RNNCell(tf.nn.rnn_cell.RNNCell):
 
             new_state = tf.nn.sigmoid(tf.matmul(state, W_h) + tf.matmul(inputs, W_x) + b1)
 
-        output = new_state
-        return output, new_state
+        
+        new_hiddenstate = hiddenstate
+        return new_state, new_hiddenstate
 

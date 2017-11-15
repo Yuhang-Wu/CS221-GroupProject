@@ -4,7 +4,9 @@ import readin
 # store the result as a list of (date, index) tuple
 def selectDate(allfilecontents, frequency = 'month'):
 	if frequency == 'week':
-		return selectDate_weekly(allfilecontents)
+		return selectDateWeekly(allfilecontents)
+	elif frequency == 'day':
+		return selectDateDaily(allfilecontents)
 	curMonth = int(allfilecontents[0][1][1][0][5:7])
 	dateSelected = []
 	for dateIdx in xrange(len(allfilecontents[0][1][1:])):
@@ -21,22 +23,34 @@ def selectDate(allfilecontents, frequency = 'month'):
 # Store the price of each stock on the date selected, return a matrix 
 # in the form of [[]]
 def getStockPrice(allfilecontents, dateSelected):
+	allStockPrice = getAllStockPrices(allfilecontents, dateSelected)
 	stockPrice = [[] for i in xrange(len(dateSelected))]
+	for i in range(len(dateSelected)):
+		# get adj close price
+		stockPrice[i]=[ele[-1] for ele in allStockPrice[i]] 
+	return stockPrice
+
+def getAllStockPrices(allfilecontents, dateSelected):
+	allStockPrice = [[] for i in xrange(len(dateSelected))]
 	for compName, data in allfilecontents:
 		for i in xrange(len( dateSelected)):
 			dateIdx = dateSelected[i][1]
-			price = float(data[1:][dateIdx][1]) #open price
-			stockPrice[i].append(price)		
-	return stockPrice
-
+			prices = [float(data[1:][dateIdx][j]) for j in range(1,5)] #open price
+			allStockPrice[i].append(prices)		
+	return allStockPrice
 
 def loss2mRatio(loss):
 	return 1.0 / (1.0 - loss)
 
+def selectDateDaily(allfilecontents):
+	dateSelected = []
+	for content in allfilecontents[0][1][1:]:
+		dateSelected.append(content[0])
+	return dateSelected 
 
 # Select the dates which are the first date of each week in database
 # store the result as a list of (date, index) tuple
-def selectDate_weekly(allfilecontents):
+def selectDateWeekly(allfilecontents):
 	cws = allfilecontents[0][1][1][0] #the first day of current week 
 	cws = cws[0:4] + cws[5:7] + cws[8:10]
 	cws_int = int(cws) #covert string to integer

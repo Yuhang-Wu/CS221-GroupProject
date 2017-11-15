@@ -1,16 +1,16 @@
 import tensorflow as tf
 import numpy as np
-from utils import dataUtil
+from utils import dataUtil as du
 
 N = 8 # depend on the N previous periods
 B = 1 # batch size
 
-dateSelected, stockPrice  = dataUtil.getData()
+dateSelected, stockPrice  = du.getData()
 
-logreturn = dataUtil.logReturn(stockPrice)
+logreturn = du.logReturn(stockPrice)
 
 # return for N previous periods, input, shape: [-1,K,N]
-logReturn_x = dataUtil.logReturnMatrix(logreturn, N)
+logReturn_x = du.logReturnMatrix(logreturn, N)
 # return for current period
 logReturn_x0 = logreturn[N:]
 

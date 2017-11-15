@@ -4,7 +4,6 @@ from model import Model, raiseNotDefined
 import os, json
 import modelUtil as mu
 
-
 class Config:
 	lr = 1e-4
 	dropout = 1.0
@@ -93,7 +92,9 @@ class BasicModel(Model):
 			'dropout': self.config.dropout,
 			'model_type': self.config.modelType
 		}
+		print("model info")
 		print(json.dumps(model_info))
+		print()
 
 	# object constructor
 	# D : the dimension of the portfolio,

@@ -4,7 +4,7 @@ import sys
 import tensorflow as tf
 import numpy as np
 
-class RNNCell(tf.nn.rnn_cell.RNNCell):
+class GRUCell(tf.nn.rnn_cell.RNNCell):
     def __init__(self, input_size, state_size):
         self.input_size = input_size
         self._state_size = state_size
@@ -17,7 +17,7 @@ class RNNCell(tf.nn.rnn_cell.RNNCell):
     def output_size(self):
         return self._state_size
 
-    def __call__(self, inputs, state, scope=None):
+    def __call__(self, inputs, state, hiddenstate, scope=None):
         scope = scope or type(self).__name__
         
         initializer = tf.contrib.layers.xavier_initializer()
@@ -55,7 +55,7 @@ class RNNCell(tf.nn.rnn_cell.RNNCell):
             h_hat = tf.nn.tanh(tf.matmul(inputs, U_o) + tf.matmul(r * state, W_o) + b_o)
             new_state = z * state + (1 - z) * h_hat
 
-        output = new_state
-        return output, new_state
+        new_hiddenstate = hiddenstate
+        return new_state, new_hiddenstate
 
 

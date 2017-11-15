@@ -3,16 +3,27 @@ from utils import dataUtil as du
 import tensorflow as tf
 import numpy as np
 
+	# assume the input is of shape [D, 1]
+	# add one more 0 to it (output shape [D+1, 1])
+def addBias(x):
+	x = tf.concat([x, tf.constant(np.array([[0.0]]), dtype = tf.float32)], axis = 0)
+	return x
 
 	# get weight variavle of initial values from truncated normal
 def tnVariable(shape, name = None):
 	initial = tf.truncated_normal(shape, stddev=0.1)
-	return tf.Variable(initial)
+	if name is None:
+		return tf.Variable(initial)
+	else:
+		return tf.get_variable(name = name, initializer = initial, dtype = tf.float32)
 
 	# get bias variable of all initial value of 0.1
 def biasVariable(shape, name = None):
     initial = tf.constant(0.1, shape=shape)
-    return tf.Variable(initial)
+    if name is None:
+    	return tf.Variable(initial)
+    else:
+    	return tf.get_variable(name = name, initializer = initial, dtype = tf.float32)
 
     # stride 1 convolution, H and W won't change
 def conv2dStide1(x, W):
