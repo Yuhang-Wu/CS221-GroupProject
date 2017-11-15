@@ -4,17 +4,17 @@ def raiseNotDefined():
 
 class Model(object):
 	def __init__(self):
-		pass
+		raiseNotDefined()
 
 	# create feed dict (return it)
 	def create_feed_dict(self, inputs):
 		raiseNotDefined()
 
-	# define the variables (add it to self)
+	# define the variables (add it to self.placeholders)
 	def add_placeholders(self):
 		raiseNotDefined()
 
-	# add an action (return it)
+	# add an action (add it to self)
 	def add_action(self):
 		raiseNotDefined()
 

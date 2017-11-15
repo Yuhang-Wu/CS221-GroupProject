@@ -95,13 +95,13 @@ def getData(datapath1 = 'data/sp10/'):
 	return dateSelected, stockPrice
     
 def logReturn(stockPrice):
-    logReturn = np.log(np.array(stockPrice[1:])) - np.log(np.array(stockPrice[:-1]))
-    return logReturn
+    logReturnPrices = np.log(np.array(stockPrice[1:])) - np.log(np.array(stockPrice[:-1]))
+    return logReturnPrices
 
-def logReturnMatrix(logReturn, N):
-    lRMtx =np.empty((len(logReturn)-N,len(logReturn[0]),N))
-    for i in xrange(N,len(logReturn)):
-        lRMtx[i-N] = np.transpose(logReturn[i-N:i])
+def logReturnMatrix(logReturnPrices, N):
+    lRMtx =np.empty((len(logReturnPrices)-N,len(logReturnPrices[0]),N))
+    for i in xrange(N,len(logReturnPrices)):
+        lRMtx[i-N] = np.transpose(logReturnPrices[i-N:i])
     return lRMtx
 
 # exponential weighted average mean and covariance matrix
@@ -127,7 +127,7 @@ def getCovarianceMatrix(stockReturn, mu):
         cov = cov + \
         np.dot(np.transpose(normalizedReturn),normalizedReturn) * np.exp(-mu * (T-i))
     
-    cov  = cov / denumerator
+    cov = cov / denumerator
     return cov
         
     
@@ -146,6 +146,30 @@ def calcMDD(portfolioHistory):
 		for j in range(i+1, len(ph)):
 			mdd = max(mdd, (ph[i] - ph[j]) / ph[i])
 	return mdd
+
+def preprocess(stockPrice, N):
+	prices = np.array(stockPrice)
+	returnMatrix = np.empty((len(prices)-N,len(prices[0]),N))
+	for i in range(len(prices) - N):
+		returnMatrix[i] = np.transpose(prices[i:i+N]/prices[i+N-1])
+
+	return np.log(returnMatrix)
+
+def extendDimension(arr):
+	newshape = tuple(list(arr.shape) + [1])
+	return np.reshape(arr, newshape)
+
+def getInitialAllocation(D):
+	prevA = np.array([0.0 for _ in range(D + 1)])
+	prevA[-1] = 0.0
+
+	return extendDimension(prevA)
+
+def prod(arr):
+	p = 1.0
+	for ele in arr:
+		p *= ele
+	return p
 
 
 

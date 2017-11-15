@@ -6,7 +6,9 @@ N = 8 # depend on the N previous periods
 B = 1 # batch size
 
 dateSelected, stockPrice  = dataUtil.getData()
+
 logreturn = dataUtil.logReturn(stockPrice)
+
 # return for N previous periods, input, shape: [-1,K,N]
 logReturn_x = dataUtil.logReturnMatrix(logreturn, N)
 # return for current period
@@ -103,15 +105,15 @@ with tf.Session() as sess:
         compareReturn = logReturn_x0[i*B:(i+1)*B]
         currentReturn = sess.run(reward, {x: historicalData, y_: compareReturn, \
                                  previousPortfolio: PrePortfolio, previousReturn: PreReturn} )
-                                 print currentReturn
-                                 accumulate = accumulate * (1 + sess.run(-reward_minus,\
-                                                                         {x: historicalData,y_: compareReturn, \
-                                                                         previousPortfolio: PrePortfolio, previousReturn: PreReturn}))
-                                 train_step.run(feed_dict={x: historicalData, y_: compareReturn,\
-                                                previousPortfolio: PrePortfolio, previousReturn: PreReturn})
-                                 prePortfolio = sess.run(currentPortfolio, \
-                                                         {x: historicalData,y_: compareReturn, \
-                                                         previousPortfolio: PrePortfolio, previousReturn: PreReturn})
-                                 preReturn = currentReturn
+        print currentReturn
+        accumulate = accumulate * (1 + sess.run(-reward_minus,\
+                                                 {x: historicalData,y_: compareReturn, \
+                                                 previousPortfolio: PrePortfolio, previousReturn: PreReturn}))
+        train_step.run(feed_dict={x: historicalData, y_: compareReturn,\
+                        previousPortfolio: PrePortfolio, previousReturn: PreReturn})
+        prePortfolio = sess.run(currentPortfolio, \
+                                 {x: historicalData,y_: compareReturn, \
+                                 previousPortfolio: PrePortfolio, previousReturn: PreReturn})
+        preReturn = currentReturn
 
 print accumulate

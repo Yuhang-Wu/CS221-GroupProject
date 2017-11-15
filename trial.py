@@ -1,7 +1,14 @@
 import sys, os, csv
 import numpy as np
 from utils import readin, yfReader, crawler
+import tensorflow as tf
 
+def testTFindex():
+	a = np.array(np.random.rand(2,3))
+	tfa = tf.constant(a, dtype = tf.float32)
+	print(tfa)
+	tfb = tfa[:,:-1]
+	print(tfb)
 
 
 def yfReaderUsageExample():
@@ -42,7 +49,7 @@ def verify150():
 		if not valid: print c
 
 def main():
-	pass
+	testTFindex()
 	#get150()
 	#verify150()
 
