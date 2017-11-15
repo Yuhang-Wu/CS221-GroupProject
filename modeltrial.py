@@ -28,7 +28,7 @@ def dummyModelTrainingTrial():
 	returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, 'vsToday')
 
 	# define model
-	curModel = cm.CnnModel(D, N, transCostParams, inBatch = True)
+	curModel = cm.CnnModel(D, N, transCostParams)
 	curModel.get_model_info()
 	#quit()
 	with tf.Session() as sess:

@@ -4,23 +4,21 @@ import tensorflow as tf
 import numpy as np
 
 
-def addNoneDim(shape):
-	return tuple([None] + list(shape))
-
-def addNoneDimToAll(shapes):
-	return [addNoneDim(shape) for shape in shapes]
-
+	# get weight variavle of initial values from truncated normal
 def tnVariable(shape, name = None):
 	initial = tf.truncated_normal(shape, stddev=0.1)
 	return tf.Variable(initial)
 
+	# get bias variable of all initial value of 0.1
 def biasVariable(shape, name = None):
     initial = tf.constant(0.1, shape=shape)
     return tf.Variable(initial)
 
+    # stride 1 convolution, H and W won't change
 def conv2dStide1(x, W):
 	return tf.nn.conv2d(x, W, strides=[1, 1, 1, 1], padding='SAME')
 
+	# 1 by 1 average ???
 def avg1x1(x):
 	return tf.nn.avg_pool(x, ksize=[1, 1, 1, 1],
                           strides=[1, 1, 1, 1], padding='SAME')
@@ -101,6 +99,13 @@ def trainOrTest1Epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel
 	growthRates = map(lambda x: 1-x, allLosses)
 
 	return allActions, growthRates
+
+	# add one more dimension for batching (which seems not very useful in this case)	
+def addNoneDim(shape):
+	return tuple([None] + list(shape))
+
+def addNoneDimToAll(shapes):
+	return [addNoneDim(shape) for shape in shapes]
 
 ###
 ###

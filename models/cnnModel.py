@@ -51,6 +51,7 @@ class CnnModel(BasicModel):
 		y_conv = tf.nn.relu(tf.matmul(h_fc1, W_fc2) + b_fc2)
 		
 		action = tf.nn.softmax(y_conv)
+
 		action = tf.transpose(action)
 
 		self.action = action
@@ -58,11 +59,10 @@ class CnnModel(BasicModel):
 	# object constructor
 	# D : the dimension of the portfolio,
 	# N : the number of days looking back
-	def __init__(self, D, N, transCostParams, L = 1, inBatch = False):
+	def __init__(self, D, N, transCostParams, L = 1):
 		self.D = D
 		self.N = N
 		self.L = L
-		self.inBatch = inBatch
 		self.config = Config
 		self.transCostParams = {
 			key: tf.constant(transCostParams[key], dtype = tf.float32) for key in transCostParams
