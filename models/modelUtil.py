@@ -4,12 +4,49 @@ import tensorflow as tf
 import numpy as np
 
 
-def calcProfit(action, logR):
+def addNoneDim(shape):
+	return tuple([None] + list(shape))
+
+def addNoneDimToAll(shapes):
+	return [addNoneDim(shape) for shape in shapes]
+
+def tnVariable(shape, name = None):
+	initial = tf.truncated_normal(shape, stddev=0.1)
+	return tf.Variable(initial)
+
+def biasVariable(shape, name = None):
+    initial = tf.constant(0.1, shape=shape)
+    return tf.Variable(initial)
+
+def conv2dStide1(x, W):
+	return tf.nn.conv2d(x, W, strides=[1, 1, 1, 1], padding='SAME')
+
+def avg1x1(x):
+	return tf.nn.avg_pool(x, ksize=[1, 1, 1, 1],
+                          strides=[1, 1, 1, 1], padding='SAME')
+
+def calcProfit(action, logR, inBatch = False):
+	if not inBatch:
+		return calcProfitNoBatch(action, logR)
+	else:
+		return calcProfitBatch(action, logR)
+
+def calcTransCost(action, prevAction, prevLogR, transCostParams, mRatio, inBatch = False):
+	if not inBatch:
+		return calcTransCostNoBatch(action, prevAction, prevLogR, transCostParams, mRatio)
+	else:
+		return calcTransCostBatch(action, prevAction, prevLogR, transCostParams, mRatio)
+
+def calcProfitNoBatch(action, logR):
 	profit = tf.reduce_sum(tf.multiply(action[:-1], logR))
 	return profit
 
-def calcTransCost(action, prevAction, prevLogR, transCostParams, mRatio):
-	# get parameters
+def calcProfitBatch(action, logR):
+	profit = tf.reduce_sum(tf.multiply(action[:,:-1], logR), axis = 1)
+	return tf.reduce_sum(profit)
+
+
+def calcTransCostNoBatch(action, prevAction, prevLogR, transCostParams, mRatio):
 	c = transCostParams['c']
 	c0 = transCostParams['c0']
 	priceRatio = tf.exp(prevLogR)
@@ -18,13 +55,22 @@ def calcTransCost(action, prevAction, prevLogR, transCostParams, mRatio):
 	transactionCost += c0
 	return transactionCost
 
-def train1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess):
+def calcTransCostBatch(action, prevAction, prevLogR, transCostParams, mRatio):
+	c = transCostParams['c']
+	c0 = transCostParams['c0']
+	priceRatio = tf.exp(prevLogR)
+	changes = tf.abs(action[:,:-1] - mRatio * tf.multiply(priceRatio, prevAction[:,:-1]))
+	transactionCost = tf.reduce_sum( tf.multiply(c, changes) , axis = 1)
+	transactionCost += c0
+	return tf.reduce_sum(transactionCost)
+
+def train1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess, B = None):
 	return trainOrTest1Epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
 
-def test1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess):
+def test1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess, B = None):
 	return trainOrTest1Epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess, training = False)
 
-def trainOrTest1Epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess, training = True):
+def trainOrTest1Epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess, training = True):	
 	totalIters = returnTensor.shape[0]
 	prevLoss = 0.0
 	D = len(prevReturnMatrix[0])
@@ -34,7 +80,6 @@ def trainOrTest1Epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel
 
 	for t in range(totalIters):
 		mRatio = du.loss2mRatio(prevLoss)
-
 		inputs = {
 			'X': returnTensor[t],
 			'prevReturn': prevReturnMatrix[t],

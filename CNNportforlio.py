@@ -90,7 +90,6 @@ if flag:
     reward = reward - c[0]
 
 
-
 reward_minus = -tf.reduce_mean(reward)
 
 train_step = tf.train.AdamOptimizer(1e-4).minimize(reward_minus)

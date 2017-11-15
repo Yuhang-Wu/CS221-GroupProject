@@ -1,7 +1,7 @@
 from __future__ import print_function
 import numpy as np
 import tensorflow as tf
-from models import modelUtil as mu, dummyModel as dm
+from models import modelUtil as mu, dummyModel as dm, cnnModel as cm
 from utils import readin, yfReader, dataUtil as du
 
 
@@ -17,6 +17,7 @@ def dummyModelTrainingTrial():
 	N = 5
 	c = 0.0001
 	epochs = 200
+
 	D = stockPrices.shape[1]
 	transCostParams = {
 		'c': np.array([ [c] for _ in range(D) ]),
@@ -27,8 +28,9 @@ def dummyModelTrainingTrial():
 	returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, 'vsToday')
 
 	# define model
-	curModel = dm.DummyModel(D, N, transCostParams)
-
+	curModel = cm.CnnModel(D, N, transCostParams, inBatch = True)
+	curModel.get_model_info()
+	#quit()
 	with tf.Session() as sess:
 		sess.run(tf.global_variables_initializer())
 		for i in range(epochs):

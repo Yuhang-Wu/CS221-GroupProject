@@ -28,12 +28,16 @@ class Model(object):
 
 	# train the model with 1 iteration
 	# return action and loss
-	def train(self, sess):
+	def train(self, inputs, sess):
 		raiseNotDefined()
 
 	# get the action of the next time step
 	# return action and loss
-	def get_action(self, sess):
+	def get_action(self, inputs, sess):
+		raiseNotDefined()
+
+	# get model meta data 
+	def get_model_info(self):
 		raiseNotDefined()
 
 	# build the computation graph (add them to self)
