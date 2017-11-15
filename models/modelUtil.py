@@ -1,6 +1,8 @@
 from __future__ import print_function
+from utils import dataUtil as du
 import tensorflow as tf
 import numpy as np
+
 
 def calcProfit(action, logR):
 	profit = tf.reduce_sum(tf.multiply(action[:-1], logR))
@@ -16,6 +18,44 @@ def calcTransCost(action, prevAction, prevLogR, transCostParams, mRatio):
 	transactionCost += c0
 	return transactionCost
 
+def train1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess):
+	return trainOrTest1Epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
+
+def test1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess):
+	return trainOrTest1Epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess, training = False)
+
+def trainOrTest1Epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess, training = True):
+	totalIters = returnTensor.shape[0]
+	prevLoss = 0.0
+	D = len(prevReturnMatrix[0])
+	prevA = du.getInitialAllocation(D)
+	allActions = []
+	allLosses = []
+
+	for t in range(totalIters):
+		mRatio = du.loss2mRatio(prevLoss)
+
+		inputs = {
+			'X': returnTensor[t],
+			'prevReturn': prevReturnMatrix[t],
+			'nextReturn': nextReturnMatrix[t],
+			'prevA': prevA,
+			'mRatio': mRatio
+		}
+		if training:
+			curA, curLoss = curModel.train(inputs, sess)
+		else:
+			curA, curLoss = curModel.get_action(inputs, sess)
+		allActions.append(curA)
+		allLosses.append(curLoss)
+
+		prevLoss = curLoss
+		prevA = curA
+	
+	totalLoss = sum(allLosses)
+	growthRates = map(lambda x: 1-x, allLosses)
+
+	return allActions, growthRates
 
 ###
 ###

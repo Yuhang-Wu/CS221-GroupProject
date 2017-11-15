@@ -85,7 +85,7 @@ def selectDate_weekly(allfilecontents):
 					cws = str(cws_int)
 	return dateSelected[1:]
 
-# getData:
+# get dates selected and stockprices
 def getData(datapath1 = 'data/sp10/'):
 	allfilecontents = readin.readCsvFromPath(datapath1)
 	dateSelected = selectDate(allfilecontents, 'week')
@@ -93,7 +93,11 @@ def getData(datapath1 = 'data/sp10/'):
 	dateSelected = dateSelected[1:]
 	stockPrice = stockPrice[1:]
 	return dateSelected, stockPrice
-    
+  
+# get prices only
+def getPrices(datapath1 = 'data/sp10/'):
+	return np.array(getData(datapath1)[1])
+
 def logReturn(stockPrice):
     logReturnPrices = np.log(np.array(stockPrice[1:])) - np.log(np.array(stockPrice[:-1]))
     return logReturnPrices
@@ -155,15 +159,14 @@ def preprocess(stockPrice, N):
 
 	return np.log(returnMatrix)
 
-def extendDimension(arr):
+def extendDim(arr):
 	newshape = tuple(list(arr.shape) + [1])
 	return np.reshape(arr, newshape)
 
 def getInitialAllocation(D):
 	prevA = np.array([0.0 for _ in range(D + 1)])
 	prevA[-1] = 0.0
-
-	return extendDimension(prevA)
+	return extendDim(prevA)
 
 def prod(arr):
 	p = 1.0
@@ -171,7 +174,23 @@ def prod(arr):
 		p *= ele
 	return p
 
+def getInputs(stockPrices, N, method = 'vsToday'):
+	if method == 'vsToday':
+		return getInputsVsToday(stockPrices, N)
+	elif method == 'vsYesterday':
+		return getInputsVsYesterday(stockPrices, N)
+
+def getInputsVsYesterday(stockPrices, N):
+	returnMatrix = logReturn(stockPrices)
+	prevReturnMatrix = extendDim(returnMatrix[N-1:-1])
+	nextReturnMatrix = extendDim(returnMatrix[N:])
+	returnTensor = logReturnMatrix(returnMatrix, N)
+	return returnTensor, prevReturnMatrix, nextReturnMatrix
 
 
-
-
+def getInputsVsToday(stockPrices, N):
+	returnMatrix = logReturn(stockPrices)
+	prevReturnMatrix = extendDim(returnMatrix[N-2:-1])
+	nextReturnMatrix = extendDim(returnMatrix[N-1:])
+	returnTensor = preprocess(stockPrices, N)
+	return returnTensor, prevReturnMatrix, nextReturnMatrix

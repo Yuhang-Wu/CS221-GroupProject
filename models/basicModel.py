@@ -33,9 +33,7 @@ class BasicModel(Model):
 	def add_action(self):
 		# each model must implement this method
 		raiseNotDefined()
-		return
 		
-
 	# create loss from action (return it)
 	def add_loss(self, action):
 		# calculate profit from action	
@@ -60,17 +58,18 @@ class BasicModel(Model):
 		return train_op
 
 	# train the model with 1 iteration
+	# return action and loss
 	def train(self, inputs, sess):
 		feed_dict = self.create_feed_dict(inputs)
 		action = sess.run(self.action, feed_dict = feed_dict)
 		loss, _ = sess.run([self.loss, self.train_op], feed_dict = feed_dict)
 		return action, loss
 
-	# get the action of the current time step 
+	# get the action and loss of the current time step 
 	def get_action(self, inputs, sess):
 		feed_dict = self.create_feed_dict(inputs)
-		action = sess.run(self.action, feed_dict = feed_dict)
-		return action
+		action, loss = sess.run([self.action, self.loss], feed_dict = feed_dict)
+		return action, loss
 
 	# object constructor
 	# D : the dimension of the portfolio,

@@ -26,6 +26,16 @@ class Model(object):
 	def add_train_op(self, loss):
 		raiseNotDefined()
 
+	# train the model with 1 iteration
+	# return action and loss
+	def train(self, sess):
+		raiseNotDefined()
+
+	# get the action of the next time step
+	# return action and loss
+	def get_action(self, sess):
+		raiseNotDefined()
+
 	# build the computation graph (add them to self)
 	# called after initializing an instance of the object
 	def build(self):
@@ -33,11 +43,3 @@ class Model(object):
 		self.add_action()
 		self.loss = self.add_loss(self.action)
 		self.train_op = self.add_train_op(self.loss)
-
-	# train the model with 1 iteration
-	def train(self, sess):
-		raiseNotDefined()
-
-	# get the action of the next time step
-	def get_action(self, sess):
-		raiseNotDefined()
