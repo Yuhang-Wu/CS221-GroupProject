@@ -8,7 +8,7 @@ def main():
 	data = readCsvExample()
 	dateSelected = du.selectDate(data, 'week')
 	stockPrice =  du.getStockPrice(data, dateSelected)
-	c = [0.0001]*10
+	c = [0.001]*10
 	c_0 = 0.001
 	solveOracle(stockPrice, 10000, c, c_0)
 
