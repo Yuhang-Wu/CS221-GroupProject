@@ -6,11 +6,10 @@ import cvxpy as cvx
 
 def main():
 	data = readCsvExample()
-	dateSelected = du.selectDate(data, 'week')
-	stockPrice =  du.getStockPrice(data, dateSelected)
+	dateSelected, stockPrice = du.getData() 
 	c = [0.001]*10
 	c_0 = 0.001
-	solveOracle(stockPrice, 10000, c, c_0)
+	return solveOracle(stockPrice, 10000, c, c_0)
 
 
 def yfReaderUsageExample():
@@ -91,10 +90,10 @@ def solveOracle(SP, startingFund,c,c_0):
 	for i in xrange(len(result_R)):
 		for j in xrange(i + 1):
 			return_accum[i] += result_R[j]
-	print return_accum
-	print result_R
-	print result_M
- 	#return return_accum
+	#print return_accum
+	#print result_R
+	#print result_M
+ 	return result_R
  
  
 def makePlot(xAxis, yAxis):

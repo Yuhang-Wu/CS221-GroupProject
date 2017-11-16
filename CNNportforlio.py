@@ -94,6 +94,7 @@ reward_minus = -tf.reduce_mean(reward)
 
 train_step = tf.train.AdamOptimizer(1e-4).minimize(reward_minus)
 
+result_Return = []
 with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
     accumulate = 1;
@@ -104,7 +105,8 @@ with tf.Session() as sess:
         compareReturn = logReturn_x0[i*B:(i+1)*B]
         currentReturn = sess.run(reward, {x: historicalData, y_: compareReturn, \
                                  previousPortfolio: PrePortfolio, previousReturn: PreReturn} )
-        print currentReturn
+        result_Return.append(currentReturn)
+        #print currentReturn
         accumulate = accumulate * (1 + sess.run(-reward_minus,\
                                                  {x: historicalData,y_: compareReturn, \
                                                  previousPortfolio: PrePortfolio, previousReturn: PreReturn}))
@@ -115,4 +117,6 @@ with tf.Session() as sess:
                                  previousPortfolio: PrePortfolio, previousReturn: PreReturn})
         preReturn = currentReturn
 
-print accumulate
+#print accumulate
+def main():
+    return result_Return

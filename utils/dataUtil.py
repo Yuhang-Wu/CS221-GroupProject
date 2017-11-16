@@ -104,8 +104,8 @@ def getData(datapath1 = 'data/sp10/'):
 	allfilecontents = readin.readCsvFromPath(datapath1)
 	dateSelected = selectDate(allfilecontents, 'week')
 	stockPrice =  getStockPrice(allfilecontents, dateSelected)
-	dateSelected = dateSelected[1:]
-	stockPrice = stockPrice[1:]
+	dateSelected = dateSelected
+	stockPrice = stockPrice
 	return dateSelected, stockPrice
   
 # get prices only
