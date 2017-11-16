@@ -4,7 +4,9 @@ import readin
 # store the result as a list of (date, index) tuple
 def selectDate(allfilecontents, frequency = 'month'):
 	if frequency == 'week':
-		return selectDate_weekly(allfilecontents)
+		return selectDateWeekly(allfilecontents)
+	elif frequency == 'day':
+		return selectDateDaily(allfilecontents)
 	curMonth = int(allfilecontents[0][1][1][0][5:7])
 	dateSelected = []
 	for dateIdx in xrange(len(allfilecontents[0][1][1:])):
@@ -21,22 +23,34 @@ def selectDate(allfilecontents, frequency = 'month'):
 # Store the price of each stock on the date selected, return a matrix 
 # in the form of [[]]
 def getStockPrice(allfilecontents, dateSelected):
+	allStockPrice = getAllStockPrices(allfilecontents, dateSelected)
 	stockPrice = [[] for i in xrange(len(dateSelected))]
+	for i in range(len(dateSelected)):
+		# get adj close price
+		stockPrice[i]=[ele[-1] for ele in allStockPrice[i]] 
+	return stockPrice
+
+def getAllStockPrices(allfilecontents, dateSelected):
+	allStockPrice = [[] for i in xrange(len(dateSelected))]
 	for compName, data in allfilecontents:
 		for i in xrange(len( dateSelected)):
 			dateIdx = dateSelected[i][1]
-			price = float(data[1:][dateIdx][1]) #open price
-			stockPrice[i].append(price)		
-	return stockPrice
-
+			prices = [float(data[1:][dateIdx][j]) for j in range(1,5)] #open price
+			allStockPrice[i].append(prices)		
+	return allStockPrice
 
 def loss2mRatio(loss):
 	return 1.0 / (1.0 - loss)
 
+def selectDateDaily(allfilecontents):
+	dateSelected = []
+	for content in allfilecontents[0][1][1:]:
+		dateSelected.append(content[0])
+	return dateSelected 
 
 # Select the dates which are the first date of each week in database
 # store the result as a list of (date, index) tuple
-def selectDate_weekly(allfilecontents):
+def selectDateWeekly(allfilecontents):
 	cws = allfilecontents[0][1][1][0] #the first day of current week 
 	cws = cws[0:4] + cws[5:7] + cws[8:10]
 	cws_int = int(cws) #covert string to integer
@@ -85,23 +99,27 @@ def selectDate_weekly(allfilecontents):
 					cws = str(cws_int)
 	return dateSelected[1:]
 
-# getData:
+# get dates selected and stockprices
 def getData(datapath1 = 'data/sp10/'):
 	allfilecontents = readin.readCsvFromPath(datapath1)
-	dateSelected = selectDate(allfilecontents)
+	dateSelected = selectDate(allfilecontents, 'week')
 	stockPrice =  getStockPrice(allfilecontents, dateSelected)
 	dateSelected = dateSelected[1:]
 	stockPrice = stockPrice[1:]
 	return dateSelected, stockPrice
-    
-def logReturn(stockPrice):
-    logReturn = np.log(np.array(stockPrice[1:])) - np.log(np.array(stockPrice[:-1]))
-    return logReturn
+  
+# get prices only
+def getPrices(datapath1 = 'data/sp10/'):
+	return np.array(getData(datapath1)[1])
 
-def logReturnMatrix(logReturn, N):
-    lRMtx =np.empty((len(logReturn)-N,len(logReturn[0]),N))
-    for i in xrange(N,len(logReturn)):
-        lRMtx[i-N] = np.transpose(logReturn[i-N:i])
+def logReturn(stockPrice):
+    logReturnPrices = np.log(np.array(stockPrice[1:])) - np.log(np.array(stockPrice[:-1]))
+    return logReturnPrices
+
+def logReturnMatrix(logReturnPrices, N):
+    lRMtx =np.empty((len(logReturnPrices)-N,len(logReturnPrices[0]),N))
+    for i in xrange(N,len(logReturnPrices)):
+        lRMtx[i-N] = np.transpose(logReturnPrices[i-N:i])
     return lRMtx
 
 # exponential weighted average mean and covariance matrix
@@ -127,7 +145,7 @@ def getCovarianceMatrix(stockReturn, mu):
         cov = cov + \
         np.dot(np.transpose(normalizedReturn),normalizedReturn) * np.exp(-mu * (T-i))
     
-    cov  = cov / denumerator
+    cov = cov / denumerator
     return cov
         
     
@@ -147,7 +165,46 @@ def calcMDD(portfolioHistory):
 			mdd = max(mdd, (ph[i] - ph[j]) / ph[i])
 	return mdd
 
+def preprocess(stockPrice, N):
+	prices = np.array(stockPrice)
+	returnMatrix = np.empty((len(prices)-N,len(prices[0]),N))
+	for i in range(len(prices) - N):
+		returnMatrix[i] = np.transpose(prices[i:i+N]/prices[i+N-1])
+
+	return np.log(returnMatrix)
+
+def extendDim(arr):
+	newshape = tuple(list(arr.shape) + [1])
+	return np.reshape(arr, newshape)
+
+def getInitialAllocation(D):
+	prevA = np.array([0.0 for _ in range(D + 1)])
+	prevA[-1] = 0.0
+	return extendDim(prevA)
+
+def prod(arr):
+	p = 1.0
+	for ele in arr:
+		p *= ele
+	return p
+
+def getInputs(stockPrices, N, method = 'vsToday'):
+	if method == 'vsToday':
+		return getInputsVsToday(stockPrices, N)
+	elif method == 'vsYesterday':
+		return getInputsVsYesterday(stockPrices, N)
+
+def getInputsVsYesterday(stockPrices, N):
+	returnMatrix = logReturn(stockPrices)
+	prevReturnMatrix = extendDim(returnMatrix[N-1:-1])
+	nextReturnMatrix = extendDim(returnMatrix[N:])
+	returnTensor = logReturnMatrix(returnMatrix, N)
+	return returnTensor, prevReturnMatrix, nextReturnMatrix
 
 
-
-
+def getInputsVsToday(stockPrices, N):
+	returnMatrix = logReturn(stockPrices)
+	prevReturnMatrix = extendDim(returnMatrix[N-2:-1])
+	nextReturnMatrix = extendDim(returnMatrix[N-1:])
+	returnTensor = preprocess(stockPrices, N)
+	return returnTensor, prevReturnMatrix, nextReturnMatrix

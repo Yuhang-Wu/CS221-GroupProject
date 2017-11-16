@@ -1,79 +1,83 @@
 from __future__ import print_function
-import sys, os, csv
-from models import dummyModel as dm
 import numpy as np
 import tensorflow as tf
+from models import modelUtil as mu
+from models import dummyModel as dm
+from models import cnnModel as cm
+from models import rnnModel as rm
 from utils import readin, yfReader, dataUtil as du
 
 
 DATA_PATH = 'data/sp10/'
 
 def main():
-	dummyModelTrainingTrial(DATA_PATH)
-	
+	rnnModelTrainingTrial()
 
-def dummyModelTrainingTrial(datapath1):
-	stockPrices = getPricesFromPath(datapath1)
 
-	D = stockPrices.shape[0]
-	N = 3
+def cnnModelTrainingTrial():
+	dateSelected, stockPriceList = du.getData(DATA_PATH)
+	stockPrices = np.array(stockPriceList)
+
+	N = 5
 	c = 0.0001
-	epochs = 50
+	epochs = 100
 
+	D = stockPrices.shape[1]
 	transCostParams = {
 		'c': np.array([ [c] for _ in range(D) ]),
 		'c0': c
 	}
 
-	curModel = dm.DummyModel(D, N, transCostParams)
-	init_op = tf.global_variables_initializer()
+	# all the inputs!!
+	returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, 'vsToday')
 
-	totalIters = stockPrices.shape[1] - N
+	# define model
+	curModel = cm.CnnModel(D, N, transCostParams)
+	curModel.get_model_info()
 
-	prevLoss = 0.0
-	prevA = np.array( map(lambda x : [x], [0.0 for _ in range(D)] + [1.0]) )
-
-	
+	# quit()
 	with tf.Session() as sess:
-
-		sess.run(init_op)
+		sess.run(tf.global_variables_initializer())
 		for i in range(epochs):
-			allActions = []
-			allLosses = []
-			for t in range(totalIters):
+			allActions, growthRates = mu.train1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
+			totalGR = du.prod(growthRates)
+			if i%10 == 0:
+				print(i, 'th epoch')
+				print('total growth rate:')
+				print(totalGR)
+				print()
 
-				prevS = stockPrices[:, t : t + N]
-				nextS = stockPrices[:, t + N : t + N + 1]
-				mRatio = du.loss2mRatio(prevLoss)
-				inputs = {
-					'prevA': prevA,
-					'prevS': prevS,
-					'nextS': nextS,
-					'mRatio': mRatio
-				}
-				
-				curA, curLoss = curModel.train(inputs, sess)
+def rnnModelTrainingTrial():
+	dateSelected, stockPriceList = du.getData(DATA_PATH)
+	stockPrices = np.array(stockPriceList)
 
-				allActions.append(curA)
-				allLosses.append(curLoss)
+	N = 5
+	c = 0.0001
+	epochs = 100
 
-				prevLoss = curLoss
-				prevA = curA
-			totalLoss = sum(allLosses)
-			print(i, 'th epoch')
-			print('total earnings:')
-			print(-1.0*totalLoss)
-
-	#print(allActions)
-	#print(allLosses)
-
+	D = stockPrices.shape[1]
+	transCostParams = {
+		'c': np.array([ [c] for _ in range(D) ]),
+		'c0': c
+	}
 	
-def getPricesFromPath(datapath1): 
-	allfilecontents = readin.readCsvFromPath(datapath1)
-	dateSelected = du.selectDate(allfilecontents)
-	stockPricesList = du.getStockPrice(allfilecontents, dateSelected)
-	stockPrices = np.array(stockPricesList).T
-	return stockPrices
+	# all the inputs!!
+	returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, 'vsToday')
+
+	# define model
+	curModel = rm.RnnModel(D, N, transCostParams, L = 4)
+	curModel.get_model_info()
+	quit()
+	with tf.Session() as sess:
+		sess.run(tf.global_variables_initializer())
+		for i in range(epochs):
+			allActions, growthRates = mu.train1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
+			totalGR = du.prod(growthRates)
+			if i%10 == 0:
+				print(i, 'th epoch')
+				print('total growth rate:')
+				print(totalGR)
+				print()
 
 if __name__=='__main__':
 	main()
