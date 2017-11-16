@@ -8,7 +8,7 @@ from basicModel import BasicModel
 
 
 class Config:
-	lr = 2e-4
+	lr = 1e-4
 	dropout = 0.5
 	modelType = 'CNNModel'
 

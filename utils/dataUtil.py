@@ -1,5 +1,70 @@
 import numpy as np
 import readin
+
+# get all the data (train dev test)
+# tdt stands for train dev test
+# return dates, list of train prices, list of dev prices, list of test prices
+def getTDTdata(datapath = 'data/sp150/', frequency = 'week', getAll  = False):
+	allfilecontents = readin.readCsvFromPath(datapath)
+	dateSelected = selectDate(allfilecontents, frequency)
+	tdtCompanies = getTrainDevTestCompanies()
+	fcs = divideFileContents(allfilecontents, tdtCompanies[0], tdtCompanies[1], tdtCompanies[2])
+	fcLists = [divideToLists(fc) for fc in fcs]
+	priceLists = [[getPricesBasedOnDates(ele, dateSelected, getAll) for ele in fcList] for fcList in fcLists]
+	dateSelected = dateSelected[1:]
+	return dateSelected, priceLists[0], priceLists[1], priceLists[2]
+
+# get dates selected and stockprices
+def getData(datapath1 = 'data/sp10/', frequency = 'week', getAll = False):
+	allfilecontents = readin.readCsvFromPath(datapath1)
+	dateSelected = selectDate(allfilecontents, frequency)
+	stockPrice = getPricesBasedOnDates(allfilecontents, dateSelected, getAll)
+	dateSelected = dateSelected[1:]
+	return dateSelected, stockPrice
+
+# pretty self explanatory, if getAll is true, get all the data (all 4 dimensions)
+def getPricesBasedOnDates(allfilecontents, dateSelected, getAll):
+	if getAll:
+		stockPrice = getAllStockPrice(allfilecontents, dateSelected)
+	else:
+		stockPrice = getStockPrice(allfilecontents, dateSelected)
+	return np.array(stockPrice[1:])
+
+# get the names of all the companies in train dev and test set
+# return a list of list of strings
+def getTrainDevTestCompanies(filename = 'data/train_dev_test.txt', division= [110, 20, 20]):
+	allCompanies = getLines(filename)
+	#print allCompanies
+	out = []
+	out.append(allCompanies[:division[0]])
+	out.append(allCompanies[division[0]: -division[2]])
+	out.append(allCompanies[-division[2]:])
+	return out
+
+# given a file name, get all the companies stored in the file
+def getLines(filename):
+	f = open(filename, 'r')
+	lines = f.readlines()
+	f.close()
+	return [ele.strip().replace('.','-') for ele in lines]
+
+# divide file contentList into list of fileContent in units of D
+def divideToLists(fileContentsList, D = 10):
+	assert(len(fileContentsList)%D == 0, "not divisible, check fileContentList length")
+	out = []
+	for i in range(len(fileContentsList)/D):
+		out.append(fileContentsList[i*D : i*D + D])
+	return out
+
+# divide them up based on what group they are in
+def divideFileContents(fileContents, trainCompanies, devCompanies, testCompanies):
+	d = {fileContents[i][0].split('/')[-1]:i for i in range(len(fileContents))}
+	#print d
+	trainFileContents = [fileContents[d[c]] for c in trainCompanies]
+	devFileContents = [fileContents[d[c]] for c in devCompanies]
+	testFileContents = [fileContents[d[c]] for c in testCompanies]
+	return [trainFileContents, devFileContents, testFileContents]
+	
 # Select the dates which are the first date of each month in database
 # store the result as a list of (date, index) tuple
 def selectDate(allfilecontents, frequency = 'month'):
@@ -100,17 +165,7 @@ def selectDateWeekly(allfilecontents):
 					cws = str(cws_int)
 	return dateSelected[1:]
 
-# get dates selected and stockprices
-def getData(datapath1 = 'data/sp10/', frequency = 'week', getAll = False):
-	allfilecontents = readin.readCsvFromPath(datapath1)
-	dateSelected = selectDate(allfilecontents, frequency)
-	if getAll:
-		stockPrice =  getAllStockPrice(allfilecontents, dateSelected)
-	else:
-		stockPrice =  getStockPrice(allfilecontents, dateSelected)
-	dateSelected = dateSelected[1:]
-	stockPrice = stockPrice[1:]
-	return dateSelected, stockPrice
+
   
 # get prices only
 def getPrices(datapath1 = 'data/sp10/'):
@@ -207,7 +262,7 @@ def prod(arr):
 		p *= ele
 	return p
 
-def getInputs(stockPrices, N, method = 'vsToday', L = 1):
+def getInputs(stockPrices, N, method = 'vsYesterday', L = 1):
 	if method == 'vsToday':
 		return getInputsVsToday(stockPrices, N, L)
 	elif method == 'vsYesterday':
@@ -215,7 +270,7 @@ def getInputs(stockPrices, N, method = 'vsToday', L = 1):
 
 def getInputsVsYesterday(stockPrices, N, L = 1):
 	returnMatrix = logReturn(stockPrices)
-	print(returnMatrix.shape)
+	#print(returnMatrix.shape)
 	if L == 1:
 		prevReturnMatrix = extendDim(returnMatrix[N-1:-1])
 		nextReturnMatrix = extendDim(returnMatrix[N:])

@@ -1,5 +1,6 @@
 import sys, os, csv
 import numpy as np
+import random
 from utils import readin, yfReader, crawler
 
 def yfReaderUsageExample():
@@ -39,8 +40,20 @@ def verify150():
 		valid = f[1][0] == startDate
 		if not valid: print c
 
+def getTrainDevTest():
+	outpath = 'data/'
+	companyNamesFile = open('data/sp500tops.txt','r')
+	companyCodes = companyNamesFile.readlines()
+	companyCodes = [c.strip() for c in companyCodes]
+	random.shuffle(companyCodes)
+	tdtFile = open(outpath + 'train_dev_test.txt', 'w+')
+	tdtFile.write('\n'.join(companyCodes))
+	tdtFile.close()
+
+
 def main():
-	testTFindex()
+	#getTrainDevTest()
+	#testTFindex()
 	#get150()
 	#verify150()
 
