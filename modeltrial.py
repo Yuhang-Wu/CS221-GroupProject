@@ -7,20 +7,18 @@ from models import cnnModel as cm
 from models import rnnModel as rm
 from utils import readin, yfReader, dataUtil as du
 
-
 DATA_PATH = 'data/sp10/'
 
-def main():
-	rnnModelTrainingTrial()
+N = 5
+c = 0.001
+epochs = 400
 
+def main():
+	cnnModelTrainingTrial()
 
 def cnnModelTrainingTrial():
-	dateSelected, stockPriceList = du.getData(DATA_PATH)
+	dateSelected, stockPriceList = du.getData(DATA_PATH, frequency = 'month')
 	stockPrices = np.array(stockPriceList)
-
-	N = 5
-	c = 0.0001
-	epochs = 100
 
 	D = stockPrices.shape[1]
 	transCostParams = {
@@ -29,32 +27,33 @@ def cnnModelTrainingTrial():
 	}
 
 	# all the inputs!!
-	returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, 'vsToday')
+	returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, 'vsYesterday')
 
+	#print(returnTensor[0])
+	#print(returnTensor[1])
 	# define model
 	curModel = cm.CnnModel(D, N, transCostParams)
 	curModel.get_model_info()
 
-	# quit()
+	#quit()
 	with tf.Session() as sess:
 		sess.run(tf.global_variables_initializer())
 		for i in range(epochs):
 			allActions, growthRates = mu.train1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
 			totalGR = du.prod(growthRates)
 			if i%10 == 0:
+				#print(len(allActions))
+				#print(allActions[4])
 				print(i, 'th epoch')
 				print('total growth rate:')
 				print(totalGR)
 				print()
 
 def rnnModelTrainingTrial():
-	dateSelected, stockPriceList = du.getData(DATA_PATH)
+	dateSelected, stockPriceList = du.getData(DATA_PATH, getAll = True)
 	stockPrices = np.array(stockPriceList)
 
-	N = 5
-	c = 0.0001
-	epochs = 100
-
+	L= 4
 	D = stockPrices.shape[1]
 	transCostParams = {
 		'c': np.array([ [c] for _ in range(D) ]),
@@ -62,18 +61,20 @@ def rnnModelTrainingTrial():
 	}
 	
 	# all the inputs!!
-	returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, 'vsToday')
+	returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, 'vsYesterday', L)
 
 	# define model
 	curModel = rm.RnnModel(D, N, transCostParams, L = 4)
 	curModel.get_model_info()
-	quit()
+	#quit()
 	with tf.Session() as sess:
 		sess.run(tf.global_variables_initializer())
 		for i in range(epochs):
 			allActions, growthRates = mu.train1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
 			totalGR = du.prod(growthRates)
 			if i%10 == 0:
+				print(len(allActions))
+				print(allActions[4])
 				print(i, 'th epoch')
 				print('total growth rate:')
 				print(totalGR)

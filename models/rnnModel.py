@@ -2,17 +2,17 @@ from __future__ import print_function
 import tensorflow as tf
 from model import Model, raiseNotDefined
 from basicModel import BasicModel
-import os
+import os, json
 import modelUtil as mu
 from rnnCell import RNNCell 
 from gruCell import GRUCell
 
 class Config:
-	lr = 2e-4
+	lr = 6e-4
 	dropout = 0.5
 	modelType = 'RNNModel'
 	cellType = 'rnn'
-	hiddenSize = 50
+	hiddenSize = 15
 
 class RnnModel(BasicModel):
 	# add an action (add to self and return it)
@@ -67,7 +67,18 @@ class RnnModel(BasicModel):
 		action = tf.nn.softmax(action, dim = 0)
 		self.action = action
 
-	
+	def get_model_info(self):
+		model_info = {
+			'lr': self.config.lr,
+			'dropout': self.config.dropout,
+			'model_type': self.config.modelType,
+			'cell_type': self.config.cellType,
+			'hidden_size': self.config.hiddenSize
+		}
+		print("model info")
+		print(json.dumps(model_info))
+		print()
+
 	# object constructor
 	# D : the dimension of the portfolio,
 	# N : the number of days looking back
