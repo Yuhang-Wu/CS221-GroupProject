@@ -14,7 +14,7 @@ c = 0.001
 epochs = 400
 
 def main():
-	cnnModelTrainingTrial()
+	rnnModelTrainingTrial()
 
 def cnnModelTrainingTrial():
 	dateSelected, stockPriceList = du.getData(DATA_PATH, frequency = 'month')
@@ -73,8 +73,8 @@ def rnnModelTrainingTrial():
 			allActions, growthRates = mu.train1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
 			totalGR = du.prod(growthRates)
 			if i%10 == 0:
-				print(len(allActions))
-				print(allActions[4])
+				#print(len(allActions))
+				#print(allActions[4])
 				print(i, 'th epoch')
 				print('total growth rate:')
 				print(totalGR)
