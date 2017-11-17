@@ -49,6 +49,7 @@ def solveOracle(SP, startingFund,c,c_0):
 	result_R.append(R_1)
 	M_1 = startingFund * (1 + R_1)
 	result_M.append(M_1)
+
 	for i in xrange(1, (len(SP)-1)):
 		P_pre = result_P[-1] #vector
 		M_pre = result_M[-2]

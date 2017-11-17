@@ -87,6 +87,7 @@ def trainAndTestTrial():
 	epochs = 20
 
 	# define model
+	#curModel = rm.RnnModel(D, N, transCostParams, L = 4)
 	curModel = cm.CnnModel(D, N, transCostParams)
 	curModel.get_model_info()
 
@@ -115,6 +116,7 @@ def trainAndTestTrial():
 			print('total growth rate:')
 			print(totalGR)
 			print()
+		return_list = []
 		for i in range(len(testPriceList)):
 			stockPrices = testPriceList[i]
 			returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N)
@@ -123,7 +125,9 @@ def trainAndTestTrial():
 			print(i, 'th group in test')
 			print('total growth rate:')
 			print(totalGR)
+			return_list.append(totalGR)
 			print()
+	   	print(return_list)
 
 if __name__=='__main__':
 	main()
