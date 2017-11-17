@@ -176,6 +176,7 @@ def logReturn(stockPrice):
     return logReturnPrices
 
 def logReturnMatrix(logReturnPrices, N, L = 1):
+	#print L
 	if L == 1:
 		lRMtx = np.empty((len(logReturnPrices) - N, len(logReturnPrices[0]), N))
 	else:
@@ -269,6 +270,7 @@ def getInputs(stockPrices, N, method = 'vsYesterday', L = 1):
 		return getInputsVsYesterday(stockPrices, N, L)
 
 def getInputsVsYesterday(stockPrices, N, L = 1):
+	#print L
 	returnMatrix = logReturn(stockPrices)
 	#print(returnMatrix.shape)
 	if L == 1:
