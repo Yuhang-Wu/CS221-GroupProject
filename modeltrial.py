@@ -80,15 +80,22 @@ def rnnModelTrainingTrial():
 				print()
 
 def trainAndTestTrial():
-	dateSelected, trainPriceList, devPriceList, testPriceList = du.getTDTdata(DATA_PATH_ALL, frequency = 'week')
+	dateSelected, trainPriceList, devPriceList, testPriceList = du.getTDTdata(DATA_PATH_ALL, frequency = 'week', getAll = True)
 	
 
 	# all the inputs!!
 	epochs = 20
 
+	L = 4
+	#D = stockPrices.shape[1]
+	
+	# all the inputs!!
+	#returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, 'vsYesterday', L)
+
 	# define model
-	#curModel = rm.RnnModel(D, N, transCostParams, L = 4)
-	curModel = cm.CnnModel(D, N, transCostParams)
+
+	curModel = rm.RnnModel(D, N, transCostParams, L = 4)
+
 	curModel.get_model_info()
 
 	#quit()
@@ -97,7 +104,7 @@ def trainAndTestTrial():
 		for e in range(epochs):
 			for i in range(len(trainPriceList)):
 				stockPrices = trainPriceList[i]
-				returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N)
+				returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L = 4)
 				allActions, growthRates = mu.train1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
 				totalGR = du.prod(growthRates)
 				if i%10 == 0:
@@ -110,7 +117,7 @@ def trainAndTestTrial():
 		for i in range(len(devPriceList)):
 			stockPrices = devPriceList[i]
 			returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N)
-			allActions, growthRates = mu.train1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
+			allActions, growthRates = mu.test1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
 			totalGR = du.prod(growthRates)
 			print(i, 'th group in dev')
 			print('total growth rate:')
@@ -120,7 +127,7 @@ def trainAndTestTrial():
 		for i in range(len(testPriceList)):
 			stockPrices = testPriceList[i]
 			returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N)
-			allActions, growthRates = mu.train1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
+			allActions, growthRates = mu.test1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
 			totalGR = du.prod(growthRates)
 			print(i, 'th group in test')
 			print('total growth rate:')
