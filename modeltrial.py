@@ -107,34 +107,43 @@ def trainAndTestTrial():
 				returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L = 4)
 				allActions, growthRates = mu.train1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
 				totalGR = du.prod(growthRates)
+				'''
 				if i%10 == 0:
 					#print(len(allActions))
 					#print(allActions[4])
+					
 					print(i, 'th group in training')
 					print('total growth rate:')
 					print(totalGR)
 					print()
+					'''
 		for i in range(len(devPriceList)):
 			stockPrices = devPriceList[i]
-			returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N)
+			returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L=4)
 			allActions, growthRates = mu.test1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
 			totalGR = du.prod(growthRates)
+			'''
 			print(i, 'th group in dev')
 			print('total growth rate:')
 			print(totalGR)
 			print()
-		return_list = []
+			'''
 		for i in range(len(testPriceList)):
 			stockPrices = testPriceList[i]
-			returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N)
+			returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L=4)
 			allActions, growthRates = mu.test1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
 			totalGR = du.prod(growthRates)
+			'''
 			print(i, 'th group in test')
 			print('total growth rate:')
 			print(totalGR)
-			return_list.append(totalGR)
+			
 			print()
-	   	print(return_list)
+			'''
+			print(growthRates)
+			print(len(growthRates))
+	
+	   	
 
 if __name__=='__main__':
 	main()
