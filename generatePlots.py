@@ -1,10 +1,12 @@
 
 import EigenPortfolio as ep
 import oracle as oa
-import matplotlib.pyplot as plt
 import CNNportforlio as cnn
 import math
 import numpy as np
+from utils import getPlots as gp
+from utils import modelEval as me
+
 
 Re_ep, D, M= ep.main()
 
@@ -28,92 +30,6 @@ Re_oa = Re_oa[len(Re_oa)-len(Re_cnn_test):]
 Re_rnn_test = Re_rnn_test[len(Re_rnn_test)-len(Re_cnn_test):]
 #Re_cnn = Re_cnn[len(Re_cnn)-len(Re_cnn_test):]
 
-
-# Find the right place to put label '2016' and '2017'
-idx_2016 = -1
-idx_2017 = -1
-for idx, date in enumerate(Date_cnn_test):
-	if date[0][2:4] == '16':
-		if idx_2016 == -1:
-			idx_2016 = idx
-	if date[0][2:4] == '17':
-		if idx_2017 == -1:
-			idx_2017 = idx
-			break
-
-Date = ['' for i in xrange(len(Re_cnn_test))]
-#Date[idx_2016] = '2016'
-Date[10]=Date_cnn_test[10][1]
-Date[-10] = Date_cnn_test[-10][1] 
-x = xrange(len(Re_cnn_test))
-
-
-'''
-print len(Re)
-print len(Re2)
-print len(Re3)
-'''
-
-
-# get the (added log) accumulated return for each senario
-def accum(Re):
-	result = []
-	result.append(Re[0])
-	for idx in xrange(1, len(Re)):
-		cur = result[-1] + Re[idx]
-		result.append(cur)
-	#result = np.log(np.array(result))
-	return result
-
-Re_ep_accum = accum(Re_ep)
-Re_oa_accum = accum(Re_oa)
-#Re_cnn_accum = accum(Re_cnn)
-Re_cnn_test_accum = accum(Re_cnn_test)
-Re_rnn_test_accum = accum(Re_rnn_test)
-
-# calculate total return and sharp ration
-def totalReturn(Re):
-	result = 1
-	for re in Re:
-		result *= (1+re)
-	return result
-
-def sharp_ratio(Re):
-	Re = np.array(Re)
-	return np.mean(Re)/np.std(Re)
-
-print 'totalReturn \t sharp_ratio'
-print 'baseline', totalReturn(Re_ep), sharp_ratio(Re_ep)
-print 'oracle', totalReturn(Re_oa), sharp_ratio(Re_oa)
-print 'cnn', totalReturn(Re_cnn_test), sharp_ratio(Re_cnn_test)
-print 'rnn', totalReturn(Re_rnn_test), sharp_ratio(Re_rnn_test)
-# do the ploting
-
-plt.plot(x,Re_ep,'*-')
-plt.plot(x,Re_oa,'*-')
-plt.plot(x,Re_cnn_test,'*-')
-plt.plot(x,Re_rnn_test,'*-')
-plt.xticks(x, Date)
-plt.title('Weekly Return')
-plt.legend(['Baseline','Oracle', 'CNN Test', 'RNN Test'])
-plt.xlabel('Date')
-plt.ylabel('Return')
-plt.savefig('Weekly_Re')
-#plt.margins(0.2)
-#plt.subplots_adjust(bottom=0.15)
-plt.show()
-
-plt.plot(x,Re_ep_accum,'*-')
-plt.plot(x,Re_oa_accum,'*-')
-plt.plot(x,Re_cnn_test_accum,'*-')
-plt.plot(x,Re_rnn_test_accum,'*-')
-plt.xticks(x, Date)
-plt.title('Weekly Accumulated Return')
-plt.legend(['Baseline','Oracle', 'CNN Test', 'RNN Test'])
-plt.xlabel('Date')
-plt.ylabel('Accumulated Return')
-plt.savefig('Weekly_Re_Accum')
-#plt.margins(0.2)
-#plt.subplots_adjust(bottom=0.15)
-plt.show()
+gp.plot(Re_ep, Re_oa, Re_rnn_test, Re_cnn_test, Date_cnn_test, 2016)
+me.evaluateModel(Re_ep, Re_oa, Re_rnn_test, Re_cnn_test)
 
