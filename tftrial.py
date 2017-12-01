@@ -7,11 +7,13 @@ A baby tensorflow example
 Note print needs parenthesis
 '''
 def main():
-	testTFinitializer()
+	multiDimensionalMultiplicationTrial()
+	#testTFinitializer()
 	pass
 
 def testTFinitializer():
 	print(tf.contrib.layers.xavier_initializer())
+
 def testTFindex():
 	a = np.array(np.random.rand(2,3))
 	tfa = tf.constant(a, dtype = tf.float32)
@@ -20,6 +22,21 @@ def testTFindex():
 	print(tfb)
 
 
+
+def multiDimensionalMultiplicationTrial():
+	a = np.random.rand(2,3,4)
+	tfa = tf.constant(a, dtype = tf.float32)
+	b = np.random.rand(4,5)
+	tfb = tf.constant(b, dtype = tf.float32)
+	for s in tfa:
+		print(s)
+	print(tfa[0])
+	tfa = tf.reshape(tfa, [-1, 4])
+	tfc = tf.matmul(tfa, tfb)
+	tfc = tf.reshape(tfc, [2,3,5])
+
+	with tf.Session() as sess:
+		print(sess.run(tfc))
 def tftrial():
 	print(tf.__version__)
 

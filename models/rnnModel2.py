@@ -14,6 +14,7 @@ class Config:
 	modelType = 'RNNModel'
 	cellType = 'rnn'
 	hiddenSize = 15
+	transformSize = 10
 
 class RnnModel(BasicModel):
 	# add an action (add to self and return it)
@@ -23,7 +24,7 @@ class RnnModel(BasicModel):
 		X = self.placeholders['X']
 		prevReturn = self.placeholders['prevReturn']
 		prevA = self.placeholders['prevA']
-		
+		print(X.shape)
 		cellType = self.config.cellType
 		if cellType == 'rnn':
 			cell = RNNCell(self.L, self.config.hiddenSize)
