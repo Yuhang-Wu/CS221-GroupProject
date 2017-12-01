@@ -65,7 +65,8 @@ def plot(Re_bl, Re_oc, Re_rnn, Re_cnn, Date, startYear):
 	plt.savefig('results/Figures/Weekly_Re_Accum')
 	plt.show()
 
-
+# please stop writing imperative
+# and unmodularized mode please
 class Plotter(object):
 	def __init__(self, title, dates, xlabel, ylabel, outPath):
 		self.title = title
