@@ -66,5 +66,34 @@ def plot(Re_bl, Re_oc, Re_rnn, Re_cnn, Date, startYear):
 	plt.show()
 
 
+class Plotter(object):
+	def __init__(self, title, dates, xlabel, ylabel, outPath):
+		self.title = title
+		self.dates = dates
+		self.xlabel = xlabel
+		self.ylabel = ylabel
+		self.outPath = outPath
+		self.lines = []
+		self.legends = []
+		self.options = []
+
+	def addLine(self, line, legend, option = '-'):
+		assert(len(line) == len(dates), "plotter dimensionality mismatch")
+		self.lines.append(line)
+		self.legends.append(legend)
+		self.options.append(option)
+
+	def plot(self):
+		plt.figure()
+		x = xrange(len(self.dates))
+		for i in range(len(self.lines)):
+			plt.plot(x, self.lines[i], self.options[i])
+		plt.xticks(x, self.dates)
+		plt.title(self.title)
+		plt.legend(self.legends)
+		plt.xlabel(self.xlabel)
+		plt.ylabel(self.ylabel)
+		plt.savefig(self.outPath)
+		plt.show()
 
 
