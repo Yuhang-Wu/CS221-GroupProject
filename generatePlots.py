@@ -4,8 +4,7 @@ import oracle as oa
 import CNNportforlio as cnn
 import math
 import numpy as np
-from utils import getPlots as gp
-from utils import modelEval as me
+from utils import plotAndEval as pe
 
 
 Re_ep, D, M= ep.main()
@@ -23,13 +22,16 @@ Date_cnn_test = [('2016-05-25', '2016-06-01'), ('2016-06-01', '2016-06-08'), ('2
 # adjust off-set:
 # Baseline omits the last day in both cnn and oracle
 Re_oa = Re_oa[:-1]
-#Re_cnn = Re_cnn[:-1]
 # Re_cnn_test should be shortest
 Re_ep = Re_ep[len(Re_ep)-len(Re_cnn_test):]
 Re_oa = Re_oa[len(Re_oa)-len(Re_cnn_test):]
 Re_rnn_test = Re_rnn_test[len(Re_rnn_test)-len(Re_cnn_test):]
-#Re_cnn = Re_cnn[len(Re_cnn)-len(Re_cnn_test):]
 
-gp.plot(Re_ep, Re_oa, Re_rnn_test, Re_cnn_test, Date_cnn_test, 2016)
-me.evaluateModel(Re_ep, Re_oa, Re_rnn_test, Re_cnn_test)
 
+pe = pe.plotEval(Date_cnn_test, 2016)
+pe.addReturn(Re_ep, 'Baseline')
+pe.addReturn(Re_oa, 'Oracle')
+pe.addReturn(Re_cnn_test, 'CNN')
+pe.addReturn(Re_rnn_test,'RNN')
+pe.generatePlot()
+pe.eval()
