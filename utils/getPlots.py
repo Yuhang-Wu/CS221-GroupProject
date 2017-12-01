@@ -1,6 +1,38 @@
 import math
 import matplotlib.pyplot as plt
 
+# please stop writing imperative
+# and unmodularized mode please
+class Plotter(object):
+	def __init__(self, title, dates, xlabel, ylabel):
+		self.title = title
+		self.dates = dates
+		self.xlabel = xlabel
+		self.ylabel = ylabel
+		self.lines = []
+		self.legends = []
+		self.options = []
+
+	def addLine(self, line, legend, option = '-'):
+		assert(len(line) == len(dates), "plotter dimensionality mismatch")
+		self.lines.append(line)
+		self.legends.append(legend)
+		self.options.append(option)
+
+	def plot(self, outPath):
+		plt.figure()
+		x = xrange(len(self.dates))
+		for i in range(len(self.lines)):
+			plt.plot(x, self.lines[i], self.options[i])
+		plt.xticks(x, self.dates)
+		plt.title(self.title)
+		plt.legend(self.legends)
+		plt.xlabel(self.xlabel)
+		plt.ylabel(self.ylabel)
+		plt.savefig(outPath)
+		plt.show()
+
+
 # get the accumulated return for each senario
 def accum(Re):
 	result = []
@@ -40,6 +72,14 @@ def plot(Re_bl, Re_oc, Re_rnn, Re_cnn, Date, startYear):
 	# do the plotting
 
 	# first plot return vs. date
+	plotter1 = Plotter('Weekly Return', dateLabel, 'Year', 'Return')
+	plotter1.addLine(Re_bl, 'Baseline')
+	plotter1.addLine(Re_oc, 'Oracle')
+	plotter1.addLine(Re_cnn, 'CNN')
+	plotter1.addLine(Re_rnn, 'RNN')
+	plotter1.plot('results/Figures/Weekly_Re')
+
+	'''
 	plt.plot(x,Re_bl,'-')
 	plt.plot(x,Re_oc,'-')
 	plt.plot(x,Re_cnn,'-')
@@ -51,8 +91,16 @@ def plot(Re_bl, Re_oc, Re_rnn, Re_cnn, Date, startYear):
 	plt.ylabel('Return')
 	plt.savefig('results/Figures/Weekly_Re')
 	plt.show()
-
+	'''
 	# then plot accumulated return vs. date
+	plotter2 = Plotter('Weekly Return', dateLabel, 'Year', 'Accumulated Return')
+	plotter2.addLine(Re_bl_accum, 'Baseline')
+	plotter2.addLine(Re_oc_accum, 'Oracle')
+	plotter2.addLine(Re_cnn_accum, 'CNN Test')
+	plotter2.addLine(Re_rnn_accum, 'RNN Test')
+	plotter2.plot('results/Figures/Weekly_Re_Accum')
+
+	'''
 	plt.plot(x,Re_bl_accum,'-')
 	plt.plot(x,Re_oc_accum,'-')
 	plt.plot(x,Re_cnn_accum,'-')
@@ -64,37 +112,7 @@ def plot(Re_bl, Re_oc, Re_rnn, Re_cnn, Date, startYear):
 	plt.ylabel('Accumulated Return')
 	plt.savefig('results/Figures/Weekly_Re_Accum')
 	plt.show()
+	'''
 
-# please stop writing imperative
-# and unmodularized mode please
-class Plotter(object):
-	def __init__(self, title, dates, xlabel, ylabel, outPath):
-		self.title = title
-		self.dates = dates
-		self.xlabel = xlabel
-		self.ylabel = ylabel
-		self.outPath = outPath
-		self.lines = []
-		self.legends = []
-		self.options = []
-
-	def addLine(self, line, legend, option = '-'):
-		assert(len(line) == len(dates), "plotter dimensionality mismatch")
-		self.lines.append(line)
-		self.legends.append(legend)
-		self.options.append(option)
-
-	def plot(self):
-		plt.figure()
-		x = xrange(len(self.dates))
-		for i in range(len(self.lines)):
-			plt.plot(x, self.lines[i], self.options[i])
-		plt.xticks(x, self.dates)
-		plt.title(self.title)
-		plt.legend(self.legends)
-		plt.xlabel(self.xlabel)
-		plt.ylabel(self.ylabel)
-		plt.savefig(self.outPath)
-		plt.show()
 
 
