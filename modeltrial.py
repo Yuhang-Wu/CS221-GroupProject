@@ -5,6 +5,7 @@ from models import modelUtil as mu
 from models import dummyModel as dm
 from models import cnnModel as cm
 from models import rnnModel as rm
+from models import rnnModel2 as rm2
 from utils import readin, yfReader, dataUtil as du
 
 DATA_PATH = 'data/sp10/'
@@ -63,7 +64,7 @@ def rnnModelTrainingTrial():
 	returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, 'vsYesterday', L)
 
 	# define model
-	curModel = rm.RnnModel(D, N, transCostParams, L = 4)
+	curModel = rm2.RnnModel(D, N, transCostParams, L = 4)
 	curModel.get_model_info()
 	#quit()
 	with tf.Session() as sess:
@@ -94,7 +95,7 @@ def trainAndTestTrial():
 
 	# define model
 
-	curModel = rm.RnnModel(D, N, transCostParams, L = 4)
+	curModel = rm2.RnnModel(D, N, transCostParams, L = L)
 
 	curModel.get_model_info()
 
@@ -107,7 +108,7 @@ def trainAndTestTrial():
 				returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L = 4)
 				allActions, growthRates = mu.train1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
 				totalGR = du.prod(growthRates)
-				'''
+				
 				if i%10 == 0:
 					#print(len(allActions))
 					#print(allActions[4])
@@ -116,32 +117,28 @@ def trainAndTestTrial():
 					print('total growth rate:')
 					print(totalGR)
 					print()
-					'''
+					
 		for i in range(len(devPriceList)):
 			stockPrices = devPriceList[i]
 			returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L=4)
 			allActions, growthRates = mu.test1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
 			totalGR = du.prod(growthRates)
-			'''
+	
 			print(i, 'th group in dev')
 			print('total growth rate:')
 			print(totalGR)
 			print()
-			'''
+
 		for i in range(len(testPriceList)):
 			stockPrices = testPriceList[i]
 			returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L=4)
 			allActions, growthRates = mu.test1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
+
 			totalGR = du.prod(growthRates)
-			'''
 			print(i, 'th group in test')
 			print('total growth rate:')
 			print(totalGR)
-			
 			print()
-			'''
-			print(growthRates)
-			print(len(growthRates))
 	
 	   	
 

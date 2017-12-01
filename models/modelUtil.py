@@ -3,13 +3,23 @@ from utils import dataUtil as du
 import tensorflow as tf
 import numpy as np
 
-	# assume the input is of shape [D, 1]
-	# add one more 0 to it (output shape [D+1, 1])
+
+# multiply a batch of matrix a tensor in the shape of [D, N, L]
+# with a transformation matrix [L, transformSize]
+# output a tensor of shape [D, N, transformSize]
+def batchMatMul(a, b, D):
+	out = []
+	for i in range(D):
+		out.append(tf.matmul(a[i], b))
+	return tf.stack(out)
+
+# assume the input is of shape [D, 1]
+# add one more 0 to it (output shape [D+1, 1])
 def addBias(x):
 	x = tf.concat([x, tf.constant(np.array([[0.0]]), dtype = tf.float32)], axis = 0)
 	return x
 
-	# get weight variavle of initial values from truncated normal
+# get weight variavle of initial values from truncated normal
 def tnVariable(shape, name = None):
 	initial = tf.truncated_normal(shape, stddev=0.1)
 	if name is None:
@@ -17,7 +27,7 @@ def tnVariable(shape, name = None):
 	else:
 		return tf.get_variable(name = name, initializer = initial, dtype = tf.float32)
 
-	# get bias variable of all initial value of 0.1
+# get bias variable of all initial value of 0.1
 def biasVariable(shape, name = None):
     initial = tf.constant(0.1, shape=shape)
     if name is None:
@@ -25,11 +35,11 @@ def biasVariable(shape, name = None):
     else:
     	return tf.get_variable(name = name, initializer = initial, dtype = tf.float32)
 
-    # stride 1 convolution, H and W won't change
+# stride 1 convolution, H and W won't change
 def conv2dStide1(x, W):
 	return tf.nn.conv2d(x, W, strides=[1, 1, 1, 1], padding='SAME')
 
-	# 1 by 1 average ???
+# 1 by 1 average ???
 def avg1x1(x):
 	return tf.nn.avg_pool(x, ksize=[1, 1, 1, 1],
                           strides=[1, 1, 1, 1], padding='SAME')
@@ -143,13 +153,13 @@ def calcReturnWithPrice(prevA, prevS, nextS, mRatio, action, transCostParams, D,
 	print('R', R.shape)
 	return R
 
-	# profit
+# profit
 def calcProfitWithPrice(nextS, todayS, todayHoldings):
 	stockChange = nextS - todayS
 	profit = tf.reduce_sum( tf.multiply( tf.div(stockChange, todayS), todayHoldings) )
 	return profit
 
-	# transaction cost
+# transaction cost
 def calctransactionCostWithPrice(todayS, yesterdayS, todayHoldings, yesterdayHoldings, mRatio, c, c0):
 	holdingsChange = tf.abs( tf.div(todayHoldings, todayS) - mRatio * tf.div(yesterdayHoldings, yesterdayS) )
 	holdingsChange = tf.multiply(holdingsChange, todayS)

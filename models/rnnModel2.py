@@ -9,11 +9,12 @@ from gruCell import GRUCell
 from lstmCell import LSTMCell
 
 class Config:
-	lr = 1e-3
+	lr = 1e-4
 	dropout = 0.5
 	modelType = 'RNNModel'
 	cellType = 'rnn'
-	hiddenSize = 15
+	hiddenSize = 10
+	transformSize = 6
 
 class RnnModel(BasicModel):
 	# add an action (add to self and return it)
@@ -25,30 +26,41 @@ class RnnModel(BasicModel):
 		prevA = self.placeholders['prevA']
 		
 		cellType = self.config.cellType
+
+		cellSize = self.config.hiddenSize
+		inputSize = self.config.transformSize
+
 		if cellType == 'rnn':
-			cell = RNNCell(self.L, self.config.hiddenSize)
+			cell = RNNCell(inputSize, cellSize)
 		elif cellType == 'gru':
-			cell = GRUCell(self.L, self.config.hiddenSize)
+			cell = GRUCell(inputSize, cellSize)
 		elif cellType == 'lstm':
-			cell = LSTMCell(self.L, self.config.hiddenSize)
+			cell = LSTMCell(inputSize, cellSize)
 		else:
 			assert False, "Cell type undefined"
+
 		h = tf.zeros([self.D, self.config.hiddenSize], dtype = tf.float32)
 		hh = tf.zeros([self.D, self.config.hiddenSize], dtype = tf.float32)
+
 		states = []
 		hiddenstates = []
-			
+		initializer = tf.contrib.layers.xavier_initializer()
+
+		W_trans = tf.get_variable('W_trans',
+		                      [self.L, inputSize],
+		                      initializer = initializer)
+		X2 = tf.nn.tanh(mu.batchMatMul(X, W_trans, self.D))
 
 		with tf.variable_scope("RNN"):
 			for t in range(self.N):
 				if t>=1:
 					tf.get_variable_scope().reuse_variables()
-				h, hh = cell(X[:, t, :], h, hh)
+				h, hh = cell(X2[:, t, :], h, hh)
 				states.append(h)
 				hiddenstates.append(hh)
 		# calculate action based on all hidden states
 
-		initializer = tf.contrib.layers.xavier_initializer()
+		
 		W_fc1 = tf.get_variable('W_fc1',
 		                      [self.config.hiddenSize, self.D],
 		                      initializer = initializer)
