@@ -2,17 +2,16 @@ import sys, os, csv
 import numpy as np
 from utils import dataUtil
 
-def baseline(stockPrice, Time):
+def baseline(stockPrice, Time, c):
     # Time: time period index for baseline estimation  
     # estimate Return[i] = Return for Date period (startDate, endDate) = (dateSelected[Time[i]-1],dateSelected[Time[i]])
+    # c: transaction cost
     estimateReturn = np.zeros(len(Time)) 
     
     # total asset
     M = np.zeros(len(Time)+1) 
     M[0] = 1 
     
-    # parameters for transaction cost
-    c = np.zeros(len(stockPrice[-1])+1) + 0.0001
     
     # calculate return including transaction cost
     for i in xrange(len(Time)):
@@ -111,8 +110,11 @@ Time = range(10+(len(dateSelected)-10)/2+1,len(dateSelected))
 # Date for estimated return period (startDate,endDate) =  (dateSelected[Time[i]-1],dateSelected[Time[i]])
 Date = [(dateSelected[i-1][0],dateSelected[i][0]) for i in Time]
 
+# parameters for transaction cost
+c = np.zeros(len(stockPrice[-1])+1) + 0.0001
+
 # estimated period return for corresponding date
-estimateReturn = baseline(stockPrice, Time)
+estimateReturn = baseline(stockPrice, Time, c)
 """
 
 
