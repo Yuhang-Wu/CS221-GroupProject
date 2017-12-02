@@ -1,5 +1,46 @@
 import numpy as np
 import readin
+import time, datetime
+import logging
+import os
+
+def setupLogger(outPath):
+	# get the output file name
+	logFileName = outPath + '/model_log.txt'
+
+	# create logger
+	logger = logging.getLogger('drl_in_pm')
+
+	# create formatter
+	formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+
+	# get the file handler
+	hdlr = logging.FileHandler(logFileName)
+	hdlr.setFormatter(formatter)
+
+	# get the stream handler for system stdout
+	sh = logging.StreamHandler()
+	sh.setFormatter(formatter)
+
+	# add the handlers
+	logger.addHandler(hdlr) 
+	logger.addHandler(sh)
+
+	# set level to debug
+	logger.setLevel(logging.DEBUG)
+
+	return logger
+
+# get the current timestamp
+# return it as a string
+def getCurrentTimestamp():
+	ts = time.time()
+	formattedTime = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d-%H:%M:%S')
+	return formattedTime
+
+# take the last price in the last dimension (for rnn only)
+def reduceDim(stockPricesAll):
+	return stockPricesAll[:,:,-1]
 
 # get all the data (train dev test)
 # tdt stands for train dev test

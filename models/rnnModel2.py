@@ -9,7 +9,7 @@ from gruCell import GRUCell
 from lstmCell import LSTMCell
 
 class Config:
-	lr = 1e-4
+	lr = 5e-4
 	dropout = 0.5
 	modelType = 'RNNModel'
 	cellType = 'rnn'
@@ -59,7 +59,6 @@ class RnnModel(BasicModel):
 				states.append(h)
 				hiddenstates.append(hh)
 		# calculate action based on all hidden states
-
 		
 		W_fc1 = tf.get_variable('W_fc1',
 		                      [self.config.hiddenSize, self.D],
@@ -88,11 +87,11 @@ class RnnModel(BasicModel):
 			'dropout': self.config.dropout,
 			'model_type': self.config.modelType,
 			'cell_type': self.config.cellType,
-			'hidden_size': self.config.hiddenSize
+			'hidden_size': self.config.hiddenSize,
+			'transform_size': self.config.transformSize
 		}
-		print("model info")
-		print(json.dumps(model_info))
-		print()
+		return json.dumps(model_info)
+
 
 	# object constructor
 	# D : the dimension of the portfolio,

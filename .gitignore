@@ -4,3 +4,4 @@ report/
 MNIST_data/
 .ipynb_checkpoints/
 data/writeCompanyNames.js
+results/allresults/
