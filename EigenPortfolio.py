@@ -82,6 +82,7 @@ def getCovarianceMatrix(stockReturn, mu):
         denumerator += np.exp(-mu * (T-i))
     meanReturn = returnSum / denumerator
 
+
     # calculate weighted exponential covariance matrix
     cov = np.zeros((stocknum, stocknum))
     for i in xrange(T):
@@ -106,10 +107,13 @@ dateSelected, stockPrice = dataUtil.getData()
     
 # get time for baseline estimation  
 Time = range(10+(len(dateSelected)-10)/2+1,len(dateSelected)) 
+
 # Date for estimated return period (startDate,endDate) =  (dateSelected[Time[i]-1],dateSelected[Time[i]])
 Date = [(dateSelected[i-1][0],dateSelected[i][0]) for i in Time]
+
 # parameters for transaction cost
 c = np.zeros(len(stockPrice[-1])+1) + 0.0001
+
 # estimated period return for corresponding date
 estimateReturn = baseline(stockPrice, Time, c)
 """
