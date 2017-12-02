@@ -116,14 +116,13 @@ def getLargestEigenvector(cov):
 # get data (date, stockPrice)
 dateSelected, stockPrice = dataUtil.getData()
     
-# get time for baseline estimation  
-# [0,10],[0,11],...,[0,len(dateSelected)]
-Time = xrange(10+(len(dateSelected)-10)/2+1,len(dateSelected)) 
+# get time index for baseline estimation  
+Time = range(len(dateSelected)/3,len(dateSelected)) 
 
-# Date for estimated return period
+# Date for estimated return period (startDate,endDate)
 Date = [(dateSelected[i-2][0],dateSelected[i-1][0]) for i in Time]
 
-# estimated period return
+# estimated period return for corresponding date
 estimateReturn = baseline(stockPrice, Time)
 """
 
