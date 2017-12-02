@@ -9,7 +9,7 @@ from gruCell import GRUCell
 from lstmCell import LSTMCell
 
 class Config:
-	lr = 5e-4
+	lr = 1e-3
 	dropout = 0.5
 	modelType = 'RNNModel'
 	cellType = 'rnn'

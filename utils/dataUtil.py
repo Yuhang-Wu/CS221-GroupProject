@@ -4,6 +4,23 @@ import time, datetime
 import logging
 import os
 
+
+def getYear(date):
+	return int(date[0][:4])
+
+def date2xtick(dateSelected):
+	s = set([])
+	ticks = []
+	for date in dateSelected:
+		y = getYear(date)
+		if y in s:
+			ticks.append('')
+		else:
+			s.add(y)
+			ticks.append(y)
+	ticks[0] = ''
+	return ticks
+
 def setupLogger(outPath):
 	# get the output file name
 	logFileName = outPath + '/model_log.txt'

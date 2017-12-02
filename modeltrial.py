@@ -14,13 +14,14 @@ import os
 DATA_PATH = 'data/sp10/'
 DATA_PATH_ALL = 'data/sp150'
 D = 10
-N = 5
+N = 10
 c = 0.0001
-epochs = 400
+epochs = 20
 transCostParams = {
 	'c': np.array([ [c] for _ in range(D) ]),
 	'c0': c
 }
+baselineTransCostParams = np.zeros(D + 1) + c
 
 resultsDirectory = 'results/allresults/' + du.getCurrentTimestamp() 
 os.mkdir(resultsDirectory)
@@ -93,18 +94,21 @@ def rnnModelTrainingTrial():
 
 def trainAndTestTrial():
 	dateSelected, trainPriceList, devPriceList, testPriceList = du.getTDTdata(DATA_PATH_ALL, frequency = 'week', getAll = True)
+	xticks = du.date2xtick(dateSelected)
 	
 	baselineTime = range(10+(len(dateSelected)-10)/2+1,len(dateSelected)) 
-	baselineTransCostParams = np.zeros(D + 1) + c
 
 	# all the inputs!!
-	epochs = 5
+	epochs = 10
+	logger.info('total epochs: '+str(epochs))
 	L = 4
 	# define model
 
 	curModel = rm2.RnnModel(D, N, transCostParams, L = L)
 
-	curModel.get_model_info()
+	model_info = curModel.get_model_info()
+	logger.info('model basic config')
+	logger.info(model_info)
 
 	#quit()
 	with tf.Session() as sess:
@@ -114,7 +118,7 @@ def trainAndTestTrial():
 			logger.info('')
 			for i in range(len(trainPriceList)):
 				stockPrices = trainPriceList[i]
-				returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L = 4)
+				returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L = L)
 				allActions, growthRates = mu.train1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
 				totalGR = du.prod(growthRates)
 				
@@ -124,7 +128,7 @@ def trainAndTestTrial():
 					
 		for i in range(len(devPriceList)):
 			stockPrices = devPriceList[i]
-			returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L=4)
+			returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L = L)
 			allActions, growthRates = mu.test1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
 			
 			baselineGrowthRates = 1.0 + ep.baseline(du.reduceDim(stockPrices), baselineTime, baselineTransCostParams)
@@ -136,11 +140,9 @@ def trainAndTestTrial():
 			logger.info('baseline total growth rate: '+str(baselineTotalGR))
 			logger.info('')
 			
-
-
 		for i in range(len(testPriceList)):
 			stockPrices = testPriceList[i]
-			returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L=4)
+			returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L = L)
 			allActions, growthRates = mu.test1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
 
 			baselineGrowthRates = 1.0 + ep.baseline(du.reduceDim(stockPrices), baselineTime, baselineTransCostParams)
@@ -153,7 +155,6 @@ def trainAndTestTrial():
 			logger.info('')
 	
 	   	
-
 if __name__=='__main__':
 	main()
 
