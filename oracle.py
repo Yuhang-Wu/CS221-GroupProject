@@ -3,14 +3,6 @@ import numpy as np
 #from utils import readin, yfReader, dataUtil as du
 import cvxpy as cvx
 
-'''
-def oracle(stockPrice, c, c_0):
-	#data = readCsvExample()
-	#dateSelected, stockPrice = du.getData() 
-	#c = [0.001]*10
-	#c_0 = 0.001
-	return solveOracle(stockPrice, 10000, c, c_0)
-'''
 
 def yfReaderUsageExample():
 	outpath = 'data/crawled'
