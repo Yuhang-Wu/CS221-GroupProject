@@ -4,7 +4,7 @@ from utils import dataUtil
 
 def baseline(stockPrice, Time):
     # Time: time period index for baseline estimation  
-    # estimate Return[i] = Return for Date period [Time[i],Time[i]+1]
+    # estimate Return[i] = Return for Date period (startDate, endDate) = (dateSelected[Time[i]-1],dateSelected[Time[i]])
     estimateReturn = np.zeros(len(Time)) 
     
     # total asset
@@ -16,7 +16,7 @@ def baseline(stockPrice, Time):
     
     # calculate return including transaction cost
     for i in xrange(len(Time)):
-        # estimateReturn[i] is return for [Time[i], Time[i]+1]
+        # estimateReturn[i] is return for (dateSelected[Time[i]-1],dateSelected[Time[i]])
         estimateReturn[i], eigenportfolio = calculateReturn(stockPrice[0:Time[i]+1]) 
         if i == 0:
             estimateReturn[i] -= c[0]+c[1]
@@ -25,7 +25,7 @@ def baseline(stockPrice, Time):
         else:
             flag = 0
             for j in xrange(len(stockPrice[-1])):
-                tmp = eigenportfolio[j]-beforePt[j]*M[i-1]/M[i]*stockPrice[Time[i]][j]/stockPrice[Time[i]-1][j]
+                tmp = eigenportfolio[j]-beforePt[j]*M[i-1]/M[i]*stockPrice[Time[i]-1][j]/stockPrice[Time[i]-2][j]
                 estimateReturn[i] = estimateReturn[i] - c[j+1] * np.abs(tmp)
                 if tmp != 0:
                     flag = 1
@@ -33,22 +33,11 @@ def baseline(stockPrice, Time):
                 estimateReturn[i] = estimateReturn[i] - c[0]
             M[i+1] = M[i]*(1 + estimateReturn[i])
             beforePt = eigenportfolio
-    
     return estimateReturn
     
 
 # stockReturn: return for each time period
 def calculateReturn(stockPrice):
-    
-    """
-    flag = 0
-    for i in xrange(len(stPrice[-2])):
-        if stPrice[-2][i] > stPrice[-3][i]:
-            flag = 1
-            break
-    if flag == 0: # if stock prices all decrease in the previous time period, do not invest at current step
-        return None,0,np.append([1],np.zeros(len(stPrice[-2])))
-    """
     
     mu = xrange(10)
     stockReturn = getPeriodReturn(stockPrice)
@@ -61,13 +50,13 @@ def calculateReturn(stockPrice):
         if portReturn > portReturn_max:
             portReturn_max = portReturn
             mu_max = mui
-    return baselineReturn(stockReturn[:-1], mu_max)
+    return baselineReturn(stockReturn, mu_max)
 
 
 def getPeriodReturn(stockPrice):
     stockReturn = np.empty((len(stockPrice)-1,len(stockPrice[0])))
     for i in xrange(len(stockPrice)-1):
-        stockReturn[i] = (np.array(stockPrice[i+1]) - np.array(stockPrice[i]))/np.array(stockPrice[i])
+        stockReturn[i] = np.log((np.array(stockPrice[i+1])/np.array(stockPrice[i])))
     return stockReturn
 
     
@@ -116,14 +105,15 @@ def getLargestEigenvector(cov):
 # get data (date, stockPrice)
 dateSelected, stockPrice = dataUtil.getData()
     
-# get time index for baseline estimation  
-Time = range(len(dateSelected)/3,len(dateSelected)) 
+# get time for baseline estimation  
+Time = range(10+(len(dateSelected)-10)/2+1,len(dateSelected)) 
 
-# Date for estimated return period (startDate,endDate)
-Date = [(dateSelected[i-2][0],dateSelected[i-1][0]) for i in Time]
+# Date for estimated return period (startDate,endDate) =  (dateSelected[Time[i]-1],dateSelected[Time[i]])
+Date = [(dateSelected[i-1][0],dateSelected[i][0]) for i in Time]
 
 # estimated period return for corresponding date
 estimateReturn = baseline(stockPrice, Time)
 """
+
 
 
