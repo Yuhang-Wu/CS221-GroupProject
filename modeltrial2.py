@@ -41,7 +41,7 @@ def trainAndTestTrial():
     # get data for testing
     dateSelected, stockPrice = du.getData(DATA_PATH, 'week')
     # get testing data index
-    TestTimeIndex = range(10+(len(dateSelected)-10)/2+1, len(dateSelected))
+    TestTimeIndex = range(len(dateSelected)/2, len(dateSelected))
     # get testing time period Date for estimating return (startDate, endDate)
     TestDate = [(dateSelected[i-1][0],dateSelected[i][0]) for i in TestTimeIndex]
 
