@@ -31,7 +31,7 @@ logger = du.setupLogger(resultsDirectory)
 
 def trainAndTestTrial():
 	dateSelected, trainPriceList, devPriceList, testPriceList = du.getTDTdata(DATA_PATH_ALL, frequency = 'week', getAll = True)
-	xticks = du.date2xtick(dateSelected)
+	dateXticks = du.date2xtick(dateSelected)
 
 	baselineTime = range(10+(len(dateSelected)-10)/2+1,len(dateSelected)) 
 
@@ -50,39 +50,65 @@ def trainAndTestTrial():
 	#quit()
 	with tf.Session() as sess:
 		sess.run(tf.global_variables_initializer())
+		numBatches = len(trainPriceList) - 0
+		trainingReturnList = [[] for _ in range(numBatches)]
 		for e in range(epochs):
 			logger.info('Beginning '+str(e)+'_th epoch')
 			logger.info('')
-			for i in range(len(trainPriceList) - 5):
+			for i in range(numBatches):
 
 				stockPrices = trainPriceList[i]
 				#print(stockPrices)
 				returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L = L)
 				allActions, growthRates = mu.train1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
 				totalGR = du.prod(growthRates)
-				
+				trainingReturnList[i].append(totalGR)
 				logger.info(str(i) + '_th group in training')
 				logger.info('total growth rate: '+ str(totalGR))
 				logger.info('')
 		
+		# plot training curves
+		trainingPlotter = gp.Plotter('Model Training History', [str(i) for i in range(epochs)], 'Epochs', 'Accumulated Return')
+		for i in range(numBatches):
+			trainingPlotter.addLine(trainingReturnList[i], str(i))
+		trainingPlotter.plot(resultsDirectory + '/training.png')
+
 		devTestPriceLists = [(devPriceList, 'dev'), (testPriceList, 'test')]
 
 		for curPriceList, curLabel in devTestPriceLists:
 
 			for i in range(len(curPriceList)):
 
-				stockPrices = devPriceList[i]
+				stockPrices = curPriceList[i]
 				returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L = L)
 				allActions, growthRates = mu.test1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
-				print(allActions[0])
+				print('example action', allActions[-1])
 				baselineGrowthRates = 1.0 + ep.baseline(du.reduceDim(stockPrices), baselineTime, baselineTransCostParams)
-				growthRates = growthRates[-len(baselineGrowthRates):]
+				minlen = len(baselineGrowthRates)
+				growthRates = growthRates[ -minlen: ]
 				totalGR = du.prod(growthRates)
 				baselineTotalGR = du.prod(baselineGrowthRates)
 				logger.info(str(i) + '_th group in '+curLabel)
 				logger.info('model total growth rate in ' + curLabel + ': '+ str(totalGR))
 				logger.info('baseline total growth rate: '+str(baselineTotalGR))
 				logger.info('')
+
+				curXticks = dateXticks[ -minlen: ]
+				curTitle = curLabel + '-' + str(i)+'-th'
+				curPlotter = gp.Plotter(curTitle, curXticks, 'Year', 'Return')
+				curPlotter.addLine(growthRates, 'model')
+				curPlotter.addLine(baselineGrowthRates, 'baseline')
+				curPlotter.plot(resultsDirectory + '/' + curTitle  + '.png')
+
+				accumulatedGrowthRates = du.getAccumulatedReturn(growthRates)
+				accumulatedBaselineGrowthRates = du.getAccumulatedReturn(baselineGrowthRates)
+
+				curXticks = dateXticks[ -minlen: ]
+				curTitle = curLabel + '-' + str(i)+'-th'
+				curPlotter2 = gp.Plotter(curTitle, curXticks, 'Year', 'Accumulated Return')
+				curPlotter2.addLine(accumulatedGrowthRates, 'model')
+				curPlotter2.addLine(accumulatedBaselineGrowthRates, 'baseline')
+				curPlotter2.plot(resultsDirectory + '/' + curTitle + '_acum' + '.png')
 		'''
 		for i in range(len(testPriceList)):
 			stockPrices = testPriceList[i]

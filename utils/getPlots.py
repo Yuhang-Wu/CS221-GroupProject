@@ -14,7 +14,7 @@ class Plotter(object):
 		self.options = []
 
 	def addLine(self, line, legend, option = '-'):
-		assert(len(line) == len(dates), "plotter dimensionality mismatch")
+		assert(len(line) == len(self.dates), "plotter dimensionality mismatch")
 		self.lines.append(line)
 		self.legends.append(legend)
 		self.options.append(option)
@@ -31,7 +31,7 @@ class Plotter(object):
 		plt.xlabel(self.xlabel)
 		plt.ylabel(self.ylabel)
 		plt.savefig(outPath)
-		plt.show()
+		#plt.show()
 
 	def getMinLen(self):
 		minlen = len(self.dates)

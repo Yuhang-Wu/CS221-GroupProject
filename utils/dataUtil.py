@@ -4,10 +4,21 @@ import time, datetime
 import logging
 import os
 
+# get accumulated return based on growth rates (a list of floats like 1.02)
+# e.g. [1.2, 1.0, 1.5] -> [1.2, 1.2, 1.8]
+def getAccumulatedReturn(growthRates):
+	cur = growthRates[0]
+	out = [cur]
+	for i in range(1, len(growthRates)):
+		cur *= growthRates[i]
+		out.append(cur)
+	return out
 
+# get the year of a date string of format 'yyyy-mm-dd'
 def getYear(date):
 	return int(date[0][:4])
 
+# get the date x ticks 
 def date2xtick(dateSelected):
 	s = set([])
 	ticks = []
