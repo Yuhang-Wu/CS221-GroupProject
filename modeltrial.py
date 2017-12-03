@@ -29,12 +29,83 @@ os.mkdir(resultsDirectory)
 # now call logger.info to log
 logger = du.setupLogger(resultsDirectory)
 
+def trainAndTestTrial():
+	dateSelected, trainPriceList, devPriceList, testPriceList = du.getTDTdata(DATA_PATH_ALL, frequency = 'week', getAll = True)
+	xticks = du.date2xtick(dateSelected)
+
+	baselineTime = range(10+(len(dateSelected)-10)/2+1,len(dateSelected)) 
+
+	# all the inputs!!
+	epochs = 10
+	logger.info('total epochs: '+str(epochs))
+	L = 4
+	# define model
+
+	curModel = rm2.RnnModel(D, N, transCostParams, L = L)
+
+	model_info = curModel.get_model_info()
+	logger.info('model basic config')
+	logger.info(model_info)
+
+	#quit()
+	with tf.Session() as sess:
+		sess.run(tf.global_variables_initializer())
+		for e in range(epochs):
+			logger.info('Beginning '+str(e)+'_th epoch')
+			logger.info('')
+			for i in range(len(trainPriceList) - 5):
+
+				stockPrices = trainPriceList[i]
+				#print(stockPrices)
+				returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L = L)
+				allActions, growthRates = mu.train1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
+				totalGR = du.prod(growthRates)
+				
+				logger.info(str(i) + '_th group in training')
+				logger.info('total growth rate: '+ str(totalGR))
+				logger.info('')
+		
+		devTestPriceLists = [(devPriceList, 'dev'), (testPriceList, 'test')]
+
+		for curPriceList, curLabel in devTestPriceLists:
+
+			for i in range(len(curPriceList)):
+
+				stockPrices = devPriceList[i]
+				returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L = L)
+				allActions, growthRates = mu.test1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
+				print(allActions[0])
+				baselineGrowthRates = 1.0 + ep.baseline(du.reduceDim(stockPrices), baselineTime, baselineTransCostParams)
+				growthRates = growthRates[-len(baselineGrowthRates):]
+				totalGR = du.prod(growthRates)
+				baselineTotalGR = du.prod(baselineGrowthRates)
+				logger.info(str(i) + '_th group in '+curLabel)
+				logger.info('model total growth rate in ' + curLabel + ': '+ str(totalGR))
+				logger.info('baseline total growth rate: '+str(baselineTotalGR))
+				logger.info('')
+		'''
+		for i in range(len(testPriceList)):
+			stockPrices = testPriceList[i]
+			returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L = L)
+			allActions, growthRates = mu.test1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
+			baselineGrowthRates = 1.0 + ep.baseline(du.reduceDim(stockPrices), baselineTime, baselineTransCostParams)
+			growthRates = growthRates[-len(baselineGrowthRates):]
+			totalGR = du.prod(growthRates)
+			print(allActions[0])
+			baselineTotalGR = du.prod(baselineGrowthRates)
+			logger.info(str(i) + '_th group in test')
+			logger.info('model total growth rate in test: '+ str(totalGR))
+			logger.info('baseline total growth rate: '+str(baselineTotalGR))
+			logger.info('')
+		'''
+
 def main():
-	print(du.getCurrentTimestamp())
+	#print(du.getCurrentTimestamp())
 	 
 	trainAndTestTrial()
 	#rnnModelTrainingTrial()
 
+'''
 def cnnModelTrainingTrial():
 	dateSelected, stockPriceList = du.getData(DATA_PATH, frequency = 'month')
 	stockPrices = np.array(stockPriceList)
@@ -91,79 +162,8 @@ def rnnModelTrainingTrial():
 				print('total growth rate:')
 				print(totalGR)
 				print()
+'''
 
-def trainAndTestTrial():
-	dateSelected, trainPriceList, devPriceList, testPriceList = du.getTDTdata(DATA_PATH_ALL, frequency = 'week', getAll = True)
-	xticks = du.date2xtick(dateSelected)
-
-	baselineTime = range(10+(len(dateSelected)-10)/2+1,len(dateSelected)) 
-
-	# all the inputs!!
-	epochs = 20
-	logger.info('total epochs: '+str(epochs))
-	L = 4
-	# define model
-
-	curModel = rm2.RnnModel(D, N, transCostParams, L = L)
-
-	model_info = curModel.get_model_info()
-	logger.info('model basic config')
-	logger.info(model_info)
-
-	#quit()
-	with tf.Session() as sess:
-		sess.run(tf.global_variables_initializer())
-		for e in range(epochs):
-			logger.info('Beginning '+str(e)+'_th epoch')
-			logger.info('')
-			for i in range(len(trainPriceList) - len(trainPriceList) + 1):
-
-				stockPrices = trainPriceList[i]
-				#print(stockPrices)
-				returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L = L)
-				#print(returnTensor)
-				#print(prevReturnMatrix)
-				allActions, growthRates = mu.train1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
-				totalGR = du.prod(growthRates)
-				
-				logger.info(str(i) + '_th group in training')
-				logger.info('total growth rate: '+ str(totalGR))
-				logger.info('')
-		
-		priceLists = [(devPriceList, 'dev'), (testPriceList, 'test')]
-
-
-		for curPriceList, curLabel in priceLists:
-
-			for i in range(len(curPriceList)):
-
-				stockPrices = devPriceList[i]
-				returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L = L)
-				allActions, growthRates = mu.test1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
-				print(allActions[0])
-				baselineGrowthRates = 1.0 + ep.baseline(du.reduceDim(stockPrices), baselineTime, baselineTransCostParams)
-				growthRates = growthRates[-len(baselineGrowthRates):]
-				totalGR = du.prod(growthRates)
-				baselineTotalGR = du.prod(baselineGrowthRates)
-				logger.info(str(i) + '_th group in '+curLabel)
-				logger.info('model total growth rate in ' + curLabel + ': '+ str(totalGR))
-				logger.info('baseline total growth rate: '+str(baselineTotalGR))
-				logger.info('')
-		'''
-		for i in range(len(testPriceList)):
-			stockPrices = testPriceList[i]
-			returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L = L)
-			allActions, growthRates = mu.test1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
-			baselineGrowthRates = 1.0 + ep.baseline(du.reduceDim(stockPrices), baselineTime, baselineTransCostParams)
-			growthRates = growthRates[-len(baselineGrowthRates):]
-			totalGR = du.prod(growthRates)
-			print(allActions[0])
-			baselineTotalGR = du.prod(baselineGrowthRates)
-			logger.info(str(i) + '_th group in test')
-			logger.info('model total growth rate in test: '+ str(totalGR))
-			logger.info('baseline total growth rate: '+str(baselineTotalGR))
-			logger.info('')
-		'''
 	
 	   	
 if __name__=='__main__':

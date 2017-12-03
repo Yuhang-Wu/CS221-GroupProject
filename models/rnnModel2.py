@@ -9,19 +9,21 @@ from gruCell import GRUCell
 from lstmCell import LSTMCell
 
 class Config:
-	lr = 1e-3
+	lr = 2e-3
 	dropout = 0.5
 	modelType = 'RNNModel'
 	cellType = 'rnn'
 	hiddenSize = 10
 	transformSize = 8
+	magnification1 = 500
+	magnification2 = 5
 
 class RnnModel(BasicModel):
 	# add an action (add to self and return it)
 	def add_action(self):
 		# define your variables here
 
-		X = tf.constant(500.0, dtype = tf.float32) * self.placeholders['X']
+		X = tf.constant(self.config.magnification1, dtype = tf.float32) * self.placeholders['X']
 		prevReturn = self.placeholders['prevReturn']
 		prevA = self.placeholders['prevA']
 		
@@ -82,7 +84,7 @@ class RnnModel(BasicModel):
 		y_fc2 = tf.nn.tanh(tf.matmul(y_fc1, W_fc2) + b_fc2)
 
 		action = mu.addBias(y_fc2)
-		action = tf.constant(3.0, dtype = tf.float32) * action
+		action = tf.constant(self.config.magnification2, dtype = tf.float32) * action
 		#action = tf.exp(action)
 		action = tf.nn.softmax(action, dim = 0)
 		self.action = action
@@ -94,7 +96,9 @@ class RnnModel(BasicModel):
 			'model_type': self.config.modelType,
 			'cell_type': self.config.cellType,
 			'hidden_size': self.config.hiddenSize,
-			'transform_size': self.config.transformSize
+			'transform_size': self.config.transformSize,
+			'magnification1': self.config.magnification1,
+			'magnification2': self.config.magnification2
 		}
 		return json.dumps(model_info)
 
