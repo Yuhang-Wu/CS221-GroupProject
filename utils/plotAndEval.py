@@ -7,7 +7,7 @@ def accum(Re):
 		result = []
 		result.append(Re[0])
 		for idx in xrange(1, len(Re)):
-			cur = result[-1] + Re[idx]
+			cur = result[-1] * Re[idx]
 			result.append(cur)
 		return result
 

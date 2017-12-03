@@ -6,8 +6,12 @@ from models import dummyModel as dm
 from models import cnnModel as cm
 from models import rnnModel as rm
 from models import rnnModel2 as rm2
+<<<<<<< HEAD
 from utils import readin, yfReader, dataUtil as du
 from utils import plotAndEval as pe
+=======
+from utils import readin, yfReader, dataUtil as du, getPlots as gp
+>>>>>>> 70a661a8e5ce4eea589d4240aee024d318716f9b
 import EigenPortfolio as ep
 import oracle as oc
 import logging
@@ -17,14 +21,19 @@ import bestStock as bs
 DATA_PATH = 'data/sp10/'
 DATA_PATH_ALL = 'data/sp150'
 D = 10
-N = 5
+N = 10
 c = 0.0001
+<<<<<<< HEAD
 startFunding = 10000
 epochs = 400
+=======
+epochs = 20
+>>>>>>> 70a661a8e5ce4eea589d4240aee024d318716f9b
 transCostParams = {
 	'c': np.array([ [c] for _ in range(D) ]),
 	'c0': c
 }
+baselineTransCostParams = np.zeros(D + 1) + c
 
 resultsDirectory = 'results/allresults/' + du.getCurrentTimestamp() 
 os.mkdir(resultsDirectory)
@@ -32,12 +41,109 @@ os.mkdir(resultsDirectory)
 # now call logger.info to log
 logger = du.setupLogger(resultsDirectory)
 
+def trainAndTestTrial():
+	dateSelected, trainPriceList, devPriceList, testPriceList = du.getTDTdata(DATA_PATH_ALL, frequency = 'week', getAll = True)
+	dateXticks = du.date2xtick(dateSelected)
+
+	baselineTime = range(10+(len(dateSelected)-10)/2+1,len(dateSelected)) 
+
+	# all the inputs!!
+	epochs = 10
+	logger.info('total epochs: '+str(epochs))
+	L = 4
+	# define model
+
+	curModel = rm2.RnnModel(D, N, transCostParams, L = L)
+
+	model_info = curModel.get_model_info()
+	logger.info('model basic config')
+	logger.info(model_info)
+
+	#quit()
+	with tf.Session() as sess:
+		sess.run(tf.global_variables_initializer())
+		numBatches = len(trainPriceList) - 0
+		trainingReturnList = [[] for _ in range(numBatches)]
+		for e in range(epochs):
+			logger.info('Beginning '+str(e)+'_th epoch')
+			logger.info('')
+			for i in range(numBatches):
+
+				stockPrices = trainPriceList[i]
+				#print(stockPrices)
+				returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L = L)
+				allActions, growthRates = mu.train1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
+				totalGR = du.prod(growthRates)
+				trainingReturnList[i].append(totalGR)
+				logger.info(str(i) + '_th group in training')
+				logger.info('total growth rate: '+ str(totalGR))
+				logger.info('')
+		
+		# plot training curves
+		trainingPlotter = gp.Plotter('Model Training History', [str(i) for i in range(epochs)], 'Epochs', 'Accumulated Return')
+		for i in range(numBatches):
+			trainingPlotter.addLine(trainingReturnList[i], str(i))
+		trainingPlotter.plot(resultsDirectory + '/training.png')
+
+		devTestPriceLists = [(devPriceList, 'dev'), (testPriceList, 'test')]
+
+		for curPriceList, curLabel in devTestPriceLists:
+
+			for i in range(len(curPriceList)):
+
+				stockPrices = curPriceList[i]
+				returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L = L)
+				allActions, growthRates = mu.test1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
+				print('example action', allActions[-1])
+				baselineGrowthRates = 1.0 + ep.baseline(du.reduceDim(stockPrices), baselineTime, baselineTransCostParams)
+				minlen = len(baselineGrowthRates)
+				growthRates = growthRates[ -minlen: ]
+				totalGR = du.prod(growthRates)
+				baselineTotalGR = du.prod(baselineGrowthRates)
+				logger.info(str(i) + '_th group in '+curLabel)
+				logger.info('model total growth rate in ' + curLabel + ': '+ str(totalGR))
+				logger.info('baseline total growth rate: '+str(baselineTotalGR))
+				logger.info('')
+
+				curXticks = dateXticks[ -minlen: ]
+				curTitle = curLabel + '-' + str(i)+'-th'
+				curPlotter = gp.Plotter(curTitle, curXticks, 'Year', 'Return')
+				curPlotter.addLine(growthRates, 'model')
+				curPlotter.addLine(baselineGrowthRates, 'baseline')
+				curPlotter.plot(resultsDirectory + '/' + curTitle  + '.png')
+
+				accumulatedGrowthRates = du.getAccumulatedReturn(growthRates)
+				accumulatedBaselineGrowthRates = du.getAccumulatedReturn(baselineGrowthRates)
+
+				curXticks = dateXticks[ -minlen: ]
+				curTitle = curLabel + '-' + str(i)+'-th'
+				curPlotter2 = gp.Plotter(curTitle, curXticks, 'Year', 'Accumulated Return')
+				curPlotter2.addLine(accumulatedGrowthRates, 'model')
+				curPlotter2.addLine(accumulatedBaselineGrowthRates, 'baseline')
+				curPlotter2.plot(resultsDirectory + '/' + curTitle + '_acum' + '.png')
+		'''
+		for i in range(len(testPriceList)):
+			stockPrices = testPriceList[i]
+			returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L = L)
+			allActions, growthRates = mu.test1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
+			baselineGrowthRates = 1.0 + ep.baseline(du.reduceDim(stockPrices), baselineTime, baselineTransCostParams)
+			growthRates = growthRates[-len(baselineGrowthRates):]
+			totalGR = du.prod(growthRates)
+			print(allActions[0])
+			baselineTotalGR = du.prod(baselineGrowthRates)
+			logger.info(str(i) + '_th group in test')
+			logger.info('model total growth rate in test: '+ str(totalGR))
+			logger.info('baseline total growth rate: '+str(baselineTotalGR))
+			logger.info('')
+		'''
+
 def main():
-	print(du.getCurrentTimestamp())
+	#print(du.getCurrentTimestamp())
 	 
 	trainAndTestTrial()
 	#rnnModelTrainingTrial()
 
+'''
 def cnnModelTrainingTrial():
 	dateSelected, stockPriceList = du.getData(DATA_PATH, frequency = 'month')
 	stockPrices = np.array(stockPriceList)
@@ -94,7 +200,9 @@ def rnnModelTrainingTrial():
 				print('total growth rate:')
 				print(totalGR)
 				print()
+'''
 
+<<<<<<< HEAD
 def trainAndTestTrial():
 	dateSelected, trainPriceList, devPriceList, testPriceList = du.getTDTdata(DATA_PATH_ALL, frequency = 'week', getAll = True)
 	
@@ -170,9 +278,10 @@ def trainAndTestTrial():
 			plot_eval.addReturn(baselineGrowthRates, 'Baseline')
 			plot_eval.generatePlot()
 
+=======
+>>>>>>> 70a661a8e5ce4eea589d4240aee024d318716f9b
 	
 	   	
-
 if __name__=='__main__':
 	main()
 

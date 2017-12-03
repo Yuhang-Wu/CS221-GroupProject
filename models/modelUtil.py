@@ -3,6 +3,45 @@ from utils import dataUtil as du
 import tensorflow as tf
 import numpy as np
 
+Exp = np.exp(1.0)
+
+def combineList(tensorList, weights):
+	t = tensorList[0] * weights[0]
+	for i in range(1, len(tensorList)):
+		t += tensorList[i] * weights[i]
+	return t
+
+def getLastEleWeights(tensorList):
+	out = [tf.constant(0.0, dtype = tf.float32) for _ in range(len(tensorList))]
+	out[-1] = tf.constant(1.0, dtype = tf.float32)
+	return out
+
+def getAverageWeights(tensorList):
+	l = len( tensorList )
+	out = [ tf.constant( 1.0 / float(l), dtype = tf.float32 ) for _ in range(l) ]
+	return out
+
+def getDecayingWeights(tensorList):
+	l = len(tensorList)
+	cur = 1.0
+	out = [cur]
+	total = cur
+
+	# create list
+	for i in range(1, len(tensorList)):
+		cur = cur * Exp
+		out.append(cur)
+		total += cur
+
+	# normalize
+	out = [ele/total for ele in out]
+
+	# convert to tensor
+	out = [tf.constant(ele, dtype = tf.float32) for ele in out]
+	return out
+
+def getAttentionWeights(tensorList):
+	pass
 
 # multiply a batch of matrix a tensor in the shape of [D, N, L]
 # with a transformation matrix [L, transformSize]

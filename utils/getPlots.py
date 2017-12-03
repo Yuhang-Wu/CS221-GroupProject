@@ -14,12 +14,13 @@ class Plotter(object):
 		self.options = []
 
 	def addLine(self, line, legend, option = '-'):
-		assert(len(line) == len(dates), "plotter dimensionality mismatch")
+		assert(len(line) == len(self.dates), "plotter dimensionality mismatch")
 		self.lines.append(line)
 		self.legends.append(legend)
 		self.options.append(option)
 
 	def plot(self, outPath):
+		#self.enforceMinLen()
 		plt.figure()
 		x = xrange(len(self.dates))
 		for i in range(len(self.lines)):
@@ -30,8 +31,19 @@ class Plotter(object):
 		plt.xlabel(self.xlabel)
 		plt.ylabel(self.ylabel)
 		plt.savefig(outPath)
-		plt.show()
+		#plt.show()
 
+	def getMinLen(self):
+		minlen = len(self.dates)
+		for line in self.lines:
+			minlen = min(minlen, len(line))
+		return minlen
+
+	def enforceMinLen(self):
+		minlen = self.getMinLen()
+		self.dates = self.dates[ -minlen: ]
+		for i in range(len(self.lines)):
+			self.lines[i] = self.lines[i][ -minlen: ]
 
 # get the accumulated return for each senario
 def accum(Re):
