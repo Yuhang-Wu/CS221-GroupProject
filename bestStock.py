@@ -1,8 +1,3 @@
-import sys, os, csv
-import numpy as np
-#from utils import readin, yfReader, dataUtil as du
-import cvxpy as cvx
-
 def bestStock(SP):
 	result_P = []
 	result_R = []
@@ -15,12 +10,11 @@ def bestStock(SP):
 		bestIdx = 0
 		for compIdx in xrange(compNum):
 			sReturn = (SP[i+1][compIdx] - SP[i][compIdx]) / SP[i][compIdx]
-			print sReturn
 			if sReturn >= bestReturn:
 				bestReturn = sReturn
 				bestIdx = compIdx
 		P[bestIdx] = 1
 		result_P.append(P)
 		result_R.append(bestReturn)
-	print result_P
+	#print result_P
 	return result_R
