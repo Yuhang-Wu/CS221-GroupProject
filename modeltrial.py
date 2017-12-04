@@ -36,7 +36,7 @@ def trainAndTestTrial():
 	baselineTime = range(10+(len(dateSelected)-10)/2+1,len(dateSelected)) 
 
 	# all the inputs!!
-	epochs = 10
+	epochs = 6
 	logger.info('total epochs: '+str(epochs))
 	L = 4
 	# define model
@@ -50,7 +50,7 @@ def trainAndTestTrial():
 	#quit()
 	with tf.Session() as sess:
 		sess.run(tf.global_variables_initializer())
-		numBatches = len(trainPriceList) - 0
+		numBatches = len(trainPriceList) - 5
 		trainingReturnList = [[] for _ in range(numBatches)]
 		for e in range(epochs):
 			logger.info('Beginning '+str(e)+'_th epoch')
@@ -82,7 +82,11 @@ def trainAndTestTrial():
 				stockPrices = curPriceList[i]
 				returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L = L)
 				allActions, growthRates = mu.test1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
+
+				# print an example action for debugging
 				print('example action', allActions[-1])
+
+				# get baseline growth rates
 				baselineGrowthRates = 1.0 + ep.baseline(du.reduceDim(stockPrices), baselineTime, baselineTransCostParams)
 				minlen = len(baselineGrowthRates)
 				growthRates = growthRates[ -minlen: ]

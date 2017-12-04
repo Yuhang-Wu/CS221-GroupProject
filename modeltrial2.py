@@ -62,7 +62,7 @@ def trainAndTestTrial():
     returnTensor_Test = np.array([returnTensor[_] for _ in TestIndex])
     prevReturnMatrix_Test = np.array([prevReturnMatrix[_] for _ in TestIndex])
     nextReturnMatrix_Test = np.array([nextReturnMatrix[_] for _ in TestIndex])    
-
+    
     # generate xticks for plotting
     xticks = du.date2xtick(dateSelected[i] for i in TestTimeIndex)
 
