@@ -70,37 +70,10 @@ def main():
                 maxN = N[i]
                 maxkernelSize = kernelSize[j]
 
-# ModelGrowthRates.append(growthRates)
-Test = 1
-    growthRates,totalGR = TrainAndValidTrial(maxN, logger, maxkernelSize, Test)
-    print(ModeltotalGR)
-    print('maxN is {}, maxkernelSize is {}'.format(maxN, maxkernelSize))
-    N = [15]
-    kernelSize = [3]
-    
-    ModelGrowthRates = []
-    maxReturn = -1000
-    maxN = -1
-    maxkernelSize = -1
-    Test = 0
-    
-    for Ni in N:
-        for kernelSizei in kernelSize:
-            print(du.getCurrentTimestamp())
-            resultsDirectory = 'results/allresults/' + du.getCurrentTimestamp()
-            os.mkdir(resultsDirectory)
-            
-            # now call logger.info to log
-            logger = du.setupLogger(resultsDirectory)
-            growthRates, totalGR = TrainAndValidTrial(Ni, kernelSizei, Test)
-            if maxReturn < totalGR:
-                maxReturn = totalGR
-                maxN = Ni
-                maxkernelSize = kernelSizei
 
-# ModelGrowthRates.append(growthRates)
+    # ModelGrowthRates.append(growthRates)
 
-Test = 1
+    Test = 1
     growthRates, totalGR = TrainAndValidTrial(Ni, kernelSizei, Test)
     print ('maxN is {}, maxkernelSize is {}'.format(maxN, maxkernelSize))
     
