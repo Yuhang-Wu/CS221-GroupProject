@@ -203,7 +203,7 @@ def rnnModelTrainingTrial():
 				print(totalGR)
 				print()
 '''
-
+'''
 <<<<<<< HEAD
 def trainAndTestTrial():
 	dateSelected, trainPriceList, devPriceList, testPriceList = du.getTDTdata(DATA_PATH_ALL, frequency = 'week', getAll = True)
@@ -282,7 +282,7 @@ def trainAndTestTrial():
 
 =======
 >>>>>>> 70a661a8e5ce4eea589d4240aee024d318716f9b
-	
+'''
 	   	
 if __name__=='__main__':
 	main()
