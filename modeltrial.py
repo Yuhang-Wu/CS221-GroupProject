@@ -6,12 +6,7 @@ from models import dummyModel as dm
 from models import cnnModel as cm
 from models import rnnModel as rm
 from models import rnnModel2 as rm2
-<<<<<<< HEAD
-from utils import readin, yfReader, dataUtil as du
-from utils import plotAndEval as pe
-=======
 from utils import readin, yfReader, dataUtil as du, getPlots as gp
->>>>>>> 70a661a8e5ce4eea589d4240aee024d318716f9b
 import EigenPortfolio as ep
 import oracle as oc
 import logging
@@ -23,12 +18,7 @@ DATA_PATH_ALL = 'data/sp150'
 D = 10
 N = 10
 c = 0.0001
-<<<<<<< HEAD
-startFunding = 10000
-epochs = 400
-=======
 epochs = 20
->>>>>>> 70a661a8e5ce4eea589d4240aee024d318716f9b
 transCostParams = {
 	'c': np.array([ [c] for _ in range(D) ]),
 	'c0': c
@@ -201,85 +191,6 @@ def rnnModelTrainingTrial():
 				print(totalGR)
 				print()
 '''
-
-<<<<<<< HEAD
-def trainAndTestTrial():
-	dateSelected, trainPriceList, devPriceList, testPriceList = du.getTDTdata(DATA_PATH_ALL, frequency = 'week', getAll = True)
-	
-	baselineTime = range(10+(len(dateSelected)-10)/2+1,len(dateSelected)) 
-	baselineTransCostParams = np.zeros(D + 1) + c
-
-	# all the inputs!!
-	epochs = 5
-	L = 4
-	# define model
-
-	curModel = rm2.RnnModel(D, N, transCostParams, L = L)
-
-	curModel.get_model_info()
-
-	#quit()
-	with tf.Session() as sess:
-		sess.run(tf.global_variables_initializer())
-		for e in range(epochs):
-			logger.info('Beginning '+str(e)+'_th epoch')
-			logger.info('')
-			for i in range(len(trainPriceList)):
-				stockPrices = trainPriceList[i]
-				returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L = 4)
-				allActions, growthRates = mu.train1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
-				totalGR = du.prod(growthRates)
-				
-				logger.info(str(i) + '_th group in training')
-				logger.info('total growth rate: '+ str(totalGR))
-				logger.info('')
-					
-		for i in range(len(devPriceList)):
-			stockPrices = devPriceList[i]
-			returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L=4)
-			allActions, growthRates = mu.test1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
-			
-			baselineGrowthRates = 1.0 + ep.baseline(du.reduceDim(stockPrices), baselineTime, baselineTransCostParams)
-			growthRates = growthRates[-len(baselineGrowthRates):]
-			totalGR = du.prod(growthRates)
-			baselineTotalGR = du.prod(baselineGrowthRates)
-			logger.info(str(i) + '_th group in dev')
-			logger.info('model total growth rate in dev: '+ str(totalGR))
-			logger.info('baseline total growth rate: '+str(baselineTotalGR))
-			logger.info('')
-			
-
-
-		for i in range(len(testPriceList)):
-			stockPrices = testPriceList[i]
-			returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrices, N, L=4)
-			allActions, growthRates = mu.test1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
-			baselineGrowthRates = 1.0 + ep.baseline(du.reduceDim(stockPrices), baselineTime, baselineTransCostParams)
-			oracleGrowthRates = 1.0 + np.array(oc.solveOracle(du.reduceDim(stockPrices), startFunding, transCostParams['c'], transCostParams['c0']))
-			#bestStockGrowthRates = 1.0 + np.array(bs.bestStock(du.reduceDim(stockPrices)))
-			growthRates = growthRates[-len(baselineGrowthRates):]
-			oracleGrowthRates = oracleGrowthRates[-len(baselineGrowthRates):]
-			#bestStockGrowthRates = bestStockGrowthRates[-len(baselineGrowthRates):]
-			totalGR = du.prod(growthRates)
-			baselineTotalGR = du.prod(baselineGrowthRates)
-			oracleTotalGR = du.prod(oracleGrowthRates)
-			#bestStockTotalGR = du.prod(bestStockGrowthRates)
-			logger.info(str(i) + '_th group in test')
-			logger.info('model total growth rate in test: '+ str(totalGR))
-			logger.info('baseline total growth rate: '+str(baselineTotalGR))
-			logger.info('oracle total growth rate: '+str(oracleTotalGR))
-			#logger.info('bestStock total growth rate: '+str(bestStockTotalGR))
-			logger.info('')
-			# plot
-			plot_eval = pe.plotEval([dateSelected[i] for i in baselineTime], 2014)
-			plot_eval.addReturn(growthRates, 'Model')
-			plot_eval.addReturn(oracleGrowthRates, 'Oracle')
-			#plot_eval.addReturn(bestStockGrowthRates, 'BestStock')
-			plot_eval.addReturn(baselineGrowthRates, 'Baseline')
-			plot_eval.generatePlot()
-
-=======
->>>>>>> 70a661a8e5ce4eea589d4240aee024d318716f9b
 	
 	   	
 if __name__=='__main__':

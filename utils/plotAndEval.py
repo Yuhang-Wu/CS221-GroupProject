@@ -5,9 +5,9 @@ import numpy as np
 
 def accum(Re):
 		result = []
-		result.append(Re[0])
+		result.append(math.log(Re[0]))
 		for idx in xrange(1, len(Re)):
-			cur = result[-1] * Re[idx]
+			cur = result[-1] + math.log(Re[idx])
 			result.append(cur)
 		return result
 
@@ -15,11 +15,11 @@ def accum(Re):
 def totalReturn(Re):
 	result = 1
 	for re in Re:
-		result *= (1+re)		
+		result *= re		
 	return result
 
 def sharp_ratio(Re):
-	Re = np.array(Re)
+	Re = np.array(Re) -1 
 	return np.mean(Re)/np.std(Re)
 
 class plotEval:
@@ -66,7 +66,7 @@ class plotEval:
 		plt.savefig('results/Figures/Weekly_Re')
 		plt.show()
 
-		# plot accumulated return
+		# plot (log) accumulated return
 		legend_2 = []
 		for label in self.returns.keys():
 			accumReturn = accum(self.returns[label])
@@ -74,11 +74,11 @@ class plotEval:
 			legend_2.append(label)
 
 		plt.xticks(x, dateLabel)
-		plt.title('Weekly Accumulated Return')
+		plt.title('Weekly Accumulated Log Return')
 		plt.legend(legend_2)
 		plt.xlabel('Year')
-		plt.ylabel('Accumulated Return')
-		plt.savefig('results/Figures/Weekly_Re_Accum')
+		plt.ylabel('Accumulated Log Return')
+		plt.savefig('results/Figures/Weekly_Re_Accum_Log')
 		plt.show()
 
 	
