@@ -6,7 +6,7 @@ import modelUtil as mu
 
 
 class Config:
-	lr = 0.001
+	lr = 0.0001
 	dropout = 0.5
 
 class DummyModel(Model):
@@ -102,7 +102,7 @@ class DummyModel(Model):
 
 	# define how to train from loss (return it)
 	def add_train_op(self, loss):
-		optimizer = tf.train.GradientDescentOptimizer(Config.lr)
+		optimizer = tf.train.AdamOptimizer(Config.lr)
 		train_op = optimizer.minimize(loss)
 		return train_op
 
