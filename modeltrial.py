@@ -6,12 +6,8 @@ from models import dummyModel as dm
 from models import cnnModel as cm
 from models import rnnModel as rm
 from models import rnnModel2 as rm2
-<<<<<<< HEAD
-from utils import readin, yfReader, dataUtil as du
 from utils import plotAndEval as pe
-=======
 from utils import readin, yfReader, dataUtil as du, getPlots as gp
->>>>>>> 70a661a8e5ce4eea589d4240aee024d318716f9b
 import EigenPortfolio as ep
 import oracle as oc
 import logging
