@@ -23,12 +23,10 @@ DATA_PATH_ALL = 'data/sp150'
 D = 10
 N = 10
 c = 0.0001
-<<<<<<< HEAD
+
 startFunding = 10000
-epochs = 400
-=======
 epochs = 20
->>>>>>> 70a661a8e5ce4eea589d4240aee024d318716f9b
+
 transCostParams = {
 	'c': np.array([ [c] for _ in range(D) ]),
 	'c0': c
