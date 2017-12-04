@@ -53,9 +53,12 @@ class plotEval:
 		x = xrange(len(self.date))
 		# Do the plotting
 		# Plot weekly return
+		style = ['ro-', 'gv-', 'b^-', 'cH-', 'mD-', 'kh-', 'yp-']
 		legend_1 = []
+		style_i = 0
 		for label in self.returns.keys():
-			plt.plot(x,self.returns[label],'-')
+			plt.plot(x,self.returns[label],style[style_i])
+			style_i += 1
 			legend_1.append(label)
 
 		plt.xticks(x, dateLabel)
@@ -68,9 +71,11 @@ class plotEval:
 
 		# plot (log) accumulated return
 		legend_2 = []
+		style_i = 0
 		for label in self.returns.keys():
 			accumReturn = accum(self.returns[label])
-			plt.plot(x,accumReturn,'-')
+			plt.plot(x,accumReturn,style[style_i])
+			style_i += 1
 			legend_2.append(label)
 
 		plt.xticks(x, dateLabel)
