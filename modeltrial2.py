@@ -39,16 +39,14 @@ TestTimeIndex = range(len(dateSelected)/10*9, len(dateSelected))
 # get testing time period Date for estimating return (startDate, endDate)
 TestDate = [(dateSelected[i-1][0],dateSelected[i][0]) for i in TestTimeIndex]
 
-# generate xticks for plotting
-xticks = du.date2xtick(dateSelected[i] for i in TestTimeIndex)
-    
+
 # epochs and tolerance for training
 epochs = 500
 tol = 1e-7
 
 def main():
-    N = [1]
-    kernelSize = [1]
+    N = [15]
+    kernelSize = [3]
     
     ModelGrowthRates = []
     maxReturn = -1000
