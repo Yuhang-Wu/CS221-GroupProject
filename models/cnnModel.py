@@ -45,13 +45,13 @@ class CnnModel(BasicModel):
         prevReturn = self.placeholders['prevReturn'] # return for last time step
     
         # first convolution layer
-        W_conv1 = weight_variable([1, 3, 1, 10])
+        W_conv1 = weight_variable([1, self.kernelSize, 1, 10])
         b_conv1 = bias_variable([10])
         h_conv1 = tf.nn.relu(conv2d(x_data, W_conv1) + b_conv1)
         h_pool1 = avg_pool_4x1(h_conv1)
     
         # second convolutional layer
-        W_conv2 = weight_variable([1, 3, 10, 5])
+        W_conv2 = weight_variable([1, self.kernelSize, 10, 5])
         b_conv2 = bias_variable([5])
         h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)
         h_pool2 = avg_pool_4x1(h_conv2)
@@ -82,10 +82,14 @@ class CnnModel(BasicModel):
         
     def get_model_info(self):
         model_info = {
+            'number of days looking back': self.N,
+            'dimension of the portfolio': self.D,
+            'kernelSize': self.kernelSize,
             'lr': self.config.lr,
             'model_type': self.config.modelType,
             'ConvolutionalLayers': self.config.ConvolutionalLayers,
             'DenseLayers': self.config.DenseLayers
+            
         }
         return json.dumps(model_info)
     
@@ -93,10 +97,11 @@ class CnnModel(BasicModel):
     # D : the dimension of the portfolio,
     # N : the number of days looking back
     # L : the number of data points per time step
-    def __init__(self, D, N, transCostParams, L = 1):
+    def __init__(self, D, N, transCostParams, kernelSize, L = 1):
         self.D = D
         self.N = N
         self.L = L
+        self.kernelSize = kernelSize
         self.config = Config
         self.transCostParams = {
             key: tf.constant(transCostParams[key], dtype = tf.float32) for key in transCostParams
