@@ -27,4 +27,4 @@ def get_testing_data():
     stockReturn  = du.logReturn(stockPrice)
     TestReturn = [stockReturn[i-1] for i in TestTimeIndex]
 
-    return TestDate, TestReturn
+    return TestDate, TestReturn, stockPrice, TestTimeIndex

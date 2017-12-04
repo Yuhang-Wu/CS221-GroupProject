@@ -36,35 +36,41 @@ class plotEval:
 
 
 	def generatePlot(self):
-		# Find the right place to put the year labels '20xx' 
+		# Find the right place to put the year labels '20xx'
+		# Show some of the dates as xticks (every 10)
 		year = self.startYear + 1
 		year_idx = {}
+		date_idx = {}
 		for idx, date in enumerate(self.date):
+			if idx % 5 == 1:
+				date_idx[date[0][5:]] = idx - 1
 			if year <= 2017:
 				if int(date[0][0:4]) == year:
 					year_idx[str(year)] = idx - 1
 					year += 1
-			else:
-				break
+			
 
 		dateLabel = ['' for i in xrange(len(self.date))]
+		
+		for date_i in date_idx.keys():
+			dateLabel[date_idx[date_i]] = date_i
 		for year in year_idx.keys():
 			dateLabel[year_idx[year]] = year
+		
 		x = xrange(len(self.date))
 		# Do the plotting
 		# Plot weekly return
-		style = ['ro-', 'gv-', 'b^-', 'cH-', 'mD-', 'kh-', 'yp-']
+		#style = ['ro-', 'gv-', 'b^-', 'cH-', 'mD-', 'kh-', 'yp-']
 		legend_1 = []
 		style_i = 0
-		for label in self.returns.keys():
-			plt.plot(x,self.returns[label],style[style_i])
+		for label_i in self.returns.keys():
+			plt.plot(x,self.returns[label_i],'-', label = label_i)
 			style_i += 1
-			legend_1.append(label)
 
 		plt.xticks(x, dateLabel)
 		plt.title('Weekly Return')
-		plt.legend(legend_1)
-		plt.xlabel('Year')
+		plt.legend(loc = 'upper right')
+		plt.xlabel('Date')
 		plt.ylabel('Return')
 		plt.savefig('results/Figures/Weekly_Re')
 		plt.show()
@@ -72,16 +78,15 @@ class plotEval:
 		# plot (log) accumulated return
 		legend_2 = []
 		style_i = 0
-		for label in self.returns.keys():
-			accumReturn = accum(self.returns[label])
-			plt.plot(x,accumReturn,style[style_i])
+		for label_i in self.returns.keys():
+			accumReturn = accum(self.returns[label_i])
+			plt.plot(x,accumReturn,'-', label = label_i)
 			style_i += 1
-			legend_2.append(label)
 
 		plt.xticks(x, dateLabel)
 		plt.title('Weekly Accumulated Log Return')
-		plt.legend(legend_2)
-		plt.xlabel('Year')
+		plt.legend(loc = 'upper left')
+		plt.xlabel('Date')
 		plt.ylabel('Accumulated Log Return')
 		plt.savefig('results/Figures/Weekly_Re_Accum_Log')
 		plt.show()
