@@ -7,7 +7,7 @@ def accum(Re):
 		result = []
 		result.append(Re[0])
 		for idx in xrange(1, len(Re)):
-			cur = result[-1] + Re[idx]
+			cur = result[-1] * Re[idx]
 			result.append(cur)
 		return result
 
@@ -42,7 +42,7 @@ class plotEval:
 		for idx, date in enumerate(self.date):
 			if year <= 2017:
 				if int(date[0][0:4]) == year:
-					year_idx[str(year)] = idx
+					year_idx[str(year)] = idx - 1
 					year += 1
 			else:
 				break

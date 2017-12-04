@@ -10,6 +10,8 @@ from utils import readin, yfReader, dataUtil as du, getPlots as gp
 import EigenPortfolio as ep
 import logging
 import os
+from utils import plotAndEval as pe
+import oracle as oc
 
 DATA_PATH = 'data/sp10/'
 DATA_PATH_ALL = 'data/sp150'
@@ -105,9 +107,15 @@ def trainAndTestTrial():
         print(allActions[0])
 
         baselineGrowthRates = 1.0 + ep.baseline(stockPrice, TestTimeIndex, baselineTransCostParams)
+        oracleGrowthRates = oc.solveOracle(stockPrice, 10000, transCostParams['c'], transCostParams['c0'])
         growthRates = growthRates[-len(baselineGrowthRates):]
         totalGR = du.prod(growthRates)
         baselineTotalGR = du.prod(baselineGrowthRates)
+        plotE = pe.plotEval(TestDate, 2016)
+        plotE.addReturn(baselineGrowthRates, 'Baseline')
+        plotE.addReturn(growthRates, 'CNN')
+        plotE.addReturn(oracleGrowthRates, 'Oracle')
+        plotE.generatePlot()
         logger.info('model total growth rate in testing data: '+ str(totalGR))
         logger.info('baseline total growth rate: '+str(baselineTotalGR))
         logger.info('')

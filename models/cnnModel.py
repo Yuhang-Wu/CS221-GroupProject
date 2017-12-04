@@ -1,16 +1,20 @@
 from __future__ import print_function
 import tensorflow as tf
 import numpy as np
-import os
+import os,json
 import modelUtil as mu
 from model import Model, raiseNotDefined
 from basicModel import BasicModel
 
 
+
 class Config:
     lr = 1e-4
-    dropout = 0.5
     modelType = 'CNNModel'
+    ConvolutionalLayers = 2
+    DenseLayers = 2
+    
+    
 
 # weight initialization
 def weight_variable(shape):
@@ -75,6 +79,16 @@ class CnnModel(BasicModel):
         action = tf.concat([currentPortfolio, [[1]]],1)
         self.action = tf.reshape(action,[self.D+1,1])
 
+        
+    def get_model_info(self):
+        model_info = {
+            'lr': self.config.lr,
+            'model_type': self.config.modelType,
+            'ConvolutionalLayers': self.config.ConvolutionalLayers,
+            'DenseLayers': self.config.DenseLayers
+        }
+        return json.dumps(model_info)
+    
     # object constructor
     # D : the dimension of the portfolio,
     # N : the number of days looking back

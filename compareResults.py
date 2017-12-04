@@ -6,20 +6,37 @@ import math
 import numpy as np
 from utils import plotAndEval as pe
 from utils import readin, yfReader, dataUtil as du
+import bestStock as bs
 
 
 #Re_ep, D, M= ep.main()
 
 # get return from senarios other than baseline
 #Re_oa = oa.main()
+# note here the form of date is [('2014-11-05', 10), ('2014-11-12', 15), ('2014-11-19', 20), ...],
+# different from what pe.plotEval() expects, but should still work
 dateSelected, stockPrice = du.getData() 
 c = [0.001]*10
 c_0 = 0.001
 startingFund = 10000
 Time = range(len(stockPrice)/3,len(stockPrice))
+print stockPrice
+
+'''
+Re_oa = oa.solveOracle(stockPrice, startingFund,c, c_0)
+Re_bs = bs.bestStock(stockPrice)
+print len(Re_oa), len(Re_bs), len(dateSelected)
+pe = pe.plotEval(dateSelected[:-1], 2014)
+pe.addReturn(Re_oa, 'Oracle')
+pe.addReturn(Re_bs, 'BestStock')
+pe.generatePlot()
+'''
+
+'''
 
 # an example of how to call oracle
 Re_oa = oa.solveOracle([stockPrice[i], for i in Time], startingFund, c, c_0)
+
 
 Re_ep = ep.baseline(stockPrice, Time)
 
@@ -47,3 +64,4 @@ pe.addReturn(Re_cnn_test, 'CNN')
 pe.addReturn(Re_rnn_test,'RNN')
 pe.generatePlot()
 pe.eval()
+'''
