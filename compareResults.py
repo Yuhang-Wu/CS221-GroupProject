@@ -1,7 +1,6 @@
 
 import EigenPortfolio as ep
-import oracle as oa
-import CNNportforlio as cnn
+import oracle as oc
 import math
 import numpy as np
 from utils import plotAndEval as pe
