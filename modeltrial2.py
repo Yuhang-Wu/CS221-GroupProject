@@ -115,8 +115,8 @@ def TrainAndValidTrial(N, logger, kernelSize):
     logger.info('tolerance: '+str(tol))
     
     # define model
-    curModel = cm.CnnModel(D, N, transCostParams, kernelSize)
     L = 1
+    curModel = cm.CnnModel(D, N, transCostParams, kernelSize, L)
 
     model_info = curModel.get_model_info()
     logger.info('model basic config')

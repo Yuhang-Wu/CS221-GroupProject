@@ -13,6 +13,9 @@ import logging
 import os
 from utils import plotAndEval as pe
 
+
+## for baseline, can directly input (stockPrice,TestTimeIndex)
+## for rnn and cnn, testing data is (TestReturn), and corresponding date is (TestDate)
 def get_testing_data():
     DATA_PATH = 'data/sp10/'
     ## specify testing data
@@ -27,4 +30,5 @@ def get_testing_data():
     stockReturn  = du.logReturn(stockPrice)
     TestReturn = [stockReturn[i-1] for i in TestTimeIndex]
 
-    return TestDate, TestReturn
+
+    return TestDate, TestReturn, stockPrice, TestTimeIndex, dateSelected
