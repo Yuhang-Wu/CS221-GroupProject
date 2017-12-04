@@ -18,7 +18,7 @@ DATA_PATH_ALL = 'data/sp150'
 D = 10
 N = 10
 c = 0.0001
-epochs = 20
+epochs = 400
 transCostParams = {
 'c': np.array([ [c] for _ in range(D) ]),
 'c0': c
@@ -64,7 +64,8 @@ def trainAndTestTrial():
     returnTensor_Test = np.array([returnTensor[_] for _ in TestIndex])
     prevReturnMatrix_Test = np.array([prevReturnMatrix[_] for _ in TestIndex])
     nextReturnMatrix_Test = np.array([nextReturnMatrix[_] for _ in TestIndex])    
-    
+    print(returnTensor_Test.shape)
+   
     # generate xticks for plotting
     xticks = du.date2xtick(dateSelected[i] for i in TestTimeIndex)
 
