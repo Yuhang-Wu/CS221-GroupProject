@@ -7,7 +7,7 @@ import TestingData as td
 import numpy as np
 
 def main():
-        TestDate, TestReturn, stockPrice, TestTimeIndex = td.get_testing_data()
+        TestDate, TestReturn, stockPrice, TestTimeIndex, dateSelected = td.get_testing_data()
         c = 0.0001
         D = 10
         transCostParams = {

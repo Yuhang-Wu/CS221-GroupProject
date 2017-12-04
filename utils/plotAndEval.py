@@ -38,33 +38,33 @@ class plotEval:
 	def generatePlot(self):
 		# Find the right place to put the year labels '20xx'
 		# Show some of the dates as xticks (every 10)
-		year = self.startYear + 1
+		year = int(self.date[0][0][0:4])
 		year_idx = {}
 		date_idx = {}
 		for idx, date in enumerate(self.date):
 			if idx % 5 == 1:
-				date_idx[date[0][5:]] = idx - 1
+				date_idx[date[0][2:]] = idx 
 			if year <= 2017:
 				if int(date[0][0:4]) == year:
-					year_idx[str(year)] = idx - 1
+					year_idx[str(year)] = idx 
 					year += 1
 			
-
 		dateLabel = ['' for i in xrange(len(self.date))]
 		
 		for date_i in date_idx.keys():
 			dateLabel[date_idx[date_i]] = date_i
+		'''
 		for year in year_idx.keys():
 			dateLabel[year_idx[year]] = year
-		
+		'''
 		x = xrange(len(self.date))
 		# Do the plotting
 		# Plot weekly return
-		#style = ['ro-', 'gv-', 'b^-', 'cH-', 'mD-', 'kh-', 'yp-']
+		style = ['r-', 'g-', 'b-', 'c-', 'm-', 'y-', 'k-']
 		legend_1 = []
 		style_i = 0
 		for label_i in self.returns.keys():
-			plt.plot(x,self.returns[label_i],'-', label = label_i)
+			plt.plot(x,self.returns[label_i],style[style_i], label = label_i)
 			style_i += 1
 
 		plt.xticks(x, dateLabel)
@@ -80,7 +80,7 @@ class plotEval:
 		style_i = 0
 		for label_i in self.returns.keys():
 			accumReturn = accum(self.returns[label_i])
-			plt.plot(x,accumReturn,'-', label = label_i)
+			plt.plot(x,accumReturn,style[style_i], label = label_i)
 			style_i += 1
 
 		plt.xticks(x, dateLabel)
