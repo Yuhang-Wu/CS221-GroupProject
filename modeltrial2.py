@@ -17,6 +17,10 @@ DATA_PATH = 'data/sp10/'
 DATA_PATH_ALL = 'data/sp150'
 D = 10
 c = 0.0001
+<<<<<<< HEAD
+=======
+epochs = 400
+>>>>>>> 6b28f2aa0a7cf39b8b43dd38c302e5046d72d081
 transCostParams = {
 'c': np.array([ [c] for _ in range(D) ]),
 'c0': c
@@ -38,17 +42,21 @@ TestTimeIndex = range(len(dateSelected)/10*9, len(dateSelected))
 # get testing time period Date for estimating return (startDate, endDate)
 TestDate = [(dateSelected[i-1][0],dateSelected[i][0]) for i in TestTimeIndex]
 
+<<<<<<< HEAD
 resultsDirectory = 'results/allresults/' + du.getCurrentTimestamp()
 os.mkdir(resultsDirectory)
     
 # now call logger.info to log
 logger = du.setupLogger(resultsDirectory)
+=======
+>>>>>>> 6b28f2aa0a7cf39b8b43dd38c302e5046d72d081
 
 # epochs and tolerance for training
 epochs = 500
 tol = 1e-7
 
 def main():
+<<<<<<< HEAD
     N = [1,5,10,15,20]
     kernelSize = [1,3,5]
     
@@ -74,6 +82,32 @@ def main():
     growthRates,totalGR = TrainAndValidTrial(maxN, logger, maxkernelSize, Test)
     print(ModeltotalGR)
     print('maxN is {}, maxkernelSize is {}'.format(maxN, maxkernelSize))
+=======
+    N = [15]
+    kernelSize = [3]
+    
+    ModelGrowthRates = []
+    maxReturn = -1000
+    maxN = -1
+    maxkernelSize = -1
+    for Ni in N:
+        for kernelSizei in kernelSize:
+            print(du.getCurrentTimestamp())
+            resultsDirectory = 'results/allresults/' + du.getCurrentTimestamp()
+            os.mkdir(resultsDirectory)
+
+            # now call logger.info to log
+            logger = du.setupLogger(resultsDirectory)
+            growthRates, totalGR = TrainAndValidTrial(Ni, logger, kernelSizei)
+            if maxReturn < totalGR:
+                maxReturn = totalGR
+                maxN = Ni
+                maxkernelSize = kernelSizei
+
+            # ModelGrowthRates.append(growthRates)
+
+    print ('maxN is {}, maxkernelSize is {}'.format(maxN, maxkernelSize))
+>>>>>>> 6b28f2aa0a7cf39b8b43dd38c302e5046d72d081
 
     """
     baselineGrowthRates = 1.0 + ep.baseline(stockPrice, TestTimeIndex, baselineTransCostParams)
@@ -87,7 +121,11 @@ def main():
     """
 
 
+<<<<<<< HEAD
 def TrainAndValidTrial(N, kernelSize, Test):
+=======
+def TrainAndValidTrial(N, logger, kernelSize):
+>>>>>>> 6b28f2aa0a7cf39b8b43dd38c302e5046d72d081
     
     # get testing data index
     TestIndex = [i-N-1 for i in TestTimeIndex]
@@ -112,7 +150,16 @@ def TrainAndValidTrial(N, kernelSize, Test):
     ## get testing data
     returnTensor_Test = np.array([returnTensor[_] for _ in TestIndex])
     prevReturnMatrix_Test = np.array([prevReturnMatrix[_] for _ in TestIndex])
+<<<<<<< HEAD
     nextReturnMatrix_Test = np.array([nextReturnMatrix[_] for _ in TestIndex])
+=======
+
+    nextReturnMatrix_Test = np.array([nextReturnMatrix[_] for _ in TestIndex])    
+    print(returnTensor_Test.shape)
+   
+    # generate xticks for plotting
+    xticks = du.date2xtick(dateSelected[i] for i in TestTimeIndex)
+>>>>>>> 6b28f2aa0a7cf39b8b43dd38c302e5046d72d081
 
 
     # epochs and tolerance for training
@@ -152,6 +199,7 @@ def TrainAndValidTrial(N, kernelSize, Test):
         totalGR = du.prod(growthRates)
         logger.info('model total growth rate in validation data: '+ str(totalGR))
         
+<<<<<<< HEAD
         ## test model
         if Test == 1:
             allActions, growthRates = mu.test1epoch(returnTensor_Valid, prevReturnMatrix_Valid, nextReturnMatrix_Valid, curModel, sess)
@@ -160,6 +208,13 @@ def TrainAndValidTrial(N, kernelSize, Test):
 
         print(allActions[0])
 
+=======
+        print(allActions[0])
+
+
+        # growthRates = growthRates[-len(baselineGrowthRates):]
+
+>>>>>>> 6b28f2aa0a7cf39b8b43dd38c302e5046d72d081
     return growthRates, totalGR
 
 

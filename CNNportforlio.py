@@ -17,7 +17,11 @@ def conv2d(x, W):
 
 def avg_pool_4x1(x):
     return tf.nn.avg_pool(x, ksize=[1, 1, 1, 1],
+<<<<<<< HEAD
                         strides=[1, 1, 1, 1], padding='SAME')
+=======
+                          strides=[1, 1, 1, 1], padding='SAME')
+>>>>>>> 6b28f2aa0a7cf39b8b43dd38c302e5046d72d081
 
 
 def CNN(stockPrice, Time, c):
@@ -60,7 +64,11 @@ def CNN(stockPrice, Time, c):
     b_conv2 = bias_variable([5])
     h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)
     h_pool2 = avg_pool_4x1(h_conv2)
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 6b28f2aa0a7cf39b8b43dd38c302e5046d72d081
     # densely connected layer 1
     wsize1 = int(h_pool2.shape[2] * h_pool2.shape[3])
     wsize2 = 1
@@ -72,7 +80,11 @@ def CNN(stockPrice, Time, c):
     h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + tf.matmul(prePort, W_fc12) + b_fc1)
     h_fc1_score = tf.reshape(h_fc1, [-1, L])
     
+<<<<<<< HEAD
     # densely connected layer 2 
+=======
+    # densely connected layer 2
+>>>>>>> 6b28f2aa0a7cf39b8b43dd38c302e5046d72d081
     # readout layer
     W_fc2 = weight_variable([L, L])
     b_fc2 = bias_variable([L])
@@ -80,7 +92,11 @@ def CNN(stockPrice, Time, c):
     
     # produce portfolio
     currentPortfolio = tf.nn.softmax(logits=y_conv)
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 6b28f2aa0a7cf39b8b43dd38c302e5046d72d081
     # define loss function
     reward0 = np.multiply(currentPortfolio, y_)
     reward = tf.reduce_sum(reward0, 1)
@@ -93,12 +109,21 @@ def CNN(stockPrice, Time, c):
             flag = 1
     if flag:
         reward = reward - c[0]
+<<<<<<< HEAD
 
     # loss function: reward_minus
     reward_minus = -tf.reduce_prod(reward+1)
     
     
     
+=======
+    
+    # loss function: reward_minus
+    reward_minus = -tf.reduce_prod(reward+1)
+    
+
+
+>>>>>>> 6b28f2aa0a7cf39b8b43dd38c302e5046d72d081
     train_step = tf.train.AdamOptimizer(1e-4).minimize(reward_minus)
     test_step = tf.train.AdamOptimizer(1e-4).minimize(reward_minus)
     
@@ -125,9 +150,15 @@ def CNN(stockPrice, Time, c):
             else:
                 pre_train_accumulate = train_accumulate
             print 'epoch{0}, the training accumulated return is {1}.'.format(k, train_accumulate)
+<<<<<<< HEAD
             
         # test model
         test_accumulate = 1 
+=======
+    
+        # test model
+        test_accumulate = 1
+>>>>>>> 6b28f2aa0a7cf39b8b43dd38c302e5046d72d081
         PrePortfolio = np.zeros([B,L])
         PreReturn = np.zeros(B)
         testReturn = []
@@ -140,6 +171,7 @@ def CNN(stockPrice, Time, c):
             test_step.run(feed_dict={x: historicalData, y_: compareReturn, previousPortfolio: PrePortfolio, previousReturn: PreReturn})
             prePortfolio = sess.run(currentPortfolio,  {x: historicalData,y_: compareReturn,  previousPortfolio: PrePortfolio, previousReturn: PreReturn})
             preReturn = currentReturn
+<<<<<<< HEAD
             
     return testReturn
 
@@ -150,6 +182,18 @@ dateSelected, stockPrice = dataUtil.getData()
     
 # get time for baseline estimation  
 Time = range(len(dateSelected)/2,len(dateSelected)) 
+=======
+
+return testReturn
+
+
+"""
+# get data (date, stockPrice)
+dateSelected, stockPrice = dataUtil.getData()
+
+# get time for baseline estimation
+Time = range(10+(len(dateSelected)-10)/2+1,len(dateSelected))
+>>>>>>> 6b28f2aa0a7cf39b8b43dd38c302e5046d72d081
 
 # Date for estimated return period (startDate,endDate) =  (dateSelected[Time[i]-1],dateSelected[Time[i]])
 Date = [(dateSelected[i-1][0],dateSelected[i][0]) for i in Time]
@@ -157,6 +201,7 @@ Date = [(dateSelected[i-1][0],dateSelected[i][0]) for i in Time]
 # parameters for transaction cost
 c = np.zeros(len(stockPrice[-1])+1) + 0.0001
 
+<<<<<<< HEAD
 # estimated period return for corresponding date 
 # estimateReturn[i] =  return in (dateSelected[Time[i]-1][0], dateSelected[Time[i]][0])
 estimateReturn = CNN(stockPrice, Time, c)
@@ -164,3 +209,14 @@ estimateReturn = CNN(stockPrice, Time, c)
 
 
     
+=======
+# estimated period return for corresponding date
+estimateReturn = CNN(stockPrice, Time, c)
+"""
+
+
+
+
+
+
+>>>>>>> 6b28f2aa0a7cf39b8b43dd38c302e5046d72d081
