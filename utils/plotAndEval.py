@@ -94,9 +94,9 @@ class plotEval:
 	
 
 	def eval(self):
-		for label in self.returns.keys():
+		for (label, Re) in self.returns:
 			print('Model: {0} \n total return: {1} \n sharpe ratio: {2}'
-				.format(label, totalReturn(self.returns[label]), sharp_ratio(self.returns[label])))
+				.format(label, totalReturn(Re), sharp_ratio(Re)))
 
 
 
