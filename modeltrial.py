@@ -73,7 +73,7 @@ def trainModelWithParameters(trainingData, testingData, N = 10, D = 10, epochs =
 	for e in range(epochs):
 		logger.info('Beginning '+str(e)+'_th epoch')
 		logger.info('')
-		for i in range()
+		for i in range():
 		 	returnTensor, prevReturnMatrix, nextReturnMatrix = trainingData[e]
 		 	allActions, growthRates = mu.train1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
 		 	totalGR = du.prod(growthRates)

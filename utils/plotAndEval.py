@@ -26,13 +26,13 @@ class plotEval:
 	def __init__(self, date, startYear):
 		self.date = date
 		self.startYear = startYear # an integer like 2015
-		self.returns = {} # a dictionary mapping each model's label to its return vector
+		self.returns = []
 
 	# Re should be a vector not shorter than Date. If Re is longer than date,
 	# it will be automatically alinged to Date in terms of the last entry
 	# label shoud be a string (e.g., 'cnn') 
 	def addReturn(self, Re, label):
-		self.returns[label] = Re[len(Re) - len(self.date):]
+		self.returns.append((label,Re[len(Re) - len(self.date):]))
 
 
 	def generatePlot(self):
@@ -63,8 +63,8 @@ class plotEval:
 		style = ['r-', 'g-', 'b-', 'c-', 'm-', 'y-', 'k-']
 		legend_1 = []
 		style_i = 0
-		for label_i in self.returns.keys():
-			plt.plot(x,self.returns[label_i],style[style_i], label = label_i)
+		for (label_i, Re) in self.returns:
+			plt.plot(x,Re,style[style_i], label = label_i)
 			style_i += 1
 
 		plt.xticks(x, dateLabel)
@@ -78,8 +78,8 @@ class plotEval:
 		# plot (log) accumulated return
 		legend_2 = []
 		style_i = 0
-		for label_i in self.returns.keys():
-			accumReturn = accum(self.returns[label_i])
+		for (label_i, Re) in self.returns:
+			accumReturn = accum(Re)
 			plt.plot(x,accumReturn,style[style_i], label = label_i)
 			style_i += 1
 

@@ -1,22 +1,13 @@
 from __future__ import print_function
 import tensorflow as tf
 import numpy as np
-<<<<<<< HEAD
-import os
-=======
+
 import os,json
->>>>>>> 6b28f2aa0a7cf39b8b43dd38c302e5046d72d081
 import modelUtil as mu
 from model import Model, raiseNotDefined
 from basicModel import BasicModel
 
 
-<<<<<<< HEAD
-class Config:
-    lr = 1e-4
-    dropout = 0.5
-    modelType = 'CNNModel'
-=======
 
 class Config:
     lr = 1e-4
@@ -25,7 +16,6 @@ class Config:
     DenseLayers = 2
     
     
->>>>>>> 6b28f2aa0a7cf39b8b43dd38c302e5046d72d081
 
 # weight initialization
 def weight_variable(shape):
@@ -56,21 +46,14 @@ class CnnModel(BasicModel):
         prevReturn = self.placeholders['prevReturn'] # return for last time step
     
         # first convolution layer
-<<<<<<< HEAD
-        W_conv1 = weight_variable([1, 3, 1, 10])
-=======
         W_conv1 = weight_variable([1, self.kernelSize, 1, 10])
->>>>>>> 6b28f2aa0a7cf39b8b43dd38c302e5046d72d081
         b_conv1 = bias_variable([10])
         h_conv1 = tf.nn.relu(conv2d(x_data, W_conv1) + b_conv1)
         h_pool1 = avg_pool_4x1(h_conv1)
     
         # second convolutional layer
-<<<<<<< HEAD
-        W_conv2 = weight_variable([1, 3, 10, 5])
-=======
+
         W_conv2 = weight_variable([1, self.kernelSize, 10, 5])
->>>>>>> 6b28f2aa0a7cf39b8b43dd38c302e5046d72d081
         b_conv2 = bias_variable([5])
         h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)
         h_pool2 = avg_pool_4x1(h_conv2)
@@ -98,8 +81,6 @@ class CnnModel(BasicModel):
         action = tf.concat([currentPortfolio, [[1]]],1)
         self.action = tf.reshape(action,[self.D+1,1])
 
-<<<<<<< HEAD
-=======
         
     def get_model_info(self):
         model_info = {
@@ -114,23 +95,17 @@ class CnnModel(BasicModel):
         }
         return json.dumps(model_info)
     
->>>>>>> 6b28f2aa0a7cf39b8b43dd38c302e5046d72d081
     # object constructor
     # D : the dimension of the portfolio,
     # N : the number of days looking back
     # L : the number of data points per time step
-<<<<<<< HEAD
-    def __init__(self, D, N, transCostParams, L = 1):
-        self.D = D
-        self.N = N
-        self.L = L
-=======
+
     def __init__(self, D, N, transCostParams, kernelSize, L = 1):
         self.D = D
         self.N = N
         self.L = L
         self.kernelSize = kernelSize
->>>>>>> 6b28f2aa0a7cf39b8b43dd38c302e5046d72d081
+
         self.config = Config
         self.transCostParams = {
             key: tf.constant(transCostParams[key], dtype = tf.float32) for key in transCostParams
