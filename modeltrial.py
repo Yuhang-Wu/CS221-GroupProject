@@ -19,7 +19,6 @@ DATA_PATH_ALL = 'data/sp150'
 D = 10
 N = 10
 c = 0.0001
-
 startFunding = 10000
 epochs = 20
 
@@ -108,6 +107,7 @@ def trainTestModelWithParameters( trainingData, testingData, N = 10, D = 10, epo
 	numBatches = len(trainingData)
 
 	trainingReturnList = [[] for _ in range(numBatches)]
+<<<<<<< HEAD
 	with tf.Session() as sess:
 		sess.run(tf.global_variables_initializer())
 		for e in range(1):
@@ -122,6 +122,20 @@ def trainTestModelWithParameters( trainingData, testingData, N = 10, D = 10, epo
 
 		returnTensor, prevReturnMatrix, nextReturnMatrix = testingData
 		allActions, testGrowthRates = mu.test1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
+=======
+
+	for e in range(epochs):
+		logger.info('Beginning '+str(e)+'_th epoch')
+		logger.info('')
+		for i in range():
+		 	returnTensor, prevReturnMatrix, nextReturnMatrix = trainingData[e]
+		 	allActions, growthRates = mu.train1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
+		 	totalGR = du.prod(growthRates)
+			trainingReturnList[i].append( totalGR )
+
+	returnTensor, prevReturnMatrix, nextReturnMatrix = testingData
+	allActions, testGrowthRates = mu.test1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
+>>>>>>> 78d807912e0887374959b8022e66aa5ee0eb5a6c
 	return trainingReturnList, testGrowthRates
 
 def trainAndTestTrial():

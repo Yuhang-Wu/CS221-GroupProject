@@ -1,7 +1,6 @@
 from __future__ import print_function
 import tensorflow as tf
 import numpy as np
-
 import os,json
 import modelUtil as mu
 from model import Model, raiseNotDefined
@@ -52,7 +51,6 @@ class CnnModel(BasicModel):
         h_pool1 = avg_pool_4x1(h_conv1)
     
         # second convolutional layer
-
         W_conv2 = weight_variable([1, self.kernelSize, 10, 5])
         b_conv2 = bias_variable([5])
         h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)
@@ -99,13 +97,11 @@ class CnnModel(BasicModel):
     # D : the dimension of the portfolio,
     # N : the number of days looking back
     # L : the number of data points per time step
-
     def __init__(self, D, N, transCostParams, kernelSize, L = 1):
         self.D = D
         self.N = N
         self.L = L
         self.kernelSize = kernelSize
-
         self.config = Config
         self.transCostParams = {
             key: tf.constant(transCostParams[key], dtype = tf.float32) for key in transCostParams

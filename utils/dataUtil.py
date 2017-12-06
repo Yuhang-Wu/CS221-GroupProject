@@ -244,7 +244,6 @@ def selectDateWeekly(allfilecontents):
 # get prices only
 def getPrices(datapath1 = 'data/sp10/'):
 	return np.array(getData(datapath1)[1])
-
 def logReturn(stockPrice):
     logReturnPrices = np.log(np.array(stockPrice[1:])) - np.log(np.array(stockPrice[:-1]))
     return logReturnPrices
