@@ -1,0 +1,840 @@
+2017-12-04 16:56:22,099 INFO results saved to results/allresults/2017-12-04-16:56:22
+2017-12-04 16:56:22,152 INFO logging with N = 5
+2017-12-04 16:56:22,155 INFO total epochs: 40
+2017-12-04 16:56:22,155 INFO tolerance: 1e-07
+2017-12-04 16:56:24,172 INFO model basic config
+2017-12-04 16:56:24,172 INFO {"magnification2": 5, "cell_type": "rnn", "lr": 0.001, "transform_size": 8, "model_type": "RNNModel", "dropout": 0.5, "hidden_size": 10, "magnification1": 500}
+2017-12-04 16:56:24,620 INFO Beginning 0_th epoch
+2017-12-04 16:56:24,620 INFO 
+2017-12-04 16:56:24,901 INFO model total growth rate in training data: 1.33034226569
+2017-12-04 16:56:24,902 INFO 
+2017-12-04 16:56:24,903 INFO Beginning 1_th epoch
+2017-12-04 16:56:24,903 INFO 
+2017-12-04 16:56:25,084 INFO model total growth rate in training data: 1.35246884951
+2017-12-04 16:56:25,084 INFO 
+2017-12-04 16:56:25,084 INFO Beginning 2_th epoch
+2017-12-04 16:56:25,084 INFO 
+2017-12-04 16:56:25,262 INFO model total growth rate in training data: 1.37670897788
+2017-12-04 16:56:25,262 INFO 
+2017-12-04 16:56:25,262 INFO Beginning 3_th epoch
+2017-12-04 16:56:25,262 INFO 
+2017-12-04 16:56:25,449 INFO model total growth rate in training data: 1.40796434097
+2017-12-04 16:56:25,449 INFO 
+2017-12-04 16:56:25,449 INFO Beginning 4_th epoch
+2017-12-04 16:56:25,450 INFO 
+2017-12-04 16:56:25,634 INFO model total growth rate in training data: 1.4548267422
+2017-12-04 16:56:25,634 INFO 
+2017-12-04 16:56:25,634 INFO Beginning 5_th epoch
+2017-12-04 16:56:25,634 INFO 
+2017-12-04 16:56:25,814 INFO model total growth rate in training data: 1.4857977342
+2017-12-04 16:56:25,814 INFO 
+2017-12-04 16:56:25,814 INFO Beginning 6_th epoch
+2017-12-04 16:56:25,815 INFO 
+2017-12-04 16:56:25,996 INFO model total growth rate in training data: 1.53123418206
+2017-12-04 16:56:25,996 INFO 
+2017-12-04 16:56:25,996 INFO Beginning 7_th epoch
+2017-12-04 16:56:25,996 INFO 
+2017-12-04 16:56:26,172 INFO model total growth rate in training data: 1.58018809518
+2017-12-04 16:56:26,172 INFO 
+2017-12-04 16:56:26,172 INFO Beginning 8_th epoch
+2017-12-04 16:56:26,172 INFO 
+2017-12-04 16:56:26,357 INFO model total growth rate in training data: 1.62842130284
+2017-12-04 16:56:26,357 INFO 
+2017-12-04 16:56:26,357 INFO Beginning 9_th epoch
+2017-12-04 16:56:26,357 INFO 
+2017-12-04 16:56:26,535 INFO model total growth rate in training data: 1.67321922202
+2017-12-04 16:56:26,535 INFO 
+2017-12-04 16:56:26,535 INFO Beginning 10_th epoch
+2017-12-04 16:56:26,535 INFO 
+2017-12-04 16:56:26,709 INFO model total growth rate in training data: 1.70734232754
+2017-12-04 16:56:26,709 INFO 
+2017-12-04 16:56:26,709 INFO Beginning 11_th epoch
+2017-12-04 16:56:26,709 INFO 
+2017-12-04 16:56:26,892 INFO model total growth rate in training data: 1.73959218344
+2017-12-04 16:56:26,892 INFO 
+2017-12-04 16:56:26,892 INFO Beginning 12_th epoch
+2017-12-04 16:56:26,892 INFO 
+2017-12-04 16:56:27,073 INFO model total growth rate in training data: 1.76818258536
+2017-12-04 16:56:27,073 INFO 
+2017-12-04 16:56:27,073 INFO Beginning 13_th epoch
+2017-12-04 16:56:27,073 INFO 
+2017-12-04 16:56:27,253 INFO model total growth rate in training data: 1.79391598487
+2017-12-04 16:56:27,253 INFO 
+2017-12-04 16:56:27,253 INFO Beginning 14_th epoch
+2017-12-04 16:56:27,253 INFO 
+2017-12-04 16:56:27,446 INFO model total growth rate in training data: 1.81679832489
+2017-12-04 16:56:27,446 INFO 
+2017-12-04 16:56:27,446 INFO Beginning 15_th epoch
+2017-12-04 16:56:27,446 INFO 
+2017-12-04 16:56:27,651 INFO model total growth rate in training data: 1.8378892977
+2017-12-04 16:56:27,651 INFO 
+2017-12-04 16:56:27,651 INFO Beginning 16_th epoch
+2017-12-04 16:56:27,651 INFO 
+2017-12-04 16:56:27,826 INFO model total growth rate in training data: 1.85631721142
+2017-12-04 16:56:27,826 INFO 
+2017-12-04 16:56:27,826 INFO Beginning 17_th epoch
+2017-12-04 16:56:27,827 INFO 
+2017-12-04 16:56:28,022 INFO model total growth rate in training data: 1.87589628194
+2017-12-04 16:56:28,022 INFO 
+2017-12-04 16:56:28,022 INFO Beginning 18_th epoch
+2017-12-04 16:56:28,022 INFO 
+2017-12-04 16:56:28,226 INFO model total growth rate in training data: 1.89793990344
+2017-12-04 16:56:28,227 INFO 
+2017-12-04 16:56:28,227 INFO Beginning 19_th epoch
+2017-12-04 16:56:28,227 INFO 
+2017-12-04 16:56:28,416 INFO model total growth rate in training data: 1.91734761087
+2017-12-04 16:56:28,416 INFO 
+2017-12-04 16:56:28,416 INFO Beginning 20_th epoch
+2017-12-04 16:56:28,416 INFO 
+2017-12-04 16:56:28,586 INFO model total growth rate in training data: 1.93566629382
+2017-12-04 16:56:28,586 INFO 
+2017-12-04 16:56:28,586 INFO Beginning 21_th epoch
+2017-12-04 16:56:28,586 INFO 
+2017-12-04 16:56:28,812 INFO model total growth rate in training data: 1.95322527305
+2017-12-04 16:56:28,812 INFO 
+2017-12-04 16:56:28,812 INFO Beginning 22_th epoch
+2017-12-04 16:56:28,812 INFO 
+2017-12-04 16:56:28,992 INFO model total growth rate in training data: 1.97101902974
+2017-12-04 16:56:28,992 INFO 
+2017-12-04 16:56:28,992 INFO Beginning 23_th epoch
+2017-12-04 16:56:28,992 INFO 
+2017-12-04 16:56:29,174 INFO model total growth rate in training data: 1.99017075013
+2017-12-04 16:56:29,175 INFO 
+2017-12-04 16:56:29,175 INFO Beginning 24_th epoch
+2017-12-04 16:56:29,175 INFO 
+2017-12-04 16:56:29,369 INFO model total growth rate in training data: 2.02033219813
+2017-12-04 16:56:29,369 INFO 
+2017-12-04 16:56:29,369 INFO Beginning 25_th epoch
+2017-12-04 16:56:29,370 INFO 
+2017-12-04 16:56:29,544 INFO model total growth rate in training data: 2.01027279436
+2017-12-04 16:56:29,544 INFO 
+2017-12-04 16:56:29,544 INFO Beginning 26_th epoch
+2017-12-04 16:56:29,544 INFO 
+2017-12-04 16:56:29,770 INFO model total growth rate in training data: 2.09368566217
+2017-12-04 16:56:29,770 INFO 
+2017-12-04 16:56:29,770 INFO Beginning 27_th epoch
+2017-12-04 16:56:29,770 INFO 
+2017-12-04 16:56:29,951 INFO model total growth rate in training data: 2.13080815531
+2017-12-04 16:56:29,952 INFO 
+2017-12-04 16:56:29,952 INFO Beginning 28_th epoch
+2017-12-04 16:56:29,952 INFO 
+2017-12-04 16:56:30,139 INFO model total growth rate in training data: 2.16483799152
+2017-12-04 16:56:30,139 INFO 
+2017-12-04 16:56:30,139 INFO Beginning 29_th epoch
+2017-12-04 16:56:30,139 INFO 
+2017-12-04 16:56:30,316 INFO model total growth rate in training data: 2.20445128282
+2017-12-04 16:56:30,316 INFO 
+2017-12-04 16:56:30,316 INFO Beginning 30_th epoch
+2017-12-04 16:56:30,316 INFO 
+2017-12-04 16:56:30,501 INFO model total growth rate in training data: 2.24813578369
+2017-12-04 16:56:30,501 INFO 
+2017-12-04 16:56:30,501 INFO Beginning 31_th epoch
+2017-12-04 16:56:30,502 INFO 
+2017-12-04 16:56:30,677 INFO model total growth rate in training data: 2.29525115866
+2017-12-04 16:56:30,677 INFO 
+2017-12-04 16:56:30,677 INFO Beginning 32_th epoch
+2017-12-04 16:56:30,677 INFO 
+2017-12-04 16:56:30,857 INFO model total growth rate in training data: 2.34583123602
+2017-12-04 16:56:30,857 INFO 
+2017-12-04 16:56:30,857 INFO Beginning 33_th epoch
+2017-12-04 16:56:30,857 INFO 
+2017-12-04 16:56:31,034 INFO model total growth rate in training data: 2.40005501064
+2017-12-04 16:56:31,034 INFO 
+2017-12-04 16:56:31,034 INFO Beginning 34_th epoch
+2017-12-04 16:56:31,035 INFO 
+2017-12-04 16:56:31,226 INFO model total growth rate in training data: 2.45617440905
+2017-12-04 16:56:31,226 INFO 
+2017-12-04 16:56:31,226 INFO Beginning 35_th epoch
+2017-12-04 16:56:31,226 INFO 
+2017-12-04 16:56:31,420 INFO model total growth rate in training data: 2.51313162486
+2017-12-04 16:56:31,421 INFO 
+2017-12-04 16:56:31,421 INFO Beginning 36_th epoch
+2017-12-04 16:56:31,421 INFO 
+2017-12-04 16:56:31,627 INFO model total growth rate in training data: 2.57018569684
+2017-12-04 16:56:31,627 INFO 
+2017-12-04 16:56:31,628 INFO Beginning 37_th epoch
+2017-12-04 16:56:31,628 INFO 
+2017-12-04 16:56:31,807 INFO model total growth rate in training data: 2.6261169422
+2017-12-04 16:56:31,807 INFO 
+2017-12-04 16:56:31,807 INFO Beginning 38_th epoch
+2017-12-04 16:56:31,807 INFO 
+2017-12-04 16:56:31,985 INFO model total growth rate in training data: 2.6795351699
+2017-12-04 16:56:31,985 INFO 
+2017-12-04 16:56:31,985 INFO Beginning 39_th epoch
+2017-12-04 16:56:31,985 INFO 
+2017-12-04 16:56:32,159 INFO model total growth rate in training data: 2.72921855135
+2017-12-04 16:56:32,160 INFO 
+2017-12-04 16:56:32,184 INFO dev growth rate: 1.17620243952
+2017-12-04 16:56:32,197 INFO test growth rate: 1.04135837082
+2017-12-04 16:56:32,207 INFO logging with N = 7
+2017-12-04 16:56:32,209 INFO total epochs: 40
+2017-12-04 16:56:32,209 INFO tolerance: 1e-07
+2017-12-04 16:56:33,196 INFO model basic config
+2017-12-04 16:56:33,196 INFO {"magnification2": 5, "cell_type": "rnn", "lr": 0.001, "transform_size": 8, "model_type": "RNNModel", "dropout": 0.5, "hidden_size": 10, "magnification1": 500}
+2017-12-04 16:56:33,886 INFO Beginning 0_th epoch
+2017-12-04 16:56:33,886 INFO 
+2017-12-04 16:56:34,198 INFO model total growth rate in training data: 1.01540117142
+2017-12-04 16:56:34,199 INFO 
+2017-12-04 16:56:34,199 INFO Beginning 1_th epoch
+2017-12-04 16:56:34,199 INFO 
+2017-12-04 16:56:34,408 INFO model total growth rate in training data: 1.01806786592
+2017-12-04 16:56:34,408 INFO 
+2017-12-04 16:56:34,408 INFO Beginning 2_th epoch
+2017-12-04 16:56:34,408 INFO 
+2017-12-04 16:56:34,629 INFO model total growth rate in training data: 1.02234143925
+2017-12-04 16:56:34,629 INFO 
+2017-12-04 16:56:34,629 INFO Beginning 3_th epoch
+2017-12-04 16:56:34,629 INFO 
+2017-12-04 16:56:34,833 INFO model total growth rate in training data: 1.02985033877
+2017-12-04 16:56:34,833 INFO 
+2017-12-04 16:56:34,833 INFO Beginning 4_th epoch
+2017-12-04 16:56:34,833 INFO 
+2017-12-04 16:56:35,044 INFO model total growth rate in training data: 1.04421512945
+2017-12-04 16:56:35,044 INFO 
+2017-12-04 16:56:35,044 INFO Beginning 5_th epoch
+2017-12-04 16:56:35,045 INFO 
+2017-12-04 16:56:35,290 INFO model total growth rate in training data: 1.07371188445
+2017-12-04 16:56:35,290 INFO 
+2017-12-04 16:56:35,290 INFO Beginning 6_th epoch
+2017-12-04 16:56:35,290 INFO 
+2017-12-04 16:56:35,520 INFO model total growth rate in training data: 1.13295567165
+2017-12-04 16:56:35,520 INFO 
+2017-12-04 16:56:35,521 INFO Beginning 7_th epoch
+2017-12-04 16:56:35,521 INFO 
+2017-12-04 16:56:35,716 INFO model total growth rate in training data: 1.21249714595
+2017-12-04 16:56:35,716 INFO 
+2017-12-04 16:56:35,716 INFO Beginning 8_th epoch
+2017-12-04 16:56:35,717 INFO 
+2017-12-04 16:56:35,997 INFO model total growth rate in training data: 1.2664300099
+2017-12-04 16:56:35,997 INFO 
+2017-12-04 16:56:35,997 INFO Beginning 9_th epoch
+2017-12-04 16:56:35,997 INFO 
+2017-12-04 16:56:36,191 INFO model total growth rate in training data: 1.29623762518
+2017-12-04 16:56:36,191 INFO 
+2017-12-04 16:56:36,191 INFO Beginning 10_th epoch
+2017-12-04 16:56:36,191 INFO 
+2017-12-04 16:56:36,387 INFO model total growth rate in training data: 1.31375596175
+2017-12-04 16:56:36,387 INFO 
+2017-12-04 16:56:36,388 INFO Beginning 11_th epoch
+2017-12-04 16:56:36,388 INFO 
+2017-12-04 16:56:36,603 INFO model total growth rate in training data: 1.33652091516
+2017-12-04 16:56:36,603 INFO 
+2017-12-04 16:56:36,603 INFO Beginning 12_th epoch
+2017-12-04 16:56:36,603 INFO 
+2017-12-04 16:56:36,818 INFO model total growth rate in training data: 1.3563233175
+2017-12-04 16:56:36,819 INFO 
+2017-12-04 16:56:36,819 INFO Beginning 13_th epoch
+2017-12-04 16:56:36,819 INFO 
+2017-12-04 16:56:37,062 INFO model total growth rate in training data: 1.3849249094
+2017-12-04 16:56:37,062 INFO 
+2017-12-04 16:56:37,062 INFO Beginning 14_th epoch
+2017-12-04 16:56:37,062 INFO 
+2017-12-04 16:56:37,264 INFO model total growth rate in training data: 1.41153553272
+2017-12-04 16:56:37,264 INFO 
+2017-12-04 16:56:37,264 INFO Beginning 15_th epoch
+2017-12-04 16:56:37,264 INFO 
+2017-12-04 16:56:37,487 INFO model total growth rate in training data: 1.44542122922
+2017-12-04 16:56:37,487 INFO 
+2017-12-04 16:56:37,487 INFO Beginning 16_th epoch
+2017-12-04 16:56:37,487 INFO 
+2017-12-04 16:56:37,687 INFO model total growth rate in training data: 1.48548684259
+2017-12-04 16:56:37,687 INFO 
+2017-12-04 16:56:37,687 INFO Beginning 17_th epoch
+2017-12-04 16:56:37,687 INFO 
+2017-12-04 16:56:37,916 INFO model total growth rate in training data: 1.533679789
+2017-12-04 16:56:37,916 INFO 
+2017-12-04 16:56:37,916 INFO Beginning 18_th epoch
+2017-12-04 16:56:37,917 INFO 
+2017-12-04 16:56:38,114 INFO model total growth rate in training data: 1.58698996415
+2017-12-04 16:56:38,114 INFO 
+2017-12-04 16:56:38,115 INFO Beginning 19_th epoch
+2017-12-04 16:56:38,115 INFO 
+2017-12-04 16:56:38,314 INFO model total growth rate in training data: 1.64692630264
+2017-12-04 16:56:38,315 INFO 
+2017-12-04 16:56:38,315 INFO Beginning 20_th epoch
+2017-12-04 16:56:38,315 INFO 
+2017-12-04 16:56:38,510 INFO model total growth rate in training data: 1.71197351894
+2017-12-04 16:56:38,510 INFO 
+2017-12-04 16:56:38,510 INFO Beginning 21_th epoch
+2017-12-04 16:56:38,510 INFO 
+2017-12-04 16:56:38,719 INFO model total growth rate in training data: 1.78022856835
+2017-12-04 16:56:38,719 INFO 
+2017-12-04 16:56:38,719 INFO Beginning 22_th epoch
+2017-12-04 16:56:38,719 INFO 
+2017-12-04 16:56:38,931 INFO model total growth rate in training data: 1.85131434871
+2017-12-04 16:56:38,932 INFO 
+2017-12-04 16:56:38,932 INFO Beginning 23_th epoch
+2017-12-04 16:56:38,932 INFO 
+2017-12-04 16:56:39,115 INFO model total growth rate in training data: 1.92443900045
+2017-12-04 16:56:39,115 INFO 
+2017-12-04 16:56:39,115 INFO Beginning 24_th epoch
+2017-12-04 16:56:39,115 INFO 
+2017-12-04 16:56:39,363 INFO model total growth rate in training data: 2.00063923978
+2017-12-04 16:56:39,363 INFO 
+2017-12-04 16:56:39,363 INFO Beginning 25_th epoch
+2017-12-04 16:56:39,363 INFO 
+2017-12-04 16:56:39,569 INFO model total growth rate in training data: 2.07669390359
+2017-12-04 16:56:39,569 INFO 
+2017-12-04 16:56:39,569 INFO Beginning 26_th epoch
+2017-12-04 16:56:39,569 INFO 
+2017-12-04 16:56:39,798 INFO model total growth rate in training data: 2.16723989418
+2017-12-04 16:56:39,798 INFO 
+2017-12-04 16:56:39,798 INFO Beginning 27_th epoch
+2017-12-04 16:56:39,798 INFO 
+2017-12-04 16:56:39,994 INFO model total growth rate in training data: 2.27102637424
+2017-12-04 16:56:39,994 INFO 
+2017-12-04 16:56:39,994 INFO Beginning 28_th epoch
+2017-12-04 16:56:39,994 INFO 
+2017-12-04 16:56:40,233 INFO model total growth rate in training data: 2.36970673697
+2017-12-04 16:56:40,233 INFO 
+2017-12-04 16:56:40,233 INFO Beginning 29_th epoch
+2017-12-04 16:56:40,233 INFO 
+2017-12-04 16:56:40,436 INFO model total growth rate in training data: 2.45871851929
+2017-12-04 16:56:40,436 INFO 
+2017-12-04 16:56:40,436 INFO Beginning 30_th epoch
+2017-12-04 16:56:40,436 INFO 
+2017-12-04 16:56:40,648 INFO model total growth rate in training data: 2.59670263816
+2017-12-04 16:56:40,648 INFO 
+2017-12-04 16:56:40,649 INFO Beginning 31_th epoch
+2017-12-04 16:56:40,649 INFO 
+2017-12-04 16:56:40,846 INFO model total growth rate in training data: 2.6984118806
+2017-12-04 16:56:40,846 INFO 
+2017-12-04 16:56:40,846 INFO Beginning 32_th epoch
+2017-12-04 16:56:40,846 INFO 
+2017-12-04 16:56:41,062 INFO model total growth rate in training data: 2.85992353142
+2017-12-04 16:56:41,062 INFO 
+2017-12-04 16:56:41,062 INFO Beginning 33_th epoch
+2017-12-04 16:56:41,062 INFO 
+2017-12-04 16:56:41,270 INFO model total growth rate in training data: 2.95087657032
+2017-12-04 16:56:41,270 INFO 
+2017-12-04 16:56:41,270 INFO Beginning 34_th epoch
+2017-12-04 16:56:41,270 INFO 
+2017-12-04 16:56:41,481 INFO model total growth rate in training data: 3.11110286091
+2017-12-04 16:56:41,482 INFO 
+2017-12-04 16:56:41,482 INFO Beginning 35_th epoch
+2017-12-04 16:56:41,482 INFO 
+2017-12-04 16:56:41,802 INFO model total growth rate in training data: 3.192544736
+2017-12-04 16:56:41,802 INFO 
+2017-12-04 16:56:41,802 INFO Beginning 36_th epoch
+2017-12-04 16:56:41,802 INFO 
+2017-12-04 16:56:42,040 INFO model total growth rate in training data: 3.3734373422
+2017-12-04 16:56:42,040 INFO 
+2017-12-04 16:56:42,040 INFO Beginning 37_th epoch
+2017-12-04 16:56:42,040 INFO 
+2017-12-04 16:56:42,681 INFO model total growth rate in training data: 3.17194425517
+2017-12-04 16:56:42,681 INFO 
+2017-12-04 16:56:42,681 INFO Beginning 38_th epoch
+2017-12-04 16:56:42,681 INFO 
+2017-12-04 16:56:42,969 INFO model total growth rate in training data: 3.4943800095
+2017-12-04 16:56:42,969 INFO 
+2017-12-04 16:56:42,970 INFO Beginning 39_th epoch
+2017-12-04 16:56:42,970 INFO 
+2017-12-04 16:56:43,286 INFO model total growth rate in training data: 3.57118594232
+2017-12-04 16:56:43,286 INFO 
+2017-12-04 16:56:43,324 INFO dev growth rate: 1.12605154125
+2017-12-04 16:56:43,343 INFO test growth rate: 1.10409461849
+2017-12-04 16:56:43,363 INFO logging with N = 10
+2017-12-04 16:56:43,366 INFO total epochs: 40
+2017-12-04 16:56:43,366 INFO tolerance: 1e-07
+2017-12-04 16:56:44,949 INFO model basic config
+2017-12-04 16:56:44,949 INFO {"magnification2": 5, "cell_type": "rnn", "lr": 0.001, "transform_size": 8, "model_type": "RNNModel", "dropout": 0.5, "hidden_size": 10, "magnification1": 500}
+2017-12-04 16:56:46,312 INFO Beginning 0_th epoch
+2017-12-04 16:56:46,312 INFO 
+2017-12-04 16:56:46,775 INFO model total growth rate in training data: 1.3028853639
+2017-12-04 16:56:46,776 INFO 
+2017-12-04 16:56:46,776 INFO Beginning 1_th epoch
+2017-12-04 16:56:46,776 INFO 
+2017-12-04 16:56:47,088 INFO model total growth rate in training data: 1.30693759141
+2017-12-04 16:56:47,088 INFO 
+2017-12-04 16:56:47,088 INFO Beginning 2_th epoch
+2017-12-04 16:56:47,088 INFO 
+2017-12-04 16:56:47,370 INFO model total growth rate in training data: 1.31680153501
+2017-12-04 16:56:47,370 INFO 
+2017-12-04 16:56:47,370 INFO Beginning 3_th epoch
+2017-12-04 16:56:47,370 INFO 
+2017-12-04 16:56:47,656 INFO model total growth rate in training data: 1.34441241108
+2017-12-04 16:56:47,656 INFO 
+2017-12-04 16:56:47,656 INFO Beginning 4_th epoch
+2017-12-04 16:56:47,656 INFO 
+2017-12-04 16:56:47,970 INFO model total growth rate in training data: 1.40140947325
+2017-12-04 16:56:47,970 INFO 
+2017-12-04 16:56:47,970 INFO Beginning 5_th epoch
+2017-12-04 16:56:47,970 INFO 
+2017-12-04 16:56:48,341 INFO model total growth rate in training data: 1.47017174318
+2017-12-04 16:56:48,341 INFO 
+2017-12-04 16:56:48,341 INFO Beginning 6_th epoch
+2017-12-04 16:56:48,344 INFO 
+2017-12-04 16:56:48,700 INFO model total growth rate in training data: 1.53983576209
+2017-12-04 16:56:48,700 INFO 
+2017-12-04 16:56:48,700 INFO Beginning 7_th epoch
+2017-12-04 16:56:48,700 INFO 
+2017-12-04 16:56:49,006 INFO model total growth rate in training data: 1.59745494993
+2017-12-04 16:56:49,006 INFO 
+2017-12-04 16:56:49,006 INFO Beginning 8_th epoch
+2017-12-04 16:56:49,006 INFO 
+2017-12-04 16:56:49,232 INFO model total growth rate in training data: 1.65135371977
+2017-12-04 16:56:49,232 INFO 
+2017-12-04 16:56:49,232 INFO Beginning 9_th epoch
+2017-12-04 16:56:49,232 INFO 
+2017-12-04 16:56:49,449 INFO model total growth rate in training data: 1.7057156424
+2017-12-04 16:56:49,449 INFO 
+2017-12-04 16:56:49,449 INFO Beginning 10_th epoch
+2017-12-04 16:56:49,449 INFO 
+2017-12-04 16:56:49,666 INFO model total growth rate in training data: 1.76601335866
+2017-12-04 16:56:49,666 INFO 
+2017-12-04 16:56:49,666 INFO Beginning 11_th epoch
+2017-12-04 16:56:49,666 INFO 
+2017-12-04 16:56:49,886 INFO model total growth rate in training data: 1.84599659243
+2017-12-04 16:56:49,886 INFO 
+2017-12-04 16:56:49,886 INFO Beginning 12_th epoch
+2017-12-04 16:56:49,886 INFO 
+2017-12-04 16:56:50,111 INFO model total growth rate in training data: 1.96570534467
+2017-12-04 16:56:50,111 INFO 
+2017-12-04 16:56:50,111 INFO Beginning 13_th epoch
+2017-12-04 16:56:50,112 INFO 
+2017-12-04 16:56:50,324 INFO model total growth rate in training data: 2.15309269897
+2017-12-04 16:56:50,324 INFO 
+2017-12-04 16:56:50,324 INFO Beginning 14_th epoch
+2017-12-04 16:56:50,324 INFO 
+2017-12-04 16:56:50,539 INFO model total growth rate in training data: 2.34086743122
+2017-12-04 16:56:50,539 INFO 
+2017-12-04 16:56:50,539 INFO Beginning 15_th epoch
+2017-12-04 16:56:50,539 INFO 
+2017-12-04 16:56:50,750 INFO model total growth rate in training data: 2.53074773206
+2017-12-04 16:56:50,750 INFO 
+2017-12-04 16:56:50,750 INFO Beginning 16_th epoch
+2017-12-04 16:56:50,750 INFO 
+2017-12-04 16:56:50,966 INFO model total growth rate in training data: 2.67563151476
+2017-12-04 16:56:50,966 INFO 
+2017-12-04 16:56:50,966 INFO Beginning 17_th epoch
+2017-12-04 16:56:50,966 INFO 
+2017-12-04 16:56:51,177 INFO model total growth rate in training data: 2.89361460225
+2017-12-04 16:56:51,177 INFO 
+2017-12-04 16:56:51,177 INFO Beginning 18_th epoch
+2017-12-04 16:56:51,177 INFO 
+2017-12-04 16:56:51,390 INFO model total growth rate in training data: 3.03262596493
+2017-12-04 16:56:51,390 INFO 
+2017-12-04 16:56:51,390 INFO Beginning 19_th epoch
+2017-12-04 16:56:51,390 INFO 
+2017-12-04 16:56:51,607 INFO model total growth rate in training data: 3.13230324529
+2017-12-04 16:56:51,608 INFO 
+2017-12-04 16:56:51,608 INFO Beginning 20_th epoch
+2017-12-04 16:56:51,608 INFO 
+2017-12-04 16:56:51,815 INFO model total growth rate in training data: 3.31382737881
+2017-12-04 16:56:51,815 INFO 
+2017-12-04 16:56:51,815 INFO Beginning 21_th epoch
+2017-12-04 16:56:51,815 INFO 
+2017-12-04 16:56:52,025 INFO model total growth rate in training data: 3.43167217544
+2017-12-04 16:56:52,025 INFO 
+2017-12-04 16:56:52,025 INFO Beginning 22_th epoch
+2017-12-04 16:56:52,025 INFO 
+2017-12-04 16:56:52,258 INFO model total growth rate in training data: 3.4307409224
+2017-12-04 16:56:52,258 INFO 
+2017-12-04 16:56:52,258 INFO Beginning 23_th epoch
+2017-12-04 16:56:52,258 INFO 
+2017-12-04 16:56:52,476 INFO model total growth rate in training data: 3.61480441905
+2017-12-04 16:56:52,476 INFO 
+2017-12-04 16:56:52,476 INFO Beginning 24_th epoch
+2017-12-04 16:56:52,476 INFO 
+2017-12-04 16:56:52,691 INFO model total growth rate in training data: 3.75103171285
+2017-12-04 16:56:52,691 INFO 
+2017-12-04 16:56:52,691 INFO Beginning 25_th epoch
+2017-12-04 16:56:52,691 INFO 
+2017-12-04 16:56:52,921 INFO model total growth rate in training data: 3.83565566362
+2017-12-04 16:56:52,921 INFO 
+2017-12-04 16:56:52,921 INFO Beginning 26_th epoch
+2017-12-04 16:56:52,921 INFO 
+2017-12-04 16:56:53,127 INFO model total growth rate in training data: 3.85177330218
+2017-12-04 16:56:53,128 INFO 
+2017-12-04 16:56:53,128 INFO Beginning 27_th epoch
+2017-12-04 16:56:53,128 INFO 
+2017-12-04 16:56:53,363 INFO model total growth rate in training data: 3.97072231866
+2017-12-04 16:56:53,363 INFO 
+2017-12-04 16:56:53,363 INFO Beginning 28_th epoch
+2017-12-04 16:56:53,364 INFO 
+2017-12-04 16:56:53,586 INFO model total growth rate in training data: 4.12927957425
+2017-12-04 16:56:53,586 INFO 
+2017-12-04 16:56:53,586 INFO Beginning 29_th epoch
+2017-12-04 16:56:53,586 INFO 
+2017-12-04 16:56:53,934 INFO model total growth rate in training data: 4.17163025268
+2017-12-04 16:56:53,934 INFO 
+2017-12-04 16:56:53,934 INFO Beginning 30_th epoch
+2017-12-04 16:56:53,934 INFO 
+2017-12-04 16:56:54,392 INFO model total growth rate in training data: 4.27907904098
+2017-12-04 16:56:54,392 INFO 
+2017-12-04 16:56:54,392 INFO Beginning 31_th epoch
+2017-12-04 16:56:54,392 INFO 
+2017-12-04 16:56:54,618 INFO model total growth rate in training data: 4.33252902949
+2017-12-04 16:56:54,618 INFO 
+2017-12-04 16:56:54,618 INFO Beginning 32_th epoch
+2017-12-04 16:56:54,618 INFO 
+2017-12-04 16:56:54,826 INFO model total growth rate in training data: 4.41264398078
+2017-12-04 16:56:54,826 INFO 
+2017-12-04 16:56:54,826 INFO Beginning 33_th epoch
+2017-12-04 16:56:54,827 INFO 
+2017-12-04 16:56:55,038 INFO model total growth rate in training data: 4.48653516847
+2017-12-04 16:56:55,038 INFO 
+2017-12-04 16:56:55,038 INFO Beginning 34_th epoch
+2017-12-04 16:56:55,038 INFO 
+2017-12-04 16:56:55,258 INFO model total growth rate in training data: 4.56480010652
+2017-12-04 16:56:55,258 INFO 
+2017-12-04 16:56:55,258 INFO Beginning 35_th epoch
+2017-12-04 16:56:55,258 INFO 
+2017-12-04 16:56:55,471 INFO model total growth rate in training data: 4.64078827626
+2017-12-04 16:56:55,472 INFO 
+2017-12-04 16:56:55,472 INFO Beginning 36_th epoch
+2017-12-04 16:56:55,472 INFO 
+2017-12-04 16:56:55,690 INFO model total growth rate in training data: 4.71606055968
+2017-12-04 16:56:55,690 INFO 
+2017-12-04 16:56:55,690 INFO Beginning 37_th epoch
+2017-12-04 16:56:55,690 INFO 
+2017-12-04 16:56:55,913 INFO model total growth rate in training data: 4.7912904667
+2017-12-04 16:56:55,913 INFO 
+2017-12-04 16:56:55,913 INFO Beginning 38_th epoch
+2017-12-04 16:56:55,913 INFO 
+2017-12-04 16:56:56,135 INFO model total growth rate in training data: 4.86416772791
+2017-12-04 16:56:56,135 INFO 
+2017-12-04 16:56:56,135 INFO Beginning 39_th epoch
+2017-12-04 16:56:56,135 INFO 
+2017-12-04 16:56:56,351 INFO model total growth rate in training data: 4.94153320639
+2017-12-04 16:56:56,351 INFO 
+2017-12-04 16:56:56,400 INFO dev growth rate: 1.14506831599
+2017-12-04 16:56:56,417 INFO test growth rate: 1.05014983011
+2017-12-04 16:56:56,447 INFO logging with N = 12
+2017-12-04 16:56:56,450 INFO total epochs: 40
+2017-12-04 16:56:56,450 INFO tolerance: 1e-07
+2017-12-04 16:56:57,840 INFO model basic config
+2017-12-04 16:56:57,840 INFO {"magnification2": 5, "cell_type": "rnn", "lr": 0.001, "transform_size": 8, "model_type": "RNNModel", "dropout": 0.5, "hidden_size": 10, "magnification1": 500}
+2017-12-04 16:56:59,297 INFO Beginning 0_th epoch
+2017-12-04 16:56:59,297 INFO 
+2017-12-04 16:56:59,691 INFO model total growth rate in training data: 1.29786851228
+2017-12-04 16:56:59,691 INFO 
+2017-12-04 16:56:59,691 INFO Beginning 1_th epoch
+2017-12-04 16:56:59,691 INFO 
+2017-12-04 16:56:59,922 INFO model total growth rate in training data: 1.30658954802
+2017-12-04 16:56:59,922 INFO 
+2017-12-04 16:56:59,922 INFO Beginning 2_th epoch
+2017-12-04 16:56:59,922 INFO 
+2017-12-04 16:57:00,171 INFO model total growth rate in training data: 1.31279327521
+2017-12-04 16:57:00,171 INFO 
+2017-12-04 16:57:00,171 INFO Beginning 3_th epoch
+2017-12-04 16:57:00,171 INFO 
+2017-12-04 16:57:00,407 INFO model total growth rate in training data: 1.31894410062
+2017-12-04 16:57:00,407 INFO 
+2017-12-04 16:57:00,407 INFO Beginning 4_th epoch
+2017-12-04 16:57:00,408 INFO 
+2017-12-04 16:57:00,656 INFO model total growth rate in training data: 1.32714029003
+2017-12-04 16:57:00,656 INFO 
+2017-12-04 16:57:00,656 INFO Beginning 5_th epoch
+2017-12-04 16:57:00,656 INFO 
+2017-12-04 16:57:00,880 INFO model total growth rate in training data: 1.33811186274
+2017-12-04 16:57:00,880 INFO 
+2017-12-04 16:57:00,880 INFO Beginning 6_th epoch
+2017-12-04 16:57:00,880 INFO 
+2017-12-04 16:57:01,124 INFO model total growth rate in training data: 1.35147938177
+2017-12-04 16:57:01,124 INFO 
+2017-12-04 16:57:01,124 INFO Beginning 7_th epoch
+2017-12-04 16:57:01,124 INFO 
+2017-12-04 16:57:01,357 INFO model total growth rate in training data: 1.36585529429
+2017-12-04 16:57:01,357 INFO 
+2017-12-04 16:57:01,357 INFO Beginning 8_th epoch
+2017-12-04 16:57:01,357 INFO 
+2017-12-04 16:57:01,595 INFO model total growth rate in training data: 1.38152573
+2017-12-04 16:57:01,595 INFO 
+2017-12-04 16:57:01,595 INFO Beginning 9_th epoch
+2017-12-04 16:57:01,595 INFO 
+2017-12-04 16:57:01,824 INFO model total growth rate in training data: 1.39834052565
+2017-12-04 16:57:01,824 INFO 
+2017-12-04 16:57:01,824 INFO Beginning 10_th epoch
+2017-12-04 16:57:01,824 INFO 
+2017-12-04 16:57:02,060 INFO model total growth rate in training data: 1.41577982052
+2017-12-04 16:57:02,060 INFO 
+2017-12-04 16:57:02,060 INFO Beginning 11_th epoch
+2017-12-04 16:57:02,060 INFO 
+2017-12-04 16:57:02,295 INFO model total growth rate in training data: 1.4341546165
+2017-12-04 16:57:02,295 INFO 
+2017-12-04 16:57:02,295 INFO Beginning 12_th epoch
+2017-12-04 16:57:02,295 INFO 
+2017-12-04 16:57:02,529 INFO model total growth rate in training data: 1.45328521836
+2017-12-04 16:57:02,529 INFO 
+2017-12-04 16:57:02,530 INFO Beginning 13_th epoch
+2017-12-04 16:57:02,530 INFO 
+2017-12-04 16:57:02,770 INFO model total growth rate in training data: 1.47330807555
+2017-12-04 16:57:02,770 INFO 
+2017-12-04 16:57:02,770 INFO Beginning 14_th epoch
+2017-12-04 16:57:02,770 INFO 
+2017-12-04 16:57:03,014 INFO model total growth rate in training data: 1.49485763824
+2017-12-04 16:57:03,014 INFO 
+2017-12-04 16:57:03,014 INFO Beginning 15_th epoch
+2017-12-04 16:57:03,014 INFO 
+2017-12-04 16:57:03,240 INFO model total growth rate in training data: 1.51828813566
+2017-12-04 16:57:03,240 INFO 
+2017-12-04 16:57:03,240 INFO Beginning 16_th epoch
+2017-12-04 16:57:03,241 INFO 
+2017-12-04 16:57:03,467 INFO model total growth rate in training data: 1.54304383319
+2017-12-04 16:57:03,467 INFO 
+2017-12-04 16:57:03,467 INFO Beginning 17_th epoch
+2017-12-04 16:57:03,467 INFO 
+2017-12-04 16:57:03,697 INFO model total growth rate in training data: 1.56912024761
+2017-12-04 16:57:03,697 INFO 
+2017-12-04 16:57:03,697 INFO Beginning 18_th epoch
+2017-12-04 16:57:03,697 INFO 
+2017-12-04 16:57:03,928 INFO model total growth rate in training data: 1.59735265281
+2017-12-04 16:57:03,928 INFO 
+2017-12-04 16:57:03,928 INFO Beginning 19_th epoch
+2017-12-04 16:57:03,929 INFO 
+2017-12-04 16:57:04,161 INFO model total growth rate in training data: 1.62982239807
+2017-12-04 16:57:04,161 INFO 
+2017-12-04 16:57:04,162 INFO Beginning 20_th epoch
+2017-12-04 16:57:04,162 INFO 
+2017-12-04 16:57:04,389 INFO model total growth rate in training data: 1.66705394424
+2017-12-04 16:57:04,389 INFO 
+2017-12-04 16:57:04,389 INFO Beginning 21_th epoch
+2017-12-04 16:57:04,389 INFO 
+2017-12-04 16:57:04,629 INFO model total growth rate in training data: 1.7196729078
+2017-12-04 16:57:04,629 INFO 
+2017-12-04 16:57:04,629 INFO Beginning 22_th epoch
+2017-12-04 16:57:04,629 INFO 
+2017-12-04 16:57:04,863 INFO model total growth rate in training data: 1.76663093119
+2017-12-04 16:57:04,863 INFO 
+2017-12-04 16:57:04,863 INFO Beginning 23_th epoch
+2017-12-04 16:57:04,863 INFO 
+2017-12-04 16:57:05,101 INFO model total growth rate in training data: 1.81559031088
+2017-12-04 16:57:05,102 INFO 
+2017-12-04 16:57:05,102 INFO Beginning 24_th epoch
+2017-12-04 16:57:05,102 INFO 
+2017-12-04 16:57:05,342 INFO model total growth rate in training data: 1.86684943322
+2017-12-04 16:57:05,342 INFO 
+2017-12-04 16:57:05,342 INFO Beginning 25_th epoch
+2017-12-04 16:57:05,342 INFO 
+2017-12-04 16:57:05,583 INFO model total growth rate in training data: 1.92012389208
+2017-12-04 16:57:05,583 INFO 
+2017-12-04 16:57:05,583 INFO Beginning 26_th epoch
+2017-12-04 16:57:05,583 INFO 
+2017-12-04 16:57:05,811 INFO model total growth rate in training data: 1.97947761438
+2017-12-04 16:57:05,812 INFO 
+2017-12-04 16:57:05,812 INFO Beginning 27_th epoch
+2017-12-04 16:57:05,812 INFO 
+2017-12-04 16:57:06,112 INFO model total growth rate in training data: 2.04418569716
+2017-12-04 16:57:06,112 INFO 
+2017-12-04 16:57:06,112 INFO Beginning 28_th epoch
+2017-12-04 16:57:06,112 INFO 
+2017-12-04 16:57:06,419 INFO model total growth rate in training data: 2.116828403
+2017-12-04 16:57:06,420 INFO 
+2017-12-04 16:57:06,420 INFO Beginning 29_th epoch
+2017-12-04 16:57:06,420 INFO 
+2017-12-04 16:57:06,662 INFO model total growth rate in training data: 2.19273858267
+2017-12-04 16:57:06,663 INFO 
+2017-12-04 16:57:06,663 INFO Beginning 30_th epoch
+2017-12-04 16:57:06,663 INFO 
+2017-12-04 16:57:06,936 INFO model total growth rate in training data: 2.2741724927
+2017-12-04 16:57:06,937 INFO 
+2017-12-04 16:57:06,937 INFO Beginning 31_th epoch
+2017-12-04 16:57:06,937 INFO 
+2017-12-04 16:57:07,199 INFO model total growth rate in training data: 2.35647665647
+2017-12-04 16:57:07,199 INFO 
+2017-12-04 16:57:07,200 INFO Beginning 32_th epoch
+2017-12-04 16:57:07,200 INFO 
+2017-12-04 16:57:07,458 INFO model total growth rate in training data: 2.44083429939
+2017-12-04 16:57:07,459 INFO 
+2017-12-04 16:57:07,459 INFO Beginning 33_th epoch
+2017-12-04 16:57:07,459 INFO 
+2017-12-04 16:57:07,751 INFO model total growth rate in training data: 2.52026844019
+2017-12-04 16:57:07,751 INFO 
+2017-12-04 16:57:07,751 INFO Beginning 34_th epoch
+2017-12-04 16:57:07,751 INFO 
+2017-12-04 16:57:08,026 INFO model total growth rate in training data: 2.60123879847
+2017-12-04 16:57:08,027 INFO 
+2017-12-04 16:57:08,027 INFO Beginning 35_th epoch
+2017-12-04 16:57:08,027 INFO 
+2017-12-04 16:57:08,277 INFO model total growth rate in training data: 2.67773053585
+2017-12-04 16:57:08,277 INFO 
+2017-12-04 16:57:08,277 INFO Beginning 36_th epoch
+2017-12-04 16:57:08,277 INFO 
+2017-12-04 16:57:08,516 INFO model total growth rate in training data: 2.75548328523
+2017-12-04 16:57:08,516 INFO 
+2017-12-04 16:57:08,516 INFO Beginning 37_th epoch
+2017-12-04 16:57:08,516 INFO 
+2017-12-04 16:57:08,753 INFO model total growth rate in training data: 2.831010383
+2017-12-04 16:57:08,754 INFO 
+2017-12-04 16:57:08,754 INFO Beginning 38_th epoch
+2017-12-04 16:57:08,754 INFO 
+2017-12-04 16:57:08,987 INFO model total growth rate in training data: 2.90676922084
+2017-12-04 16:57:08,987 INFO 
+2017-12-04 16:57:08,987 INFO Beginning 39_th epoch
+2017-12-04 16:57:08,987 INFO 
+2017-12-04 16:57:09,219 INFO model total growth rate in training data: 2.98151543019
+2017-12-04 16:57:09,220 INFO 
+2017-12-04 16:57:09,278 INFO dev growth rate: 1.15850164555
+2017-12-04 16:57:09,294 INFO test growth rate: 0.983852681253
+2017-12-04 16:57:09,330 INFO logging with N = 15
+2017-12-04 16:57:09,332 INFO total epochs: 40
+2017-12-04 16:57:09,333 INFO tolerance: 1e-07
+2017-12-04 16:57:11,604 INFO model basic config
+2017-12-04 16:57:11,606 INFO {"magnification2": 5, "cell_type": "rnn", "lr": 0.001, "transform_size": 8, "model_type": "RNNModel", "dropout": 0.5, "hidden_size": 10, "magnification1": 500}
+2017-12-04 16:57:13,482 INFO Beginning 0_th epoch
+2017-12-04 16:57:13,482 INFO 
+2017-12-04 16:57:13,901 INFO model total growth rate in training data: 1.10835093134
+2017-12-04 16:57:13,901 INFO 
+2017-12-04 16:57:13,901 INFO Beginning 1_th epoch
+2017-12-04 16:57:13,901 INFO 
+2017-12-04 16:57:14,165 INFO model total growth rate in training data: 1.15541097182
+2017-12-04 16:57:14,166 INFO 
+2017-12-04 16:57:14,166 INFO Beginning 2_th epoch
+2017-12-04 16:57:14,166 INFO 
+2017-12-04 16:57:14,453 INFO model total growth rate in training data: 1.2146279082
+2017-12-04 16:57:14,453 INFO 
+2017-12-04 16:57:14,453 INFO Beginning 3_th epoch
+2017-12-04 16:57:14,453 INFO 
+2017-12-04 16:57:14,724 INFO model total growth rate in training data: 1.26342405497
+2017-12-04 16:57:14,725 INFO 
+2017-12-04 16:57:14,725 INFO Beginning 4_th epoch
+2017-12-04 16:57:14,725 INFO 
+2017-12-04 16:57:14,979 INFO model total growth rate in training data: 1.2967381868
+2017-12-04 16:57:14,979 INFO 
+2017-12-04 16:57:14,979 INFO Beginning 5_th epoch
+2017-12-04 16:57:14,980 INFO 
+2017-12-04 16:57:15,239 INFO model total growth rate in training data: 1.32008471457
+2017-12-04 16:57:15,240 INFO 
+2017-12-04 16:57:15,240 INFO Beginning 6_th epoch
+2017-12-04 16:57:15,240 INFO 
+2017-12-04 16:57:15,494 INFO model total growth rate in training data: 1.338340165
+2017-12-04 16:57:15,494 INFO 
+2017-12-04 16:57:15,494 INFO Beginning 7_th epoch
+2017-12-04 16:57:15,494 INFO 
+2017-12-04 16:57:15,746 INFO model total growth rate in training data: 1.35473100006
+2017-12-04 16:57:15,747 INFO 
+2017-12-04 16:57:15,747 INFO Beginning 8_th epoch
+2017-12-04 16:57:15,747 INFO 
+2017-12-04 16:57:15,994 INFO model total growth rate in training data: 1.36989329709
+2017-12-04 16:57:15,994 INFO 
+2017-12-04 16:57:15,994 INFO Beginning 9_th epoch
+2017-12-04 16:57:15,994 INFO 
+2017-12-04 16:57:16,248 INFO model total growth rate in training data: 1.38374827277
+2017-12-04 16:57:16,248 INFO 
+2017-12-04 16:57:16,248 INFO Beginning 10_th epoch
+2017-12-04 16:57:16,248 INFO 
+2017-12-04 16:57:16,497 INFO model total growth rate in training data: 1.39824895559
+2017-12-04 16:57:16,497 INFO 
+2017-12-04 16:57:16,497 INFO Beginning 11_th epoch
+2017-12-04 16:57:16,497 INFO 
+2017-12-04 16:57:16,760 INFO model total growth rate in training data: 1.4131410415
+2017-12-04 16:57:16,760 INFO 
+2017-12-04 16:57:16,760 INFO Beginning 12_th epoch
+2017-12-04 16:57:16,760 INFO 
+2017-12-04 16:57:17,027 INFO model total growth rate in training data: 1.42862511222
+2017-12-04 16:57:17,027 INFO 
+2017-12-04 16:57:17,027 INFO Beginning 13_th epoch
+2017-12-04 16:57:17,027 INFO 
+2017-12-04 16:57:17,273 INFO model total growth rate in training data: 1.44479902349
+2017-12-04 16:57:17,273 INFO 
+2017-12-04 16:57:17,273 INFO Beginning 14_th epoch
+2017-12-04 16:57:17,273 INFO 
+2017-12-04 16:57:17,560 INFO model total growth rate in training data: 1.46204301123
+2017-12-04 16:57:17,561 INFO 
+2017-12-04 16:57:17,561 INFO Beginning 15_th epoch
+2017-12-04 16:57:17,562 INFO 
+2017-12-04 16:57:17,819 INFO model total growth rate in training data: 1.48300935559
+2017-12-04 16:57:17,819 INFO 
+2017-12-04 16:57:17,819 INFO Beginning 16_th epoch
+2017-12-04 16:57:17,819 INFO 
+2017-12-04 16:57:18,083 INFO model total growth rate in training data: 1.50376974717
+2017-12-04 16:57:18,083 INFO 
+2017-12-04 16:57:18,083 INFO Beginning 17_th epoch
+2017-12-04 16:57:18,084 INFO 
+2017-12-04 16:57:18,343 INFO model total growth rate in training data: 1.52425127959
+2017-12-04 16:57:18,343 INFO 
+2017-12-04 16:57:18,343 INFO Beginning 18_th epoch
+2017-12-04 16:57:18,343 INFO 
+2017-12-04 16:57:18,603 INFO model total growth rate in training data: 1.54977758151
+2017-12-04 16:57:18,603 INFO 
+2017-12-04 16:57:18,604 INFO Beginning 19_th epoch
+2017-12-04 16:57:18,604 INFO 
+2017-12-04 16:57:18,873 INFO model total growth rate in training data: 1.57055754327
+2017-12-04 16:57:18,873 INFO 
+2017-12-04 16:57:18,873 INFO Beginning 20_th epoch
+2017-12-04 16:57:18,873 INFO 
+2017-12-04 16:57:19,140 INFO model total growth rate in training data: 1.61222996761
+2017-12-04 16:57:19,140 INFO 
+2017-12-04 16:57:19,141 INFO Beginning 21_th epoch
+2017-12-04 16:57:19,141 INFO 
+2017-12-04 16:57:19,405 INFO model total growth rate in training data: 1.6299266526
+2017-12-04 16:57:19,406 INFO 
+2017-12-04 16:57:19,406 INFO Beginning 22_th epoch
+2017-12-04 16:57:19,406 INFO 
+2017-12-04 16:57:19,712 INFO model total growth rate in training data: 1.66363926981
+2017-12-04 16:57:19,712 INFO 
+2017-12-04 16:57:19,712 INFO Beginning 23_th epoch
+2017-12-04 16:57:19,713 INFO 
+2017-12-04 16:57:20,303 INFO model total growth rate in training data: 1.69848336547
+2017-12-04 16:57:20,303 INFO 
+2017-12-04 16:57:20,303 INFO Beginning 24_th epoch
+2017-12-04 16:57:20,303 INFO 
+2017-12-04 16:57:20,598 INFO model total growth rate in training data: 1.73555889871
+2017-12-04 16:57:20,598 INFO 
+2017-12-04 16:57:20,598 INFO Beginning 25_th epoch
+2017-12-04 16:57:20,598 INFO 
+2017-12-04 16:57:20,861 INFO model total growth rate in training data: 1.77902685369
+2017-12-04 16:57:20,862 INFO 
+2017-12-04 16:57:20,862 INFO Beginning 26_th epoch
+2017-12-04 16:57:20,862 INFO 
+2017-12-04 16:57:21,125 INFO model total growth rate in training data: 1.82037560432
+2017-12-04 16:57:21,126 INFO 
+2017-12-04 16:57:21,126 INFO Beginning 27_th epoch
+2017-12-04 16:57:21,126 INFO 
+2017-12-04 16:57:21,409 INFO model total growth rate in training data: 1.86112172226
+2017-12-04 16:57:21,409 INFO 
+2017-12-04 16:57:21,409 INFO Beginning 28_th epoch
+2017-12-04 16:57:21,409 INFO 
+2017-12-04 16:57:21,676 INFO model total growth rate in training data: 1.90173832114
+2017-12-04 16:57:21,677 INFO 
+2017-12-04 16:57:21,677 INFO Beginning 29_th epoch
+2017-12-04 16:57:21,677 INFO 
+2017-12-04 16:57:21,928 INFO model total growth rate in training data: 1.94183395254
+2017-12-04 16:57:21,928 INFO 
+2017-12-04 16:57:21,928 INFO Beginning 30_th epoch
+2017-12-04 16:57:21,928 INFO 
+2017-12-04 16:57:22,172 INFO model total growth rate in training data: 1.98270852779
+2017-12-04 16:57:22,172 INFO 
+2017-12-04 16:57:22,173 INFO Beginning 31_th epoch
+2017-12-04 16:57:22,173 INFO 
+2017-12-04 16:57:22,420 INFO model total growth rate in training data: 2.02210413767
+2017-12-04 16:57:22,420 INFO 
+2017-12-04 16:57:22,420 INFO Beginning 32_th epoch
+2017-12-04 16:57:22,420 INFO 
+2017-12-04 16:57:22,681 INFO model total growth rate in training data: 2.04796911759
+2017-12-04 16:57:22,681 INFO 
+2017-12-04 16:57:22,681 INFO Beginning 33_th epoch
+2017-12-04 16:57:22,681 INFO 
+2017-12-04 16:57:22,933 INFO model total growth rate in training data: 2.14291775748
+2017-12-04 16:57:22,933 INFO 
+2017-12-04 16:57:22,933 INFO Beginning 34_th epoch
+2017-12-04 16:57:22,933 INFO 
+2017-12-04 16:57:23,170 INFO model total growth rate in training data: 2.13095674804
+2017-12-04 16:57:23,171 INFO 
+2017-12-04 16:57:23,171 INFO Beginning 35_th epoch
+2017-12-04 16:57:23,171 INFO 
+2017-12-04 16:57:23,430 INFO model total growth rate in training data: 2.2191947081
+2017-12-04 16:57:23,430 INFO 
+2017-12-04 16:57:23,430 INFO Beginning 36_th epoch
+2017-12-04 16:57:23,430 INFO 
+2017-12-04 16:57:23,680 INFO model total growth rate in training data: 2.2499301079
+2017-12-04 16:57:23,680 INFO 
+2017-12-04 16:57:23,680 INFO Beginning 37_th epoch
+2017-12-04 16:57:23,680 INFO 
+2017-12-04 16:57:23,942 INFO model total growth rate in training data: 2.32690525772
+2017-12-04 16:57:23,942 INFO 
+2017-12-04 16:57:23,942 INFO Beginning 38_th epoch
+2017-12-04 16:57:23,942 INFO 
+2017-12-04 16:57:24,219 INFO model total growth rate in training data: 2.38909913638
+2017-12-04 16:57:24,219 INFO 
+2017-12-04 16:57:24,220 INFO Beginning 39_th epoch
+2017-12-04 16:57:24,220 INFO 
+2017-12-04 16:57:24,471 INFO model total growth rate in training data: 2.44916141635
+2017-12-04 16:57:24,471 INFO 
+2017-12-04 16:57:24,555 INFO dev growth rate: 1.1390584264
+2017-12-04 16:57:24,578 INFO test growth rate: 1.02424428521
+2017-12-04 16:57:24,622 INFO devGRs
+2017-12-04 16:57:24,622 INFO [[1.0043242494575679, 1.008332128636539, 0.98386834003031254, 1.0048811072483659, 0.98660365957766771, 1.0074580842629075, 0.99263599142432213, 0.99702928168699145, 1.0032800398766994, 1.0489229038357735, 1.0720437094569206, 1.0123133510351181, 0.98608007654547691, 1.0349231213331223, 1.0095848934724927], [1.0096841249614954, 1.0123739093542099, 0.97733097337186337, 1.0098939733579755, 1.0050606862641871, 1.0028871954418719, 0.99708405416458845, 0.98588616400957108, 1.0048675006255507, 1.0113406917080283, 1.0256616789847612, 1.0060943816788495, 0.97501549497246742, 1.1112754344940186, 0.99135470576584339], [1.0029381196945906, 1.0127460369840264, 0.97933102399110794, 1.0122493961825967, 1.0025695695076138, 1.0180217269808054, 0.99814772012177855, 0.98669738788157701, 1.0039375363849103, 1.0149319712072611, 1.0240765158087015, 1.0203852821141481, 0.96327904984354973, 1.0851575210690498, 0.99255551258102059], [1.0134948939085007, 1.0095245968550444, 0.98961671907454729, 1.0037936009466648, 1.006753021851182, 1.0148946112021804, 1.0004043928638566, 1.0078039243817329, 0.99663074128329754, 1.0226421896368265, 1.0222728103399277, 1.0096698552370071, 0.98257073387503624, 1.0237794984132051, 1.0074985404498875], [1.0070141102187335, 1.0109639810398221, 0.98381652496755123, 1.0158553831279278, 1.0099147306755185, 0.99662857502698898, 0.99533313047140837, 1.0057328208349645, 1.0102710295468569, 1.0254486128687859, 1.0195845104753971, 1.0093445722013712, 0.98126840777695179, 1.0577311776578426, 1.0041117132641375]]
+2017-12-04 16:57:24,622 INFO testGRs
+2017-12-04 16:57:24,622 INFO [[0.99806479224935174, 0.96977062523365021, 1.0050678779371083, 0.97788153029978275, 0.98364651016891003, 1.0249803084880114, 1.0321107693016529, 1.0071849399246275, 0.99704368226230145, 0.98231758363544941, 1.0056486018002033, 1.0074223699048162, 1.014820946380496, 1.0074363453313708, 1.0009133355342783, 0.99023584183305502, 0.9895999189466238, 1.0022383604664356, 1.0252971109002829, 1.021537221968174], [0.9971954005304724, 0.96993755176663399, 0.99630165658891201, 0.98046275228261948, 0.97584722377359867, 1.031975369900465, 1.0092480797320604, 1.0040765767917037, 1.0376634635031223, 0.97923833318054676, 0.99751235940493643, 0.99328339798375964, 1.0162526611238718, 1.0153080895543098, 1.064072772860527, 0.98770855646580458, 0.99992734854458831, 1.0090392688289285, 1.0159992519766092, 1.0231478232890368], [1.0064500677399337, 0.96324863284826279, 1.0060350741259754, 0.99382789246737957, 0.97734478861093521, 1.018985578790307, 1.025047117844224, 0.9994211511220783, 0.97530803084373474, 0.99150002002716064, 0.99593645194545388, 0.99311620090156794, 1.0169234275817871, 1.0162804313004017, 1.0727721974253654, 0.97133884951472282, 0.99782958230935037, 1.0065875095315278, 1.0035749056842178, 1.0227844379842281], [0.99502119794487953, 0.97836319729685783, 1.0004723218444269, 0.99278923962265253, 0.9810415543615818, 1.0033637941814959, 1.0320689454674721, 1.0049008005298674, 0.98782643023878336, 0.97984579391777515, 1.0035387077368796, 0.98060505837202072, 1.0107698673382401, 1.0178119409829378, 1.0047148559242487, 1.0021707671694458, 0.99065169878304005, 0.99747819104231894, 1.0147813120856881, 1.0073720295913517], [0.99881064065266401, 0.96198847889900208, 1.0023220744915307, 0.98908448405563831, 0.98462247848510742, 1.0431753322482109, 1.0202088095247746, 1.0077384389005601, 0.98924691509455442, 0.98039484210312366, 1.0016600196249783, 0.99054166674613953, 1.014723707921803, 1.0112839378416538, 1.0016626348951831, 0.98063062876462936, 0.99877941934391856, 1.0045165130868554, 1.0251252241432667, 1.0206941962242126]]

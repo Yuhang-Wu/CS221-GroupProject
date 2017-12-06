@@ -9,7 +9,7 @@ from gruCell import GRUCell
 from lstmCell import LSTMCell
 
 class Config:
-	lr = 2e-3
+	lr = 1e-3
 	dropout = 0.5
 	modelType = 'RNNModel'
 	cellType = 'rnn'
@@ -107,7 +107,7 @@ class RnnModel(BasicModel):
 	# D : the dimension of the portfolio,
 	# N : the number of days looking back
 	# L : the number of data points per time step
-	def __init__(self, D, N, transCostParams, L = 1):
+	def __init__(self, D, N, transCostParams, L = 1, hiddenSize = Config.hiddenSize):
 		self.D = D
 		self.N = N
 		self.L = L
@@ -115,5 +115,6 @@ class RnnModel(BasicModel):
 		self.transCostParams = {
 			key: tf.constant(transCostParams[key], dtype = tf.float32) for key in transCostParams
 		}
+		self.config.hiddenSize = hiddenSize
 
 		self.build()

@@ -4,6 +4,12 @@ import time, datetime
 import logging
 import os
 
+
+def enforceMinlen(arr):
+	minlen = min([len(ele) for ele in arr])
+	out = [ele[-minlen:] for ele in arr]
+	return out
+
 # get accumulated return based on growth rates (a list of floats like 1.02)
 # e.g. [1.2, 1.0, 1.5] -> [1.2, 1.2, 1.8]
 def getAccumulatedReturn(growthRates):

@@ -38,7 +38,7 @@ dateSelected, stockPrice = du.getData(DATA_PATH, 'week')
 TestTimeIndex = range(len(dateSelected)/10*9, len(dateSelected))
 # get testing time period Date for estimating return (startDate, endDate)
 TestDate = [(dateSelected[i-1][0],dateSelected[i][0]) for i in TestTimeIndex]
-
+TrainIndex = range(TestIndex[0]/9*8)
 
 # epochs and tolerance for training
 epochs = 500

@@ -35,21 +35,51 @@ os.mkdir(resultsDirectory)
 # now call logger.info to log
 logger = du.setupLogger(resultsDirectory)
 
+## specify testing data
+# get data for testing
+dateSelected, stockPrice = du.getData(DATA_PATH, frequency = 'week', getAll = True)
+# get testing data index
+TestTimeIndex = range(len(dateSelected)/10*9, len(dateSelected))
+TestIndex = [i-N-1 for i in TestTimeIndex]
+
+ValidationIndex = range(TestIndex[0]/9*8, TestIndex[0])
+TrainIndex = range(TestIndex[0]/9*8)
+# get testing time period Date for estimating return (startDate, endDate)
+TestDate = [(dateSelected[i-1][0],dateSelected[i][0]) for i in TestTimeIndex]
+L = 4
+print(TestTimeIndex)
+#quit()
 def varyHyperparametersN():
 	Ns = [5, 7, 10]
 	dateTicks = ['' for _ in range(5)]
 	allGrowthRates = []
-	with tf.Session() as sess:
-		for N in Ns:
-			# train the model for certain epochs
 
-			# preprocess based on N
-			trainingData = []
-			testingData = _
+	for N in Ns:
+		# train the model for certain epochs
+		returnTensor, prevReturnMatrix, nextReturnMatrix = du.getInputs(stockPrice, N, L = L)
 
-			testGrowthRates = trainModelWithParameters(trainingData, testingData, N, D = 10, epochs = 20, sess)
-			allGrowthRates.append(allGrowthRates)
-		vhPlotter = gp.Plotter('title', dateTicks, 'Year', 'Accumulated Return')
+		## get training data
+		returnTensor_Train = np.array([returnTensor[_] for _ in TrainIndex])
+		prevReturnMatrix_Train = np.array([prevReturnMatrix[_] for _ in TrainIndex])
+		nextReturnMatrix_Train = np.array([nextReturnMatrix[_] for _ in TrainIndex])
+
+		## get validation data
+		returnTensor_Valid = np.array([returnTensor[_] for _ in ValidationIndex])
+		prevReturnMatrix_Valid = np.array([prevReturnMatrix[_] for _ in ValidationIndex])
+		nextReturnMatrix_Valid = np.array([nextReturnMatrix[_] for _ in ValidationIndex])
+
+		## get testing data
+		returnTensor_Test = np.array([returnTensor[_] for _ in TestIndex])
+		prevReturnMatrix_Test = np.array([prevReturnMatrix[_] for _ in TestIndex])
+		nextReturnMatrix_Test = np.array([nextReturnMatrix[_] for _ in TestIndex])  
+
+		trainingData = [(returnTensor_Train, prevReturnMatrix_Train, nextReturnMatrix_Train) ]
+		testingData = (returnTensor_Test, prevReturnMatrix_Test, nextReturnMatrix_Test)
+
+		testGrowthRates = trainTestModelWithParameters(trainingData, testingData, N, D = 10, epochs = 20)
+		allGrowthRates.append(allGrowthRates)
+
+	vhPlotter = gp.Plotter('title', dateTicks, 'Year', 'Accumulated Return')
 		
 	for i in range(len(Ns)):
 		accum = du.getAccumulatedReturn(allGrowthRates[i])
@@ -58,11 +88,19 @@ def varyHyperparametersN():
 	vhPlotter.plot(resultsDirectory + '/varyHyperparametersN.png')
 
 
-def trainModelWithParameters(trainingData, testingData, N = 10, D = 10, epochs = 20, sess):
-	
-	curModel = rm2.RnnModel(D, N, transCostParams, L = 4)
+def trainTestModelWithParameters( trainingData, testingData, N = 10, D = 10, epochs = 20):
+
+	#print(returnTensor_Test.shape)
+
+	# generate xticks for plotting
+	xticks = du.date2xtick(dateSelected[i] for i in TestTimeIndex)
+
+
+
+	curModel = rm2.RnnModel(D, N, transCostParams, L = L)
 
 	model_info = curModel.get_model_info()
+
 	logger.info('total epochs: '+str(epochs))
 	logger.info('model basic config')
 	logger.info(model_info)
@@ -70,18 +108,20 @@ def trainModelWithParameters(trainingData, testingData, N = 10, D = 10, epochs =
 	numBatches = len(trainingData)
 
 	trainingReturnList = [[] for _ in range(numBatches)]
+	with tf.Session() as sess:
+		sess.run(tf.global_variables_initializer())
+		for e in range(1):
+			logger.info('Beginning '+str(e)+'_th epoch')
+			logger.info('')
+			for i in range(len(trainingData)):
+			 	returnTensor, prevReturnMatrix, nextReturnMatrix = trainingData[i]
+			 	#print(returnTensor)
+			 	allActions, growthRates = mu.train1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
+			 	totalGR = du.prod(growthRates)
+				trainingReturnList[i].append( totalGR )
 
-	for e in range(epochs):
-		logger.info('Beginning '+str(e)+'_th epoch')
-		logger.info('')
-		for i in range()
-		 	returnTensor, prevReturnMatrix, nextReturnMatrix = trainingData[e]
-		 	allActions, growthRates = mu.train1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
-		 	totalGR = du.prod(growthRates)
-			trainingReturnList[i].append( totalGR )
-
-	returnTensor, prevReturnMatrix, nextReturnMatrix = testingData
-	allActions, testGrowthRates = mu.test1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
+		returnTensor, prevReturnMatrix, nextReturnMatrix = testingData
+		allActions, testGrowthRates = mu.test1epoch(returnTensor, prevReturnMatrix, nextReturnMatrix, curModel, sess)
 	return trainingReturnList, testGrowthRates
 
 def trainAndTestTrial():
@@ -96,7 +136,7 @@ def trainAndTestTrial():
 	L = 4
 	# define model
 
-	curModel = rm2.RnnModel(D, N, transCostParams, L = L)
+	curModel = rm2.RnnModel(D, N, transCostParams, L = 4)
 
 	model_info = curModel.get_model_info()
 	logger.info('model basic config')
@@ -172,8 +212,8 @@ def trainAndTestTrial():
 
 def main():
 	#print(du.getCurrentTimestamp())
-	 
-	trainAndTestTrial()
+	varyHyperparametersN()
+	#trainAndTestTrial()
 	#rnnModelTrainingTrial()
 
 '''
